@@ -3,7 +3,8 @@ const servicioGeneros = require('../servicios/servicioGenero');
 
 const router = express.Router();
 
-// Rutas para Generos
+/** Operaciones Basica */
+
 router.route('/')
   .get(servicioGeneros.obtenerGeneros)
   .post(servicioGeneros.agregarGenero);
@@ -13,5 +14,6 @@ router.route('/:id')
   .delete(servicioGeneros.eliminarGenero)
   .put(servicioGeneros.actualizarGenero);
 
+/** Operaciones Requeridas */
 
 module.exports = router;

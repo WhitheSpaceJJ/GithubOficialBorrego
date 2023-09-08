@@ -2,6 +2,8 @@ const controlAsesores = require('../controles/controlAsesor');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
+/** Operaciones Basica */
+
 const agregarAsesor = asyncError(async (req, res, next) => {
   const result = await controlAsesores.agregarAsesor(req.body);
   if (typeof result === false) {
@@ -80,6 +82,8 @@ const obtenerAsesorPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarAsesor,

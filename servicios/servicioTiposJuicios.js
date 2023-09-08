@@ -3,6 +3,8 @@ const controlTiposDeJuicio = require('../controles/controlTipoJuicio');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
+/** Operaciones Basica */
+
 const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.agregarTipoDeJuicio(req.body);
   if (typeof result === false) {
@@ -84,6 +86,10 @@ const obtenerTipoDeJuicioPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+
+/** Operaciones Requeridas */
+
 module.exports = {
   agregarTipoDeJuicio,
   obtenerTiposDeJuicio,

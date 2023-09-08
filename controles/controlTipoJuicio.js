@@ -1,5 +1,7 @@
 
 const modeloTipoJuicio = require('../modelos/modeloTipoJuicio');
+/** Operaciones Basica */
+
 
 
 const obtenerTiposDeJuicio = async () => {
@@ -55,6 +57,8 @@ const actualizarTipoDeJuicio = async (tipoDeJuicio) => {
     return false;
   }
 };
+
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerTiposDeJuicio,

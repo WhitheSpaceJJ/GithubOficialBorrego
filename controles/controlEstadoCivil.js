@@ -1,4 +1,5 @@
 const modeloEstadoCivil = require('../modelos/modeloEstadoCivil');
+/** Operaciones Basica */
 
 const obtenerEstadosCiviles = async () => {
   try {
@@ -54,6 +55,7 @@ const actualizarEstadoCivil = async (estadoCivil) => {
   }
 };
 
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerEstadosCiviles,

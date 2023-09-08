@@ -1,5 +1,7 @@
 
 const modeloGenero = require('../modelos/modeloGenero');
+/** Operaciones Basica */
+
 
 
 const obtenerGeneros = async () => {
@@ -56,6 +58,8 @@ const actualizarGenero = async (genero) => {
   }
 };
 
+
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerGeneros,

@@ -1,6 +1,8 @@
 const controlPersonas = require('../controles/controlPersona');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+/** Operaciones Basica */
+
 
 const agregarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.agregarPersona(req.body);
@@ -85,6 +87,8 @@ const obtenerPersonaPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarPersona,

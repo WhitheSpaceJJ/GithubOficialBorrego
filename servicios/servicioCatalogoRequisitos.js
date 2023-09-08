@@ -1,6 +1,7 @@
 const controlCatalogoRequisitos = require('../controles/controlCatalogoRequisito');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+/** Operaciones Basica */
 
 const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.agregarCatalogoRequisito(req.body);
@@ -79,6 +80,8 @@ const obtenerCatalogoRequisitoPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarCatalogoRequisito,

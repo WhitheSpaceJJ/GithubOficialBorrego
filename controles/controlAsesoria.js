@@ -1,4 +1,6 @@
 const modeloAsesoria = require('../modelos/modeloAsesoria');
+/** Operaciones Basica */
+
 
 const obtenerAsesorias = async () => {
   try {
@@ -54,6 +56,7 @@ const actualizarAsesoria = async (asesoria) => {
     return false;
   }
 };
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerAsesorias,

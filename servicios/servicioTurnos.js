@@ -1,6 +1,8 @@
 const controlTurnos = require('../controles/controlTurno');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+/** Operaciones Basica */
+
 
 const agregarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.agregarTurno(req.body);
@@ -80,6 +82,8 @@ const obtenerTurnoPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarTurno,

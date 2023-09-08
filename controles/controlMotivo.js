@@ -1,6 +1,8 @@
 
 const modeloMotivo = require('../modelos/modeloMotivo');
 
+/** Operaciones Basica */
+
 
 const obtenerMotivos = async () => {
   try {
@@ -55,6 +57,8 @@ const actualizarMotivo = async (motivo) => {
     return false;
   }
 };
+
+/** Operaciones Requeridas */
 
 
 

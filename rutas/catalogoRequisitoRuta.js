@@ -3,6 +3,8 @@ const servicioCatalogoRequisitos = require('../servicios/servicioCatalogoRequisi
 
 const router = express.Router();
 
+/** Operaciones Basica */
+
 
 router.route('/')
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitos)
@@ -12,5 +14,7 @@ router.route('/:id')
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitoPorId)
   .delete(servicioCatalogoRequisitos.eliminarCatalogoRequisito)
   .put(servicioCatalogoRequisitos.actualizarCatalogoRequisito);
+
+/** Operaciones Requeridas */
 
 module.exports = router;

@@ -3,6 +3,8 @@ const controlEstados = require('../controles/controlEstadoCivil');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
+/** Operaciones Basica */
+
 
 const agregarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.agregarEstadoCivil(req.body);
@@ -83,6 +85,9 @@ const obtenerEstadoCivilPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
+
 module.exports = {
   agregarEstadoCivil,
   obtenerEstadosCiviles,

@@ -1,4 +1,5 @@
 const modeloTurno = require('../modelos/modeloTurno');
+/** Operaciones Basica */
 
 const obtenerTurnos = async () => {
   try {
@@ -54,6 +55,8 @@ const actualizarTurno = async (turno) => {
     return false;
   }
 };
+
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerTurnos,

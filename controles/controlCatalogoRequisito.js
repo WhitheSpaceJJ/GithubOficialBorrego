@@ -1,4 +1,6 @@
 const modeloCatalogoRequisito = require('../modelos/modeloCatalogoRequisito');
+/** Operaciones Basica */
+
 
 const obtenerCatalogoRequisitos = async () => {
   try {
@@ -54,6 +56,8 @@ const actualizarCatalogoRequisito = async (catalogoRequisito) => {
     return false;
   }
 };
+
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerCatalogoRequisitos,

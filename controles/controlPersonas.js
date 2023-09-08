@@ -1,4 +1,6 @@
 const modeloPersona = require('../modelos/modeloPersona');
+/** Operaciones Basica */
+
 
 const obtenerPersonas = async () => {
   try {
@@ -54,6 +56,7 @@ const actualizarPersona = async (persona) => {
     return false;
   }
 };
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerPersonas,

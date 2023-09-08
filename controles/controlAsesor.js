@@ -1,5 +1,5 @@
 const modeloAsesor = require('../modelos/modeloAsesor');
-
+/** Operaciones Basica */
 const obtenerAsesores = async () => {
   try {
     return await modeloAsesor.Asesor.findAll({
@@ -54,6 +54,9 @@ const actualizarAsesor = async (asesor) => {
     return false;
   }
 };
+
+/** Operaciones Requeridas */
+
 
 module.exports = {
   obtenerAsesores,

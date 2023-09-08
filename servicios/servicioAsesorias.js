@@ -1,6 +1,7 @@
 const controlAsesorias = require('../controles/controlAsesoria');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+/** Operaciones Basica */
 
 const agregarAsesoria = asyncError(async (req, res, next) => {
   const result = await controlAsesorias.agregarAsesoria(req.body);
@@ -87,6 +88,8 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarAsesoria,

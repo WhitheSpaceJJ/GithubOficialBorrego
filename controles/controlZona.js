@@ -1,5 +1,7 @@
 const modeloZona= require('../modelos/modeloZona');
 
+/** Operaciones Basica */
+
 
 const obtenerZonas = async () => {
   try {
@@ -58,6 +60,8 @@ const actualizarZona = async (zona) => {
     return  false;
   }
 };
+
+/** Operaciones Requeridas */
 
 module.exports = {
   obtenerZonas,

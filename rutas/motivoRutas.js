@@ -3,6 +3,8 @@ const servicioMotivos = require('../servicios/servicioMotivos');
 
 const router = express.Router();
 
+/** Operaciones Basica */
+
 
 router.route('/')
   .get(servicioMotivos.obtenerMotivos)
@@ -12,5 +14,7 @@ router.route('/:id')
   .get(servicioMotivos.obtenerMotivoPorId)
   .delete(servicioMotivos.eliminarMotivo)
   .put(servicioMotivos.actualizarMotivo);
+
+/** Operaciones Requeridas */
 
 module.exports = router;

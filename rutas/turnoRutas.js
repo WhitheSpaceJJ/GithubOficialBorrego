@@ -3,6 +3,7 @@ const servicioTurnos = require('../servicios/servicioTurnos');
 
 const router = express.Router();
 
+/** Operaciones Basica */
 
 router.route('/')
   .get(servicioTurnos.obtenerTurnos)
@@ -12,5 +13,7 @@ router.route('/:id')
   .get(servicioTurnos.obtenerTurnoPorId)
   .delete(servicioTurnos.eliminarTurno)
   .put(servicioTurnos.actualizarTurno);
+
+/** Operaciones Requeridas */
 
 module.exports = router;

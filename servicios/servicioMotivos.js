@@ -1,6 +1,8 @@
 const controlMotivos = require('../controles/controlMotivo');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+/** Operaciones Basica */
+
 
 
 const agregarMotivo = asyncError(async (req, res, next) => {
@@ -81,6 +83,8 @@ const obtenerMotivoPorId = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/** Operaciones Requeridas */
 
 module.exports = {
   agregarMotivo,
