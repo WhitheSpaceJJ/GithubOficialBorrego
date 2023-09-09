@@ -10,14 +10,10 @@ const agregarAsesor = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un asesor', 400);
     return next(error);
   } else {
-    const { nombre_asesor, id_zona } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        asesor: {
-          nombre_asesor,
-          id_zona
-        }
+        asesor:result
       }
     });
   }
@@ -47,7 +43,7 @@ const eliminarAsesor = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        asesor: result
+        menssage: "El asesor ha sido eliminado"
       }
     });
   }

@@ -30,8 +30,7 @@ const obtenerTipoDeJuicioPorId = async (id) => {
 
 const agregarTipoDeJuicio = async (tipoDeJuicio) => {
   try {
-    const result = await modeloTipoJuicio.TipoJuicio.create(tipoDeJuicio, { raw: true, nest: true });
-    return result.id_tipo_juicio;
+    return (await modeloTipoJuicio.TipoJuicio.create(tipoDeJuicio, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

@@ -27,8 +27,7 @@ const obtenerEstadoCivilPorId = async (id) => {
 
 const agregarEstadoCivil = async (estadoCivil) => {
   try {
-    const result = await modeloEstadoCivil.EstadoCivil.create(estadoCivil, { raw: true, nest: true });
-    return result.id_estado_civil;
+    return ( await modeloEstadoCivil.EstadoCivil.create(estadoCivil, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

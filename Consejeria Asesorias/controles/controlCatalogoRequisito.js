@@ -28,9 +28,8 @@ const obtenerCatalogoRequisitoPorId = async (id) => {
 
 const agregarCatalogoRequisito = async (catalogoRequisito) => {
   try {
-    const result = await modeloCatalogoRequisito.CatalogoRequisito.create(catalogoRequisito, { raw: true, nest: true });
-    const catalogoRequisito2 = result.dataValues;
-    return catalogoRequisito2.id_catalogo;
+ 
+    return (await modeloCatalogoRequisito.CatalogoRequisito.create(catalogoRequisito, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

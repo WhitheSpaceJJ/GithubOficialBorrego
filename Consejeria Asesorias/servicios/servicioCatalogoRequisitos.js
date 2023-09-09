@@ -9,13 +9,10 @@ const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un requisito del catálogo', 400);
     return next(error);
   } else {
-    const { descripcion_catalogo } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        requisitoCatalogo: {
-          descripcion_catalogo
-        }
+        requisitoCatalogo:result
       }
     });
   }

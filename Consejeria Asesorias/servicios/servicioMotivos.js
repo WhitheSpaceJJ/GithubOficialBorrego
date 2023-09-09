@@ -11,14 +11,10 @@ const agregarMotivo = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un motivo', 400);
     return next(error);
   } else {
-    const { descripcion_motivo } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        motivo: {
-          id_motivo: result.id,
-          descripcion_motivo: descripcion_motivo
-        }
+        motivo: result
       }
     });
   }
@@ -48,7 +44,7 @@ const eliminarMotivo = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        motivo: result
+        menssage: "El motivo ha sido eliminado"
       }
     });
   }

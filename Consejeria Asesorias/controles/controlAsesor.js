@@ -26,9 +26,7 @@ const obtenerAsesorPorId = async (id) => {
 
 const agregarAsesor = async (asesor) => {
   try {
-    const result = await modeloAsesor.Asesor.create(asesor, { raw: true, nest: true });
-    const asesor2 = result.dataValues;
-    return asesor2.id_asesor;
+    return (await modeloAsesor.Asesor.create(asesor, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

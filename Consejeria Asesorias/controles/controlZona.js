@@ -1,11 +1,11 @@
-const modeloZona= require('../modelos/modeloZona');
+const modeloZona = require('../modelos/modeloZona');
 
 /** Operaciones Basica */
 
 
 const obtenerZonas = async () => {
   try {
-    return await modeloZona.Zona.findAll({ 
+    return await modeloZona.Zona.findAll({
       raw: true,
       nest: true
     });
@@ -18,7 +18,7 @@ const obtenerZonas = async () => {
 
 const obtenerZonaPorId = async (id) => {
   try {
-    return await  modeloZona.Zona.findByPk(id, { 
+    return await modeloZona.Zona.findByPk(id, {
       raw: true,
       nest: true
     });
@@ -31,33 +31,30 @@ const obtenerZonaPorId = async (id) => {
 
 const agregarZona = async (zona) => {
   try {
-     const result=  await  modeloZona.Zona.create(zona,{raw:true,nest:true});
-     const zona2=result.dataValues;
-     return zona2.id;
+    return (await modeloZona.Zona.create(zona, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
-    return  false;
+    return false;
   }
 };
 
 const eliminarZona = async (id) => {
   try {
-     await modeloZona.Zona.destroy({ where: { id_zona: id } });
-     return true;
-
-    } catch (error) {
+    await modeloZona.Zona.destroy({ where: { id_zona: id } });
+    return true;
+  } catch (error) {
     console.log("Error:", error.message);
-    return  false;
+    return false;
   }
 };
 
 const actualizarZona = async (zona) => {
   try {
-     await modeloZona.Zona.update(zona, { where: { id_zona: zona.id_zona } });
-     return true;
+    await modeloZona.Zona.update(zona, { where: { id_zona: zona.id_zona } });
+    return true;
   } catch (error) {
     console.log("Error:", error.message);
-    return  false;
+    return false;
   }
 };
 

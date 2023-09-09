@@ -27,9 +27,7 @@ const obtenerTurnoPorId = async (id) => {
 
 const agregarTurno = async (turno) => {
   try {
-    const result = await modeloTurno.Turno.create(turno, { raw: true, nest: true });
-    const turno2 = result.dataValues;
-    return turno2.id_turno;
+    return (await modeloTurno.Turno.create(turno, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

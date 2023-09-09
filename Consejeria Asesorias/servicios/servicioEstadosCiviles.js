@@ -12,14 +12,10 @@ const agregarEstadoCivil = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un estado civil', 400);
     return next(error);
   } else {
-    const { estado_civil } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        estadoCivil: {
-          id_estado_civil: result.id,
-          estado_civil: estado_civil
-        }
+        estadoCivil:result
       }
     });
   }
@@ -50,7 +46,7 @@ const eliminarEstadoCivil = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        estadoCivil: result
+        menssage: "El estado civil ha sido eliminado"
       }
     });
   }

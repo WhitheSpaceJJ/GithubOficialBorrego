@@ -9,21 +9,10 @@ const agregarAsesoria = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar una asesoría', 400);
     return next(error);
   } else {
-    const { resumen_asesoria, conclusion_asesoria, estatus_requisitos, fecha_registro, id_asesor, id_turno, id_asesorado, usuario } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        asesoria: {
-          id_asesoria: result,
-          resumen_asesoria,
-          conclusion_asesoria,
-          estatus_requisitos,
-          fecha_registro,
-          id_asesor,
-          id_turno,
-          id_asesorado,
-          usuario
-        }
+        asesoria: result
       }
     });
   }
@@ -53,7 +42,7 @@ const eliminarAsesoria = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        asesoria: result
+        menssage: "La asesoria ha sido eliminada"
       }
     });
   }

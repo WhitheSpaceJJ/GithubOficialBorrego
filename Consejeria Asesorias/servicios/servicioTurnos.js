@@ -10,14 +10,10 @@ const agregarTurno = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un turno', 400);
     return next(error);
   } else {
-    const { fecha_turno, hora_turno } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        turno: {
-          fecha_turno,
-          hora_turno
-        }
+        turno:result
       }
     });
   }
@@ -47,7 +43,7 @@ const eliminarTurno = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        turno: result
+        menssage: "El turno ha sido eliminado"
       }
     });
   }

@@ -28,9 +28,8 @@ const obtenerPersonaPorId = async (id) => {
 
 const agregarPersona = async (persona) => {
   try {
-    const result = await modeloPersona.Persona.create(persona, { raw: true, nest: true });
-    const persona2 = result.dataValues;
-    return persona2.id_persona;
+   
+    return ( await modeloPersona.Persona.create(persona, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

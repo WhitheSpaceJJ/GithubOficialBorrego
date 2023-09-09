@@ -11,14 +11,10 @@ const agregarGenero = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un género', 400);
     return next(error);
   } else {
-    const { descripcion_genero } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        genero: {
-          id_genero: result.id,
-          descripcion_genero: descripcion_genero
-        }
+        genero: result
       }
     });
   }
@@ -48,7 +44,7 @@ const eliminarGenero = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        genero: result
+        menssage: "El genero ha sido eliminado"
       }
     });
   }

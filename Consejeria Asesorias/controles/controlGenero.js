@@ -30,8 +30,7 @@ const obtenerGeneroPorId = async (id) => {
 
 const agregarGenero = async (genero) => {
   try {
-    const result = await modeloGenero.Genero.create(genero, { raw: true, nest: true });
-    return result.id_genero;
+    return (await modeloGenero.Genero.create(genero, { raw: true, nest: true })).dataValues; 
   } catch (error) {
     console.log("Error:", error.message);
     return false;

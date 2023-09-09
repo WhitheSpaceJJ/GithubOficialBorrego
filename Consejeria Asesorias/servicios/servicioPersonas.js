@@ -1,4 +1,4 @@
-const controlPersonas = require('../controles/controlPersona');
+const controlPersonas = require('../controles/controlPersonas');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 /** Operaciones Basica */
@@ -10,19 +10,10 @@ const agregarPersona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar una persona', 400);
     return next(error);
   } else {
-    const { nombre, apellido_paterno, apellido_materno, edad, telefono, id_domicilio, id_genero } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        persona: {
-          nombre,
-          apellido_paterno,
-          apellido_materno,
-          edad,
-          telefono,
-          id_domicilio,
-          id_genero
-        }
+        persona: result
       }
     });
   }
@@ -52,7 +43,7 @@ const eliminarPersona = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        persona: result
+        menssage: "La persona ha sido eliminada"
       }
     });
   }

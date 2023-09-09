@@ -30,8 +30,7 @@ const obtenerMotivoPorId = async (id) => {
 
 const agregarMotivo = async (motivo) => {
   try {
-    const result = await modeloMotivo.Motivo.create(motivo, { raw: true, nest: true });
-    return result.id_motivo;
+    return (await modeloMotivo.Motivo.create(motivo, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
     return false;

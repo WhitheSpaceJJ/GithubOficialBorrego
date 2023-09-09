@@ -11,18 +11,10 @@ const agregarAsesorado = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un asesorado', 400);
     return next(error);
   } else {
-    const { id_asesorado, estatus_trabajo, id_motivo, id_estado_civil, numero_hijos, ingreso_mensual } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        asesorado: {
-          id_asesorado,
-          estatus_trabajo,
-          id_motivo,
-          id_estado_civil,
-          numero_hijos,
-          ingreso_mensual
-        }
+        asesorado: result
       }
     });
   }
@@ -52,7 +44,7 @@ const eliminarAsesorado = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        asesorado: result
+        menssage: "El asesorado ha sido eliminado"
       }
     });
   }

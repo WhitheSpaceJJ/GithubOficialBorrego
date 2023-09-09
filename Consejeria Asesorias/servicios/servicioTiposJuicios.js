@@ -11,14 +11,10 @@ const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un tipo de juicio', 400);
     return next(error);
   } else {
-    const { tipo_juicio } = req.body;
     res.status(201).json({
       status: 'success',
       data: {
-        tipoDeJuicio: {
-          id_tipo_juicio: result.id,
-          tipo_juicio: tipo_juicio
-        }
+        tipoDeJuicio: result
       }
     });
   }
@@ -51,7 +47,7 @@ const eliminarTipoDeJuicio = asyncError(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        tipoDeJuicio: result
+        menssage: "El tipo de juicio ha sido eliminado"
       }
     });
   }
