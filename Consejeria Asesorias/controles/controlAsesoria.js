@@ -107,9 +107,9 @@ const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
     if (asesoria.turno === null || asesoria.turno === "null") {
       delete asesoria.turno;
     }
-    const persona= await controlPersonas.obtenerPersonaPorId(asesoria.asesorado.id_asesorado);
-    delete  asesoria.asesorado.id_asesorado;
-    asesoria.asesorado.persona=persona;
+    const persona = await controlPersonas.obtenerPersonaPorId(asesoria.asesorado.id_asesorado);
+    delete asesoria.asesorado.id_asesorado;
+    asesoria.asesorado.persona = persona;
     return asesoria;
   } catch (error) {
     return null;
