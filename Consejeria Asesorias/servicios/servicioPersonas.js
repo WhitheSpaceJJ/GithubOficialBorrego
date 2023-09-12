@@ -6,7 +6,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.agregarPersona(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar una persona', 400);
     return next(error);
   } else {
@@ -21,7 +21,7 @@ const agregarPersona = asyncError(async (req, res, next) => {
 
 const obtenerPersonas = asyncError(async (req, res, next) => {
   const result = await controlPersonas.obtenerPersonas();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron personas', 404);
     return next(error);
   } else {
@@ -34,9 +34,25 @@ const obtenerPersonas = asyncError(async (req, res, next) => {
   }
 });
 
+const obtenerPersonaNombre = asyncError(async (req, res, next) => {
+  const { nombre, apellido_materno,apellido_paterno } = req.query;
+  const result = await controlPersonas.obtenerPersonaNombre(nombre,apellido_paterno,apellido_materno);
+  if (result === null) {
+    const error = new CustomeError('Error al obtener la persona', 404);
+    return next(error);
+  } else {
+    res.status(200).json({
+      status: 'success',
+      data: {
+        persona: result
+      }
+    });
+  }
+});
+
 const eliminarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.eliminarPersona(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar la persona', 400);
     return next(error);
   } else {
@@ -51,7 +67,7 @@ const eliminarPersona = asyncError(async (req, res, next) => {
 
 const actualizarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.actualizarPersona(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al actualizar la persona', 400);
     return next(error);
   } else {
@@ -66,7 +82,7 @@ const actualizarPersona = asyncError(async (req, res, next) => {
 
 const obtenerPersonaPorId = asyncError(async (req, res, next) => {
   const result = await controlPersonas.obtenerPersonaPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener la persona', 404);
     return next(error);
   } else {
@@ -86,5 +102,6 @@ module.exports = {
   obtenerPersonas,
   eliminarPersona,
   actualizarPersona,
-  obtenerPersonaPorId
+  obtenerPersonaPorId,
+  obtenerPersonaNombre
 };

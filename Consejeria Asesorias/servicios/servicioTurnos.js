@@ -6,7 +6,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.agregarTurno(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un turno', 400);
     return next(error);
   } else {
@@ -21,7 +21,7 @@ const agregarTurno = asyncError(async (req, res, next) => {
 
 const obtenerTurnos = asyncError(async (req, res, next) => {
   const result = await controlTurnos.obtenerTurnos();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron turnos', 404);
     return next(error);
   } else {
@@ -36,7 +36,7 @@ const obtenerTurnos = asyncError(async (req, res, next) => {
 
 const eliminarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.eliminarTurno(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar el turno', 400);
     return next(error);
   } else {
@@ -51,7 +51,7 @@ const eliminarTurno = asyncError(async (req, res, next) => {
 
 const actualizarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.actualizarTurno(req.body);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al actualizar el turno', 400);
     return next(error);
   } else {
@@ -66,7 +66,7 @@ const actualizarTurno = asyncError(async (req, res, next) => {
 
 const obtenerTurnoPorId = asyncError(async (req, res, next) => {
   const result = await controlTurnos.obtenerTurnoPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el turno', 404);
     return next(error);
   } else {

@@ -8,12 +8,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitos)
-  .post(servicioCatalogoRequisitos.agregarCatalogoRequisito);
+  .post(servicioCatalogoRequisitos.agregarCatalogoRequisito)
+  ;
 
 router.route('/:id')
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitoPorId)
   .delete(servicioCatalogoRequisitos.eliminarCatalogoRequisito)
-  .put(servicioCatalogoRequisitos.actualizarCatalogoRequisito);
+  .put(servicioCatalogoRequisitos.actualizarCatalogoRequisito)
+  ;
 
 /** Operaciones Requeridas */
 

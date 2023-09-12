@@ -8,12 +8,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioZonas.obtenerZonas)
-  .post(servicioZonas.agregarZona);
+  .post(servicioZonas.agregarZona)
+  ;
 
 router.route('/:id')
   .get(servicioZonas.obtenerZonaPorId)
   .delete(servicioZonas.eliminarZona)
-  .put(servicioZonas.actualizarZona);
+  .put(servicioZonas.actualizarZona)
+  ;
 
 /** Operaciones Requeridas */
 

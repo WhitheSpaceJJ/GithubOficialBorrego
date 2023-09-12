@@ -5,7 +5,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarZona = asyncError(async (req, res, next) => {
   const result = await controlZonas.agregarZona(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar una zona', 400);
     return next(error);
   } else {
@@ -21,7 +21,7 @@ const agregarZona = asyncError(async (req, res, next) => {
 
 const obtenerZonas = asyncError(async (req, res, next) => {
   const result = await controlZonas.obtenerZonas();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron zonas', 404);
     return next(error);
   } else {
@@ -36,7 +36,7 @@ const obtenerZonas = asyncError(async (req, res, next) => {
 
 const eliminarZona = asyncError(async (req, res, next) => {
   const result = await controlZonas.eliminarZona(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar la zona', 400);
     return next(error);
   } else {
@@ -51,7 +51,7 @@ const eliminarZona = asyncError(async (req, res, next) => {
 
 const actualizarZona = asyncError(async (req, res, next) => {
   const result = await controlZonas.actualizarZona(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al actualizar la zona', 400);
     return next(error);
   } else {
@@ -66,7 +66,7 @@ const actualizarZona = asyncError(async (req, res, next) => {
 
 const obtenerZonaPorId = asyncError(async (req, res, next) => {
   const result = await controlZonas.obtenerZonaPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener la zona', 404);
     return next(error);
   } else {

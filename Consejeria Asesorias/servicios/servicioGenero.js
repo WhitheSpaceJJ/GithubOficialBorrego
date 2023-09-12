@@ -7,7 +7,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.agregarGenero(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un género', 400);
     return next(error);
   } else {
@@ -22,7 +22,7 @@ const agregarGenero = asyncError(async (req, res, next) => {
 
 const obtenerGeneros = asyncError(async (req, res, next) => {
   const result = await controlGeneros.obtenerGeneros();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron géneros', 404);
     return next(error);
   } else {
@@ -37,7 +37,7 @@ const obtenerGeneros = asyncError(async (req, res, next) => {
 
 const eliminarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.eliminarGenero(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar el género', 400);
     return next(error);
   } else {
@@ -52,7 +52,7 @@ const eliminarGenero = asyncError(async (req, res, next) => {
 
 const actualizarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.actualizarGenero(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al actualizar el género', 400);
     return next(error);
   } else {
@@ -67,7 +67,7 @@ const actualizarGenero = asyncError(async (req, res, next) => {
 
 const obtenerGeneroPorId = asyncError(async (req, res, next) => {
   const result = await controlGeneros.obtenerGeneroPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el género', 404);
     return next(error);
   } else {

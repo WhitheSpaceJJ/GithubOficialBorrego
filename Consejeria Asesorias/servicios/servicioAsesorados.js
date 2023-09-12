@@ -7,7 +7,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarAsesorado = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.agregarAsesorado(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un asesorado', 400);
     return next(error);
   } else {
@@ -22,7 +22,7 @@ const agregarAsesorado = asyncError(async (req, res, next) => {
 
 const obtenerAsesorados = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.obtenerAsesorados();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorados', 404);
     return next(error);
   } else {
@@ -37,7 +37,7 @@ const obtenerAsesorados = asyncError(async (req, res, next) => {
 
 const eliminarAsesorado = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.eliminarAsesorado(req.params.id);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al eliminar el asesorado', 400);
     return next(error);
   } else {
@@ -52,7 +52,7 @@ const eliminarAsesorado = asyncError(async (req, res, next) => {
 
 const actualizarAsesorado = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.actualizarAsesorado(req.body);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al actualizar el asesorado', 400);
     return next(error);
   } else {
@@ -67,7 +67,7 @@ const actualizarAsesorado = asyncError(async (req, res, next) => {
 
 const obtenerAsesoradoPorId = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.obtenerAsesoradoPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el asesorado', 404);
     return next(error);
   } else {

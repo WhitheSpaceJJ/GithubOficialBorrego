@@ -2,6 +2,7 @@
 const express = require('express');
 const port = 3000;
 const zonasRutas = require("./rutas/zonaRutas");
+const domiciliosRutas = require("./rutas/domicilioRutas");
 const tipoDeJuiciosRutas = require("./rutas/tipoJuicioRutas");
 const generosRutas = require("./rutas/generoRutas");
 const estadosCivilesRutas = require("./rutas/estadoCivilRutas");
@@ -13,6 +14,9 @@ const turnoRutas = require("./rutas/turnoRutas");
 const catalogoRequisitosRutas = require("./rutas/catalogoRequisitoRuta");
 const personasRutas = require("./rutas/personaRuta");
 const asesoradoRutas = require("./rutas/asesorRutas");
+const detalleAsesoriaRutas = require("./rutas/detalleAsesoriaRuta");
+
+
 
 const CustomeError = require("./utilidades/customeError");
 const errorController = require("./utilidades/errrorController")
@@ -44,6 +48,8 @@ const jwtMiddleware = async (req, res, next) => {
 
 
 app.use('/zonas',jwtMiddleware, zonasRutas);
+app.use('/detalle-asesoria',jwtMiddleware, detalleAsesoriaRutas);
+app.use('/domicilios',jwtMiddleware, domiciliosRutas);
 app.use('/tipos-de-juicio',jwtMiddleware, tipoDeJuiciosRutas);
 app.use('/estados-civiles',jwtMiddleware, estadosCivilesRutas);
 app.use('/generos',jwtMiddleware, generosRutas);

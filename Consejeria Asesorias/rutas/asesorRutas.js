@@ -12,7 +12,8 @@ router.route('/')
 router.route('/:id')
   .get(servicioAsesor.obtenerAsesorPorId)
   .delete(servicioAsesor.eliminarAsesor)
-  .put(servicioAsesor.actualizarAsesor);
+  .put(servicioAsesor.actualizarAsesor)
+  ;
 /** Operaciones Requeridas */
 
 module.exports = router;

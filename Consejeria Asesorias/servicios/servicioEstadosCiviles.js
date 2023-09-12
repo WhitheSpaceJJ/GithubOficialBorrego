@@ -8,7 +8,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.agregarEstadoCivil(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un estado civil', 400);
     return next(error);
   } else {
@@ -24,7 +24,7 @@ const agregarEstadoCivil = asyncError(async (req, res, next) => {
 
 const obtenerEstadosCiviles = asyncError(async (req, res, next) => {
   const result = await controlEstados.obtenerEstadosCiviles();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron estados civiles', 404);
     return next(error);
   } else {
@@ -39,7 +39,7 @@ const obtenerEstadosCiviles = asyncError(async (req, res, next) => {
 
 const eliminarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.eliminarEstadoCivil(req.params.id);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al eliminar el estado civil', 400);
     return next(error);
   } else {
@@ -54,7 +54,7 @@ const eliminarEstadoCivil = asyncError(async (req, res, next) => {
 
 const actualizarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.actualizarEstadoCivil(req.body);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al actualizar el estado civil', 400);
     return next(error);
   } else {
@@ -69,7 +69,7 @@ const actualizarEstadoCivil = asyncError(async (req, res, next) => {
 
 const obtenerEstadoCivilPorId = asyncError(async (req, res, next) => {
   const result = await controlEstados.obtenerEstadoCivilPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el estado civil', 404);
     return next(error);
   } else {

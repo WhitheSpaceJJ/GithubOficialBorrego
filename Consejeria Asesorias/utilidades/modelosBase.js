@@ -17,7 +17,13 @@ const Zona = sequelize.define("zonas", {
     }
   }
 }, {
+  freezeTableName: true, 
   timestamps: false 
+  ,
+  name: {
+    singular: 'zona',
+    plural: 'zonas'
+}
 });
 
 const TipoJuicio = sequelize.define("tipos_juicios", {
@@ -35,6 +41,7 @@ const TipoJuicio = sequelize.define("tipos_juicios", {
     }
   }
 }, {
+  freezeTableName: true, 
   timestamps: false
 });
 
@@ -53,6 +60,7 @@ const EstadoCivil = sequelize.define("estados_civiles", {
     }
   }
 }, {
+  freezeTableName: true, 
   timestamps: false
 });
 
@@ -70,8 +78,14 @@ const Genero = sequelize.define("generos", {
       len: [0, 25]
     }
   }
-}, {
+}, {freezeTableName: true, 
   timestamps: false
+  ,
+  name: {
+    singular: 'genero',
+    plural: 'generos'
+}
+
 });
 
 const Motivo = sequelize.define("motivos", {
@@ -89,7 +103,12 @@ const Motivo = sequelize.define("motivos", {
     }
   }
 }, {
-  timestamps: false
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'motivo',
+    plural: 'motivos'
+}
 });
 
 const Asesor = sequelize.define("asesores", {
@@ -111,7 +130,12 @@ const Asesor = sequelize.define("asesores", {
     allowNull: false
   },
 }, {
-  timestamps: false
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'asesor',
+    plural: 'asesores'
+}
 });
 const CatalogoRequisito = sequelize.define("catalogo_requisitos", {
   id_catalogo: {
@@ -128,6 +152,7 @@ const CatalogoRequisito = sequelize.define("catalogo_requisitos", {
     }
   }
 }, {
+  freezeTableName: true, 
   timestamps: false
 });
 const Persona = sequelize.define("personas", {
@@ -179,12 +204,23 @@ const Persona = sequelize.define("personas", {
     allowNull: false
   },
 }, {
-  timestamps: false
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'persona',
+    plural: 'personas'
+}
 });
 
 const DetalleAsesoriaCatalogo = sequelize.define(
   "detalle_asesorias_catalogos",
   {
+    id_detalle: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
+    },
     id_asesoria: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -192,7 +228,15 @@ const DetalleAsesoriaCatalogo = sequelize.define(
     id_catalogo: {
       type: DataTypes.INTEGER,
       allowNull: false
+      
     },
+  }, {
+    freezeTableName: true, 
+    timestamps: false,
+    name: {
+      singular: 'detalle_asesoria_catalogo',
+      plural: 'detalle_asesorias_catalogos'
+  }
   }
 );
 
@@ -218,7 +262,12 @@ const Turno = sequelize.define("turnos", {
     }
   }
 }, {
-  timestamps: false
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'turno',
+    plural: 'turnos'
+}
 });
 
 const Asesorado = sequelize.define("asesorados", {
@@ -251,7 +300,12 @@ const Asesorado = sequelize.define("asesorados", {
     defaultValue: null
   },
 }, {
+  freezeTableName: true, 
   timestamps: false
+  ,  name: {
+    singular: 'asesorado',
+    plural: 'asesorados'
+}
 });
 
 const Asesoria = sequelize.define("asesorias", {
@@ -303,7 +357,56 @@ const Asesoria = sequelize.define("asesorias", {
     }
   }
 }, {
-  timestamps: false
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'asesoria',
+    plural: 'asesorias'
+}
+});
+
+
+const Domicilio = sequelize.define("domicilios", {
+  id_domicilio: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+    autoIncrement: true
+  },
+  calle_domicilio: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: [0, 75]
+    }
+  },
+  numero_exterior_domicilio: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      len: [0, 25]
+    },
+    defaultValue: null
+  },
+  numero_interior_domicilio: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      len: [0, 25]
+    },
+    defaultValue: null,
+  },
+  id_colonia: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+}, {
+  freezeTableName: true, 
+  timestamps: false,
+  name: {
+    singular: 'domicilio',
+    plural: 'domicilios'
+}
 });
 
 module.exports = {
@@ -312,6 +415,7 @@ module.exports = {
   Asesorado,
    Asesoria,
   EstadoCivil,
+  Domicilio,
   Asesor,
   DetalleAsesoriaCatalogo,
   CatalogoRequisito,

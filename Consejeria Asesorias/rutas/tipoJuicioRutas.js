@@ -9,12 +9,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioTiposDeJuicio.obtenerTiposDeJuicio)
-  .post(servicioTiposDeJuicio.agregarTipoDeJuicio);
+  .post(servicioTiposDeJuicio.agregarTipoDeJuicio)
+  ;
 
 router.route('/:id')
   .get(servicioTiposDeJuicio.obtenerTipoDeJuicioPorId)
   .delete(servicioTiposDeJuicio.eliminarTipoDeJuicio)
-  .put(servicioTiposDeJuicio.actualizarTipoDeJuicio);
+  .put(servicioTiposDeJuicio.actualizarTipoDeJuicio)
+  ;
 
 /** Operaciones Requeridas */
 

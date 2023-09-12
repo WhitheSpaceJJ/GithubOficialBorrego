@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioEstados.obtenerEstadosCiviles)
-  .post(servicioEstados.agregarEstadoCivil);
+  .post(servicioEstados.agregarEstadoCivil)
+  ;
 
 router.route('/:id')
   .get(servicioEstados.obtenerEstadoCivilPorId)
   .delete(servicioEstados.eliminarEstadoCivil)
-  .put(servicioEstados.actualizarEstadoCivil);
+  .put(servicioEstados.actualizarEstadoCivil)
+  ;
 
 /** Operaciones Requeridas */
 

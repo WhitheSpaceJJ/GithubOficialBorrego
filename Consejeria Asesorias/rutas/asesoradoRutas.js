@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioAsesorados.obtenerAsesorados)
-  .post(servicioAsesorados.agregarAsesorado);
+  .post(servicioAsesorados.agregarAsesorado)
+  ;
 
 router.route('/:id')
   .get(servicioAsesorados.obtenerAsesoradoPorId)
   .delete(servicioAsesorados.eliminarAsesorado)
-  .put(servicioAsesorados.actualizarAsesorado);
+  .put(servicioAsesorados.actualizarAsesorado)
+  ;
 
   /** Operaciones Requeridas */
 

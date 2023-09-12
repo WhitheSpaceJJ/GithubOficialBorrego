@@ -7,7 +7,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.agregarTipoDeJuicio(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un tipo de juicio', 400);
     return next(error);
   } else {
@@ -23,7 +23,7 @@ const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
 
 const obtenerTiposDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.obtenerTiposDeJuicio();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron tipos de juicio', 404);
     return next(error);
   } else {
@@ -40,7 +40,7 @@ const obtenerTiposDeJuicio = asyncError(async (req, res, next) => {
 
 const eliminarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.eliminarTipoDeJuicio(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar el tipo de juicio', 400);
     return next(error);
   } else {
@@ -55,7 +55,7 @@ const eliminarTipoDeJuicio = asyncError(async (req, res, next) => {
 
 const actualizarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.actualizarTipoDeJuicio(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al actualizar el tipo de juicio', 400);
     return next(error);
   } else {
@@ -70,7 +70,7 @@ const actualizarTipoDeJuicio = asyncError(async (req, res, next) => {
 
 const obtenerTipoDeJuicioPorId = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.obtenerTipoDeJuicioPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el tipo de juicio', 404);
     return next(error);
   } else {

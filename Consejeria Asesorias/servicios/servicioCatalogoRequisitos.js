@@ -5,7 +5,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.agregarCatalogoRequisito(req.body);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al agregar un requisito del catálogo', 400);
     return next(error);
   } else {
@@ -20,7 +20,7 @@ const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
 
 const obtenerCatalogoRequisitos = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.obtenerCatalogoRequisitos();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron requisitos del catálogo', 404);
     return next(error);
   } else {
@@ -35,7 +35,7 @@ const obtenerCatalogoRequisitos = asyncError(async (req, res, next) => {
 
 const eliminarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.eliminarCatalogoRequisito(req.params.id);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al eliminar el requisito del catálogo', 400);
     return next(error);
   } else {
@@ -50,7 +50,7 @@ const eliminarCatalogoRequisito = asyncError(async (req, res, next) => {
 
 const actualizarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.actualizarCatalogoRequisito(req.body);
-  if (typeof result === false) {
+  if ( result === false) {
     const error = new CustomeError('Error al actualizar el requisito del catálogo', 400);
     return next(error);
   } else {
@@ -65,7 +65,7 @@ const actualizarCatalogoRequisito = asyncError(async (req, res, next) => {
 
 const obtenerCatalogoRequisitoPorId = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.obtenerCatalogoRequisitoPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el requisito del catálogo', 404);
     return next(error);
   } else {

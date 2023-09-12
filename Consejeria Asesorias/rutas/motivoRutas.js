@@ -8,12 +8,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioMotivos.obtenerMotivos)
-  .post(servicioMotivos.agregarMotivo);
+  .post(servicioMotivos.agregarMotivo)
+  ;
 
 router.route('/:id')
   .get(servicioMotivos.obtenerMotivoPorId)
   .delete(servicioMotivos.eliminarMotivo)
-  .put(servicioMotivos.actualizarMotivo);
+  .put(servicioMotivos.actualizarMotivo)
+  ;
 
 /** Operaciones Requeridas */
 

@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioTurnos.obtenerTurnos)
-  .post(servicioTurnos.agregarTurno);
+  .post(servicioTurnos.agregarTurno)
+  ;
 
 router.route('/:id')
   .get(servicioTurnos.obtenerTurnoPorId)
   .delete(servicioTurnos.eliminarTurno)
-  .put(servicioTurnos.actualizarTurno);
+  .put(servicioTurnos.actualizarTurno)
+  ;
 
 /** Operaciones Requeridas */
 

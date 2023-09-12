@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.route('/')
   .get(servicioGeneros.obtenerGeneros)
-  .post(servicioGeneros.agregarGenero);
+  .post(servicioGeneros.agregarGenero)
+  ;
 
 router.route('/:id')
   .get(servicioGeneros.obtenerGeneroPorId)
   .delete(servicioGeneros.eliminarGenero)
-  .put(servicioGeneros.actualizarGenero);
+  .put(servicioGeneros.actualizarGenero)
+  ;
 
 /** Operaciones Requeridas */
 

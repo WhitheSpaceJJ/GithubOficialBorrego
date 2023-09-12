@@ -7,7 +7,7 @@ const CustomeError = require("../utilidades/customeError");
 
 const agregarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.agregarMotivo(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al agregar un motivo', 400);
     return next(error);
   } else {
@@ -22,7 +22,7 @@ const agregarMotivo = asyncError(async (req, res, next) => {
 
 const obtenerMotivos = asyncError(async (req, res, next) => {
   const result = await controlMotivos.obtenerMotivos();
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron motivos', 404);
     return next(error);
   } else {
@@ -37,7 +37,7 @@ const obtenerMotivos = asyncError(async (req, res, next) => {
 
 const eliminarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.eliminarMotivo(req.params.id);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al eliminar el motivo', 400);
     return next(error);
   } else {
@@ -52,7 +52,7 @@ const eliminarMotivo = asyncError(async (req, res, next) => {
 
 const actualizarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.actualizarMotivo(req.body);
-  if (typeof result === false) {
+  if (result === false) {
     const error = new CustomeError('Error al actualizar el motivo', 400);
     return next(error);
   } else {
@@ -67,7 +67,7 @@ const actualizarMotivo = asyncError(async (req, res, next) => {
 
 const obtenerMotivoPorId = asyncError(async (req, res, next) => {
   const result = await controlMotivos.obtenerMotivoPorId(req.params.id);
-  if (typeof result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el motivo', 404);
     return next(error);
   } else {

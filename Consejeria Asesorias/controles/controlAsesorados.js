@@ -6,6 +6,12 @@ const obtenerAsesorados = async () => {
     return await modeloAsesorado.Asesorado.findAll({
       raw: true,
       nest: true,
+      
+      attributes: {
+        exclude: ['id_asesorado', 'id_motivo',"id_estado_civil"]
+      },
+      include:[modeloAsesorado.Motivo,modeloAsesorado.EstadoCivil]
+  
     });
   } catch (error) {
     console.log("Error:", error.message);
@@ -17,7 +23,13 @@ const obtenerAsesoradoPorId = async (id) => {
   try {
     return await modeloAsesorado.Asesorado.findByPk(id, {
       raw: true,
-      nest: true,
+      nest: true
+      ,
+      attributes: {
+        exclude: ['id_asesorado', 'id_motivo',"id_estado_civil"]
+      },
+      include:[modeloAsesorado.Motivo,modeloAsesorado.EstadoCivil]
+  
     });
   } catch (error) {
     console.log("Error:", error.message);

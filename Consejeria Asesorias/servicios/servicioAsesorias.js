@@ -1,6 +1,8 @@
 const controlAsesorias = require('../controles/controlAsesoria');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
+const controlPersonas = require('../controles/controlPersonas');
+
 /** Operaciones Basica */
 
 const agregarAsesoria = asyncError(async (req, res, next) => {
@@ -20,7 +22,7 @@ const agregarAsesoria = asyncError(async (req, res, next) => {
 
 const obtenerAsesorias = asyncError(async (req, res, next) => {
   const result = await controlAsesorias.obtenerAsesorias();
-  if (result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
   } else {
@@ -65,7 +67,7 @@ const actualizarAsesoria = asyncError(async (req, res, next) => {
 
 const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
   const result = await controlAsesorias.obtenerAsesoriaPorId(req.params.id);
-  if (result === null) {
+  if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener la asesoría', 404);
     return next(error);
   } else {
@@ -76,7 +78,35 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
       }
     });
   }
+
+
 });
+
+
+const obtenerAsesoriaNombre = asyncError(async (req, res, next) => {
+  const { nombre, apellido_materno,apellido_paterno } = req.query;
+  const result2 = await controlPersonas.obtenerPersonaNombre(nombre,apellido_paterno,apellido_materno);
+  if (result2 === null) {
+    const error = new CustomeError('Error al obtener la persona', 404);
+    return next(error);
+  } else {
+   
+    const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorado(result2.id_persona);
+    if (result === null || result === undefined) {
+      const error = new CustomeError('Error al obtener la asesoría', 404);
+      return next(error);
+    } else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          asesoria: result
+        }
+      });
+    }
+  
+  }
+});
+
 
 /** Operaciones Requeridas */
 
@@ -85,5 +115,6 @@ module.exports = {
   obtenerAsesorias,
   eliminarAsesoria,
   actualizarAsesoria,
-  obtenerAsesoriaPorId
+  obtenerAsesoriaPorId,
+  obtenerAsesoriaNombre
 };
