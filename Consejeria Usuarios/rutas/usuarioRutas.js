@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/usuario')
   .get(servicioUsuarios.obtenerUsuarioCorreo);
 
-
+/*
 
 router.route('/')
   .get(servicioUsuarios.obtenerUsuarioPorId)
@@ -19,7 +19,7 @@ router.route('/:id')
   .delete(servicioUsuarios.eliminarUsuario)
   .put(servicioUsuarios.actualizarUsuario)
   ;
-
+*/
 /** Operaciones Requeridas */
 
 module.exports = router;

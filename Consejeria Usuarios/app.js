@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
+/*
 const jwtMiddleware = async (req, res, next) => {
   const { body, originalUrl, method } = req;
 
@@ -29,10 +29,12 @@ const jwtMiddleware = async (req, res, next) => {
     }
 };
 
+*/
 
 
-
-app.use('/usuarios',jwtMiddleware, usuariosRutas);
+app.use('/usuarios'
+//,jwtMiddleware
+, usuariosRutas);
 
 app.all("*", (req, res, next) => {
   const err = new CustomeError("Cannot find " + req.originalUrl + " on the server", 404);

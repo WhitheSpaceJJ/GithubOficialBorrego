@@ -11,7 +11,7 @@ const generateToken = async (payload, secretKey) => {
     });
   });
 };
-
+/*
 const verifyToken = async (token, secretKey) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secretKey, (err, decoded) => {
@@ -23,8 +23,8 @@ const verifyToken = async (token, secretKey) => {
     });
   });
 };
-
+*/
 module.exports = {
-  generateToken,
-  verifyToken
+  generateToken
+  //,verifyToken
 };

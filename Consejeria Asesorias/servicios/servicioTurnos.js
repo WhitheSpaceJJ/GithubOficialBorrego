@@ -10,11 +10,16 @@ const agregarTurno = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un turno', 400);
     return next(error);
   } else {
-    res.status(201).json({
+    /*
+      res.status(201).json({
       status: 'success',
       data: {
         turno:result
       }
+    });
+    */
+    res.status(201).json({
+        turno:result
     });
   }
 });
@@ -25,11 +30,16 @@ const obtenerTurnos = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron turnos', 404);
     return next(error);
   } else {
-    res.status(200).json({
+   /*
+ res.status(200).json({
       status: 'success',
       data: {
         turnos: result
       }
+    });
+   */
+    res.status(200).json({
+        turnos: result
     });
   }
 });
@@ -40,11 +50,16 @@ const eliminarTurno = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar el turno', 400);
     return next(error);
   } else {
-    res.status(200).json({
+  /*
+  res.status(200).json({
       status: 'success',
       data: {
         menssage: "El turno ha sido eliminado"
       }
+    });
+  */
+    res.status(200).json({
+        menssage: "El turno ha sido eliminado"
     });
   }
 });
@@ -55,11 +70,16 @@ const actualizarTurno = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar el turno', 400);
     return next(error);
   } else {
-    res.status(200).json({
+   /*
+ res.status(200).json({
       status: 'success',
       data: {
         turno: req.body
       }
+    });
+   */
+    res.status(200).json({
+        turno: req.body
     });
   }
 });
@@ -70,11 +90,16 @@ const obtenerTurnoPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener el turno', 404);
     return next(error);
   } else {
-    res.status(200).json({
+   /*
+ res.status(200).json({
       status: 'success',
       data: {
         turno: result
       }
+    });
+   */
+    res.status(200).json({
+        turno: result
     });
   }
 });

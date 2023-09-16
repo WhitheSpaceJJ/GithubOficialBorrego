@@ -4,9 +4,14 @@ const CustomeError = require('../utilidades/customeError.js');
 
 exports.getColonias = asyncError(async (req, res, next) => {
     const colonias = await controlColonias.getColonias();
-    res.status(200).json({
+    /*
+       res.status(200).json({
         status: 'success',
         data: colonias
+    });
+    */
+    res.status(200).json({
+        colonias: colonias
     });
 });
 
@@ -15,9 +20,14 @@ exports.getColonia = asyncError(async (req, res, next) => {
     if (!colonia) {
         return next(new CustomeError(`No se encontró una colonia con el id ${req.params.id}`, 404));
     }
+    /*
     res.status(200).json({
         status: 'success',
         data: colonia
+    });
+    */
+    res.status(200).json({
+        colonia: colonia
     });
 });
 

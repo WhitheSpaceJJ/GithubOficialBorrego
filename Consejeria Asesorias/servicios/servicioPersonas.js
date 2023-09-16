@@ -10,11 +10,16 @@ const agregarPersona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar una persona', 400);
     return next(error);
   } else {
-    res.status(201).json({
+    /*
+        res.status(201).json({
       status: 'success',
       data: {
         persona: result
       }
+    });
+    */
+    res.status(201).json({
+        persona: result
     });
   }
 });
@@ -25,11 +30,16 @@ const obtenerPersonas = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron personas', 404);
     return next(error);
   } else {
-    res.status(200).json({
+   /*
+ res.status(200).json({
       status: 'success',
       data: {
         personas: result
       }
+    });
+   */
+    res.status(200).json({
+        personas: result
     });
   }
 });
@@ -41,11 +51,16 @@ const obtenerPersonaNombre = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener la persona', 404);
     return next(error);
   } else {
-    res.status(200).json({
+  /*
+  res.status(200).json({
       status: 'success',
       data: {
         persona: result
       }
+    });
+  */
+    res.status(200).json({
+        persona: result
     });
   }
 });
@@ -56,11 +71,16 @@ const eliminarPersona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar la persona', 400);
     return next(error);
   } else {
-    res.status(200).json({
+   /*
+ res.status(200).json({
       status: 'success',
       data: {
         menssage: "La persona ha sido eliminada"
       }
+    });
+   */
+    res.status(200).json({
+        menssage: "La persona ha sido eliminada"
     });
   }
 });
@@ -71,11 +91,16 @@ const actualizarPersona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar la persona', 400);
     return next(error);
   } else {
-    res.status(200).json({
+  /*
+  res.status(200).json({
       status: 'success',
       data: {
         persona: req.body
       }
+    });
+  */
+    res.status(200).json({
+        persona: req.body
     });
   }
 });
@@ -86,11 +111,16 @@ const obtenerPersonaPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener la persona', 404);
     return next(error);
   } else {
-    res.status(200).json({
+  /*
+  res.status(200).json({
       status: 'success',
       data: {
         persona: result
       }
+    });
+  */
+    res.status(200).json({
+        persona: result
     });
   }
 });

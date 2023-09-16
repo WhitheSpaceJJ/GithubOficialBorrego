@@ -11,11 +11,16 @@ const agregarAsesoria = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar una asesoría', 400);
     return next(error);
   } else {
+    /*
     res.status(201).json({
       status: 'success',
       data: {
         asesoria: result
       }
+    });
+    */
+    res.status(201).json({
+        asesoria: result
     });
   }
 });
@@ -26,11 +31,16 @@ const obtenerAsesorias = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
   } else {
+    /*
     res.status(200).json({
       status: 'success',
       data: {
         asesorias: result
       }
+    });
+    */
+    res.status(200).json({
+        asesorias: result
     });
   }
 });
@@ -41,11 +51,16 @@ const eliminarAsesoria = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar la asesoría', 400);
     return next(error);
   } else {
+    /*
     res.status(200).json({
       status: 'success',
       data: {
         menssage: "La asesoria ha sido eliminada"
       }
+    });
+    */
+    res.status(200).json({
+        menssage: "La asesoria ha sido eliminada"
     });
   }
 });
@@ -56,11 +71,16 @@ const actualizarAsesoria = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar la asesoría', 400);
     return next(error);
   } else {
+    /*
     res.status(200).json({
       status: 'success',
       data: {
         asesoria: req.body
       }
+    });
+    */
+    res.status(200).json({
+        asesoria: req.body
     });
   }
 });
@@ -71,11 +91,16 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener la asesoría', 404);
     return next(error);
   } else {
+    /*
     res.status(200).json({
       status: 'success',
       data: {
         asesoria: result
       }
+    });
+    */
+    res.status(200).json({
+        asesoria: result
     });
   }
 
@@ -95,11 +120,16 @@ const obtenerAsesoriaNombre = asyncError(async (req, res, next) => {
       const error = new CustomeError('Error al obtener la asesoría', 404);
       return next(error);
     } else {
+    /*
       res.status(200).json({
         status: 'success',
         data: {
           asesoria: result
         }
+      });
+    */
+      res.status(200).json({
+          asesoria: result
       });
     }
   

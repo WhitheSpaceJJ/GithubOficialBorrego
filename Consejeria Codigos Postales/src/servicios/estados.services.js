@@ -4,9 +4,14 @@ const CustomeError = require('../utilidades/customeError.js');
 
 exports.getEstados = asyncError(async (req, res, next) => { 
     const estados = await controlEstados.getEstados();
+   /*
     res.status(200).json({
         status: 'success',
         data: estados,
+    });
+   */
+    res.status(200).json({
+        estados: estados
     });
 });
 
@@ -15,10 +20,17 @@ exports.getEstado = asyncError(async (req, res, next) => {
     if (!estado) {
         return next(new CustomeError('No se encontró el estado', 404)); 
     }
-    res.status(200).json({ 
+   /*
+ res.status(200).json({ 
         status: 'success', 
         data: estado,
     });
+   */
+    res.status(200).json({ 
+        estado: estado
+    });
+
+
     });
     
 
