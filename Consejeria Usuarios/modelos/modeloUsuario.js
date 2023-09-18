@@ -1,4 +1,4 @@
 const {TipoUser,Zona,Usuario}=require("../utilidades/modelosBase");
-Usuario.hasOne(Zona,{foreignKey:"id_zona"});
-Usuario.hasOne(TipoUser,{foreignKey:"id_tipo_usuario"});
+Usuario.belongsTo(TipoUser,{foreignKey:"id_tipouser"});
+Usuario.hasOne(Zona,{foreignKey:"id_zona"})
 module.exports = {TipoUser,Zona,Usuario};

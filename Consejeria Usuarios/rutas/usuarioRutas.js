@@ -5,8 +5,10 @@ const router = express.Router();
 /** Operaciones Basica */
 
 router.route('/usuario')
-  .get(servicioUsuarios.obtenerUsuarioCorreo);
+  .get(servicioUsuarios.obtenerUsuarioCorreoPassword);
 
+  router.route('/recuperacion')
+  .get(servicioUsuarios.recuperarContraseña);
 /*
 
 router.route('/')

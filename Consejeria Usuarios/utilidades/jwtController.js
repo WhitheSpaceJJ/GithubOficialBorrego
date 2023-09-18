@@ -1,30 +1,30 @@
+const secreto = 'osos-carinosos';
 const jwt = require('jsonwebtoken');
-
-const generateToken = async (payload, secretKey) => {
+const generateToken = async (payload) => {
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, secretKey, (err, token) => {
+    jwt.sign(payload, secreto, (err, token) => {
       if (err) {
-        reject(err);
+        reject();
       } else {
         resolve(token);
       }
     });
   });
 };
-/*
-const verifyToken = async (token, secretKey) => {
+
+const verifyToken = async (token) => {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, secretKey, (err, decoded) => {
+    jwt.verify(token, secreto, (err, decoded) => {
       if (err) {
-        reject(err);
+        reject();
       } else {
         resolve(decoded);
       }
     });
   });
 };
-*/
+
 module.exports = {
-  generateToken
-  //,verifyToken
+  generateToken,
+  verifyToken
 };

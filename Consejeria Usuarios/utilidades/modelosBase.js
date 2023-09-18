@@ -26,8 +26,9 @@ const Zona = sequelize.define("zonas", {
 }
 });
 
-const TipoUser = sequelize.define("tipouser", {
-  id_tipo_usuario: {
+const TipoUser = sequelize.define("tipo_user", {
+  id_tipouser
+            : {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
@@ -41,13 +42,8 @@ const TipoUser = sequelize.define("tipouser", {
     }
   }
 }, {
-  freezeTableName: true, 
-  timestamps: false 
-  ,
-  name: {
-    singular: 'tipouser',
-    plural: 'tipousers'
-}
+  timestamps: false,
+  tableName:"tipo_user"
 });
 const Usuario = sequelize.define("usuarios", {
   id_usuario: {
@@ -93,7 +89,7 @@ const Usuario = sequelize.define("usuarios", {
       len: [0, 65]
     }
   },
-  id_tipo_usuario: {
+  id_tipouser: {
     type: DataTypes.INTEGER,
     allowNull: false
   }

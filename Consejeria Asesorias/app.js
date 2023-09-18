@@ -16,6 +16,8 @@ const personasRutas = require("./rutas/personaRuta");
 const asesoradoRutas = require("./rutas/asesorRutas");
 const detalleAsesoriaRutas = require("./rutas/detalleAsesoriaRuta");
 
+const grpc = require('@grpc/grpc-js');
+const {packageDefinition}=require("./cliente/cliente.js")
 
 
 const CustomeError = require("./utilidades/customeError");
@@ -27,11 +29,24 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//Aqui se utilizara el servicio GRPC para validar el token ingresado
+//Aqui se utilizara el servicio GRPC de usuarios ya que ahi estara el token.
 const jwtMiddleware = async (req, res, next) => {
+  const token = req.body.token;
+  let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
+  const validador = new token_client.TokenService
+    ('localhost:3004', grpc.credentials.createInsecure());
+    validador.validarToken({token:token
+  } 
+      , function(err, response) {
+        if(response.message==="Token inválido"){
+          const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401);
+          next(customeError);
+        }else if(response.message==="Token válido"){
+          next();
+        }
+     });
 
 };
-
 app.use('/asesorias',jwtMiddleware, asesoriasRutas);
 
 
