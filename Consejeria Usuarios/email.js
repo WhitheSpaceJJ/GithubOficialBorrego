@@ -4,8 +4,8 @@ async function enviarContraseñaPorCorreo() {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'consejeria.juridica.1966@gmail.com',
-        pass: 'ConsejeriaJuridica!)&&',
+        user: 'sesobregonmensajes@gmail.com',
+      pass: 'geitiamxwzmxnvnm',
      // pass: 'consejeria.juridica',
       },
     });
