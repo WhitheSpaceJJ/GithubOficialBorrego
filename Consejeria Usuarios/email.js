@@ -6,7 +6,6 @@ async function enviarContraseñaPorCorreo() {
       auth: {
         user: 'sesobregonmensajes@gmail.com',
       pass: 'geitiamxwzmxnvnm',
-     // pass: 'consejeria.juridica',
       },
     });
     const opcionesCorreo = {
