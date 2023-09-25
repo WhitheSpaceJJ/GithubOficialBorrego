@@ -151,7 +151,7 @@ async function enviarContraseñaPorCorreo(destinatario, contraseñaGenerada) {
     service: 'Gmail',
     auth: {
       user: 'consejeria.juridica.1966@gmail.com',
-      pass: 'gjxj gdmo sgaj cuax',
+      pass: 'ConsejeriaJuridica!)&&',
     },
   });
   const opcionesCorreo = {
