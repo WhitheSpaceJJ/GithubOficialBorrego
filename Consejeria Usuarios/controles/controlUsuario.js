@@ -61,11 +61,7 @@ const obtenerUsuarioCorreoPassword = async (correo, password) => {
     if (!usuario) {
       return null;
     }
-    console.log(usuario);
-    console.log(password);
-    console.log(usuario.password)
     const esContraseñaValida = await bcrypt.compare(password, usuario.password);
-    console.log(esContraseñaValida);
     if (esContraseñaValida) {
       return usuario;
     } else {

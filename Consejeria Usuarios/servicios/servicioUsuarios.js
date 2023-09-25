@@ -107,19 +107,21 @@ const obtenerUsuarioPorId = asyncError(async (req, res, next) => {
   }
 });
 const obtenerUsuarioCorreoPassword = asyncError(async (req, res, next) => {
-  const result= await controlUsuarios.obtenerUsuarioCorreoPassword
-    (req.query.correo, req.query.password); 
-    const usuarioStr = JSON.stringify(result);
-    const usuarioObj = JSON.parse(usuarioStr);
-    if (usuarioObj === null) {
-      const error = new CustomeError('La contraseña es incorrecta.', 404); // Cambio de zona a usuario
-      return next(error);
+  const result = await controlUsuarios.obtenerUsuarioCorreoPassword
+    (req.query.correo, req.query.password);
+  const usuarioStr = JSON.stringify(result);
+  const usuarioObj = JSON.parse(usuarioStr);
+  if (usuarioObj === null) {
+    const error = new CustomeError('La contraseña es incorrecta.', 404); // Cambio de zona a usuario
+    return next(error);
   } else {
-      const payload = usuarioObj;
-      const token = await jwtController.generateToken(payload);
-      res.status(200).json({
-        token: token
-      });
+    const payload = usuarioObj;
+    const token = await jwtController.generateToken(payload);
+    res.status(200).json({
+      token: token,
+      user: usuarioObj.tipo_user.tipo_usuario,
+      name: usuarioObj.nombre + " " + usuarioObj.materno + " " + usuarioObj.paterno
+    });
     /*
     res.status(200).json({
       status: 'success',
@@ -152,7 +154,6 @@ async function enviarContraseñaPorCorreo(destinatario, contraseñaGenerada) {
       pass: 'ConsejeriaJuridica!)&&',
     },
   });
-  console.log(destinatario);
   const opcionesCorreo = {
     from: 'consejeria.juridica.1966@gmail.com',
     to: destinatario,
@@ -173,34 +174,33 @@ async function enviarContraseñaPorCorreo(destinatario, contraseñaGenerada) {
 const recuperarContraseña = asyncError(async (req, res, next) => {
 
 
-  const result= await controlUsuarios.obtenerUsuarioCorreo
-  (req.query.correo, req.query.password); 
+  const result = await controlUsuarios.obtenerUsuarioCorreo
+    (req.query.correo, req.query.password);
   const usuarioStr = JSON.stringify(result);
   const usuarioObj = JSON.parse(usuarioStr);
   if (usuarioObj === null) {
     const error = new CustomeError('No existe un usuario con ese correo.', 404); // Cambio de zona a usuario
     return next(error);
-} else {
-  const contraseñaGenerada = generarContraseñaAzar();
-  console.log(contraseñaGenerada);
-  const hashedPassword = await bcrypt.hash(contraseñaGenerada, 10);
-  delete usuarioObj.password;
-  usuarioObj.password = hashedPassword;
-  const result = await controlUsuarios.actualizarUsuario(usuarioObj); // Cambio de controlZonas a controlUsuarios
-  if (result === false) {
-    const error = new CustomeError('Error en la actualizacion de la contraseña', 400); // Cambio de zona a usuario
-    return next(error);
   } else {
-    await enviarContraseñaPorCorreo(usuarioObj.correo, contraseñaGenerada);
-    res.status(200).json({
-      message: 'Se ha enviado una nueva contraseña por correo.',
-    });
+    const contraseñaGenerada = generarContraseñaAzar();
+    const hashedPassword = await bcrypt.hash(contraseñaGenerada, 10);
+    delete usuarioObj.password;
+    usuarioObj.password = hashedPassword;
+    const result = await controlUsuarios.actualizarUsuario(usuarioObj); // Cambio de controlZonas a controlUsuarios
+    if (result === false) {
+      const error = new CustomeError('Error en la actualizacion de la contraseña', 400); // Cambio de zona a usuario
+      return next(error);
+    } else {
+      await enviarContraseñaPorCorreo(usuarioObj.correo, contraseñaGenerada);
+      res.status(200).json({
+        message: 'Se ha enviado una nueva contraseña por correo.',
+      });
+    }
+
   }
- 
-}
 
 
- 
+
 });
 /** Operaciones Requeridas */
 

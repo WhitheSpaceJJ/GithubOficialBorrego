@@ -31,34 +31,47 @@ app.use(cors());
 
 //Aqui se utilizara el servicio GRPC de usuarios ya que ahi estara el token.
 const jwtMiddleware = async (req, res, next) => {
-  const token = req.body.token;
+  const tokenHeader = req.headers.authorization; // Obtener el valor del encabezado "Authorization"
+
+  // Verificar si el token existe en el encabezado
+  if (!tokenHeader) {
+    const customeError = new CustomeError('Token no proporcionado.', 401);
+    next(customeError);
+    return;
+  }
+
+  // Extraer el token del encabezado "Authorization"
+  const token = tokenHeader.replace('Bearer ', ''); // Quita "Bearer " del encabezado
+
   let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
-  const validador = new token_client.TokenService
-    ('localhost:3004', grpc.credentials.createInsecure());
-    validador.validarToken({token:token
-  } 
-      , function(err, response) {
-        if(response.message==="Token inválido"){
-          const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401);
-          next(customeError);
-        }else if(response.message==="Token válido"){
-          next();
-        }
-     });
-
+  const validador = new token_client.TokenService('localhost:3004', grpc.credentials.createInsecure());
+  
+  validador.validarToken({ token: token }, function (err, response) {
+    if (response.message === "Token inválido") {
+      const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401);
+      next(customeError);
+    } else if (response.message === "Token válido") {
+      next();
+    }
+  });
 };
+
+
+
 app.use('/asesorias',jwtMiddleware, asesoriasRutas);
-
-
+app.use('/tipos-de-juicio',jwtMiddleware, tipoDeJuiciosRutas);
+app.use('/asesores',jwtMiddleware,asesoresRutas);
+app.use('/generos',jwtMiddleware, generosRutas);
+app.use('/estados-civiles',jwtMiddleware, estadosCivilesRutas);
+app.use('/motivos',jwtMiddleware, motivosRutas);
 /*
+
 app.use('/zonas',jwtMiddleware, zonasRutas);
 app.use('/detalle-asesoria',jwtMiddleware, detalleAsesoriaRutas);
 app.use('/domicilios',jwtMiddleware, domiciliosRutas);
-app.use('/tipos-de-juicio',jwtMiddleware, tipoDeJuiciosRutas);
-app.use('/estados-civiles',jwtMiddleware, estadosCivilesRutas);
-app.use('/generos',jwtMiddleware, generosRutas);
+
 app.use('/motivos',jwtMiddleware, motivosRutas);
-app.use('/asesores',jwtMiddleware,asesoresRutas);
+
 app.use('/turnos',jwtMiddleware,turnoRutas);
 app.use('/personas',jwtMiddleware,personasRutas);
 app.use('/asesorados',jwtMiddleware,asesoradoRutas);

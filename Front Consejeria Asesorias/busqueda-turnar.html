@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sistema Asesoría</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
+    <style>
+        .text-custom {
+            color: white;
+            font-size: inherit;
+            text-decoration: none;
+        }
+
+        .contenedor {
+            margin: 0 auto;
+            /* Esto centrará el contenido horizontalmente */
+            padding: 20px;
+            /* Agrega un espacio alrededor del contenido */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Centra verticalmente el contenido */
+        }
+
+        .contenido {
+            margin: 0 auto;
+            /* Esto centrará el contenido horizontalmente */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            padding: 30px;
+            border: 3px solid brown;
+        }
+
+        input {
+            margin: 10px;
+        }
+
+
+        input[type=submit]:hover {
+            background-color: rgb(122, 24, 24);
+        }
+
+        .contenido label {
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            /* Establece un valor alto para el z-index */
+        }
+
+        .modal-contenido {
+            background-color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+        }
+
+
+        .modal-cerrar {
+            text-align: right;
+            margin-bottom: -20px;
+        }
+
+        .modal-cerrar .cerrar {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-cerrar .cerrar:hover {
+            color: #000;
+        }
+
+        .modal-contenido h3 {
+            font-size: 18px;
+            margin-top: 0;
+        }
+    </style>
+
+    <script>
+
+
+        let datosAnalizadosGlobal = null;
+
+        function redirigirSiNoHayDatos() {
+            const data = obtenerParametrosURL();
+            const datosAnalizados = analizarDatosJSON(data);
+            if (!datosAnalizados) {
+                window.location.href = 'login.html';
+            } else {
+                const usuario = document.getElementById("user-name");
+                const nombreCompleto = datosAnalizados.name;
+                const palabras = nombreCompleto.split(" ");
+                const primerNombre = palabras[0];
+
+                usuario.innerHTML = primerNombre;
+
+                datosAnalizadosGlobal = datosAnalizados;
+
+                if (history.replaceState) {
+                    const nuevaURL = window.location.pathname; // Obtener la ruta de la página actual
+                    history.replaceState({}, document.title, nuevaURL);
+                }
+            }
+        }
+        function obtenerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = urlParams.get('data');
+            return data;
+        }
+
+        function analizarDatosJSON(data) {
+            if (data) {
+                try {
+                    const decodedData = decodeURIComponent(data);
+                    const jsonData = JSON.parse(decodedData);
+                    return jsonData;
+                } catch (error) {
+                    console.error('Error al analizar los datos JSON:', error);
+                }
+            }
+            return null;
+        }
+        window.addEventListener('load', redirigirSiNoHayDatos);
+
+        function buscarAsesoria() {
+            // Obtener los valores de los campos
+            const nombre = document.getElementById("nombreAsesoradoBTI").value;
+            const apellidoPaterno = document.getElementById("paternoAsesoradoBTI").value;
+            const apellidoMaterno = document.getElementById("maternoAsesoradoBTI").value;
+
+
+            // Crear la URL de consulta con los valores
+            const url = `http://localhost:3000/asesorias/buscar?nombre=${encodeURIComponent(nombre)}&apellido_paterno=${encodeURIComponent(apellidoPaterno)}&apellido_materno=${encodeURIComponent(apellidoMaterno)}`;
+
+            // Crear un objeto de opciones para la solicitud fetch
+            const opciones = {
+                method: 'GET', // Método GET
+                headers: {
+                    'Authorization': `Bearer ${datosAnalizadosGlobal.token}` // Agregar el token en el encabezado
+                }
+            };
+
+            // Realizar la solicitud HTTP usando fetch
+
+            fetch(url, opciones)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error en la solicitud: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const asesoria = JSON.parse(JSON.stringify(data));
+                    if (asesoria) {
+                        const idColonia = data.asesoria.persona.domicilio.id_colonia;
+                        fetch(`http://localhost:3001/colonias/${idColonia}`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${datosAnalizadosGlobal.token}`
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Error en la solicitud: ${response.status}`);
+                                }
+                                return response.json();
+                            })
+                            .then(dataColonia => {
+                          
+                                const dataPermisos = JSON.stringify(datosAnalizadosGlobal);
+                                const encodedDataPermisos = encodeURIComponent(dataPermisos);
+                                const dataColoniaB = JSON.stringify(dataColonia);
+                                const encodedDataColoniaB = encodeURIComponent(dataColoniaB);
+                                const dataAsesoria = JSON.stringify(asesoria);
+                                const encodedDataAsesoria = encodeURIComponent(dataAsesoria);
+                                window.location.href = `turnar.html?asesoria=${encodedDataAsesoria}&dataColonia=${encodedDataColoniaB}&data=${encodedDataPermisos}`;
+                            }).catch(error => {
+                                console.error("Error:", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    const miAlerta = document.getElementById("miAlerta");
+                    miAlerta.style.display = "block";
+
+                });
+
+
+
+        }
+
+        function mostrarElemento(id) {
+            let elemento = document.getElementById(id);
+            elemento.style.display = 'block';
+        }
+
+        function ocultarElemento(id) {
+            let elemento = document.getElementById(id);
+            elemento.style.display = 'none';
+        }
+
+
+        function obtenerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = urlParams.get('data');
+            return data;
+        }
+
+        function analizarDatosJSON(data) {
+            if (data) {
+                try {
+                    const decodedData = decodeURIComponent(data);
+                    const jsonData = JSON.parse(decodedData);
+                    return jsonData;
+                } catch (error) {
+                    console.error('Error al analizar los datos JSON:', error);
+                }
+            }
+            return null;
+        }
+
+        function asesoria() {
+            const dataString = JSON.stringify(datosAnalizadosGlobal);
+            const encodedData = encodeURIComponent(dataString);
+            window.location.href = `asesoria.html?data=${encodedData}`;
+        }
+        function menu() {
+            const dataString = JSON.stringify(datosAnalizadosGlobal);
+            const encodedData = encodeURIComponent(dataString);
+            window.location.href = `menu.html?data=${encodedData}`;
+        }
+
+
+        function cerrar() {
+            const miAlerta = document.getElementById("miAlerta");
+            miAlerta.style.display = "none";
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#99260E;">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/DPS.png" width="75" height="75" alt="" class="mr-5">
+            </a>
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link  h5" onclick="menu()" id="navbardrop" data-toggle="dropdown"
+                            style="color:white;">INICIO</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle h5" id="navbardrop" data-toggle="dropdown"
+                            style="color:white; ">
+                            SERVICIO
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="asesoria()">
+                                <p style="font-size: 20px;">Registrar asesoria</p>
+                            </a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link  h5" id="navbardrop" data-toggle="dropdown" style="color:white;">
+                            CONSULTA
+                        </a>
+
+                    </li>
+                </ul>
+                <div class="d-flex align-self">
+                    <div class="text-white  h5 d-flex flex-column align-items-center">
+                        <label>Usuario</label>
+                        <label id="user-name"></label>
+                    </div>
+                    <div>
+                        <img src="img/perfil.png" width="60" height="60" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-dark" style="background-color:#704414;">
+        <div id="titulo" class="d-flex justify-content-start  px-5">
+            <label style="color:white;">REGISTRO DE TURNO</label>
+        </div>
+    </nav>
+    <br>
+
+
+    <main class="contenedor">
+        <div class="domicilio rounded d-flex flex-column align-items-center w-50 contenido"
+            style="background-color: #f2f2f2;">
+            <div class="mb-2 mt-2 h5 w-100" style="text-align: center;">
+                <label for="nombreAsesorado">Nombre del asesorado</label>
+                <input type="text" placeholder="Ingrese nombre Asesorado"
+                    class="border border-danger btn btn-light border col-12" id="nombreAsesoradoBTI"
+                    name="nombreAsesoradoBTN">
+
+            </div>
+            <div class="mb-2 mt-2  h5 w-100" style="text-align: center;">
+                <label for="apellidoPaterno">Apellido paterno</label>
+                <input type="text" placeholder="Ingrese apellido paterno del asesorado"
+                    class="border border-danger btn btn-light border col-12" id="paternoAsesoradoBTI"
+                    name="paternoAsesoradoBTN">
+            </div>
+
+            <div class="mb-2 mt-2  h5  w-100" style="text-align: center;">
+                <label for="apellidoMaterno">Apellido materno</label>
+                <input type="text" placeholder="Ingrese apellido materno del asesorado"
+                    class="border border-danger btn btn-light border col-12" id="maternoAsesoradoBTI"
+                    name="maternoAsesoradoBTN">
+            </div>
+
+            <button onclick="buscarAsesoria()" class="btn btn-danger float-right  w-50 m-3 p-3"
+                style="margin-bottom: 20px;" id="buscarAsesoriaBTI" name="buscarAsesoriaBTN">Buscar
+                Asesoria</button>
+
+        </div>
+
+    </main>
+    <div id="miAlerta" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-cerrar">
+                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
+            </div>
+            <h3>Mensaje de Avertencia</h3>
+            <p id="miMensaje">No existen coincidencia.</p>
+        </div>
+    </div>
+</body>
+
+</html>

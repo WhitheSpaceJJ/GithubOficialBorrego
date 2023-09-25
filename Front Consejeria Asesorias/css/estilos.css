@@ -63,9 +63,9 @@ a {
   margin-right: 15%;
 } 
 
-#tab1>a { --tabs-position: 0; }
+#tab1>a { --tabs-position: 2; }
 #tab2>a { --tabs-position: 1; }
-#tab3>a { --tabs-position: 2; }
+#tab3>a { --tabs-position: 0; }
 #tab4>a { --tabs-position: 3; }
 #tab5>a { --tabs-position: 4; }
 #tab6>a { --tabs-position: 5; }
@@ -81,7 +81,6 @@ a {
   left: calc(var(--tabs-width) * var(--tabs-position));  /*posición de cada pestaña*/
 }
 
- más aspecto 
 .tabs { 
   padding: 10px;
   color: var(--tabs-text-color);
@@ -151,3 +150,4 @@ a {
 .navTitulo{
     display: inline-block;
 }
+
