@@ -178,17 +178,18 @@
                     <div class="tipoJuicioAplica h5">
                         <label>Responsable de turno</label><label style="color:red;">*</label>
                         <br>
-                        <select name="responsableTurnoTN" class="btn btn-light border border-danger col-md-5"
+                        <label name="responsableTurnoTN" class="btn btn-light border border-danger col-md-5"
                             id="responsableTurnoTI">
-                        </select>
+                        </label>
                     </div>
                     <div class="horaAtencion h5">
                         <label>Hora Atencion</label><label style="color:red;">*</label>
+                                                                                          
                         <br>
-                        <input type="number" class="border border-danger btn btn-light border col-1" id="horaTI"
+                        <input type="text" class="border border-danger btn btn-light border col-1" id="horaTI"
                             name="horaTN">
                         <label style="color:black;"> / </label>
-                        <input type="number" class="border border-danger btn btn-light border col-1" id="minutoTI"
+                        <input type="text" class="border border-danger btn btn-light border col-1" id="minutoTI"
                             name="minutoTN">
                     </div>
                     <div class="h5">
@@ -208,7 +209,25 @@
         </div>
 
     </div>
-
+    
+    <div id="miAlerta3" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-cerrar">
+                <span class="cerrar" id="cerrarAlerta3" onclick="cerrar3()">&times;</span>
+            </div>
+            <h3 id="tituloModal3"></h3>
+            <p id="mensajeModal3"></p>
+        </div>
+    </div>
+    <div id="miAlerta" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-cerrar">
+                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
+            </div>
+            <h3 id="tituloModal"></h3>
+            <p id="mensajeModal"></p>
+        </div>
+    </div>
 
 </body>
 

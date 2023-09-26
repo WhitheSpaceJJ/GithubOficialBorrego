@@ -356,6 +356,11 @@ const Asesoria = sequelize.define("asesorias", {
       len: [0, 75]
     }
   }
+  ,
+  id_tipo_juicio: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
 }, {
   freezeTableName: true, 
   timestamps: false,

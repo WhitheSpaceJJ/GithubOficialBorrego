@@ -10,9 +10,101 @@ function ocultarElemento(id) {
 function motivo() {
 
 }
+function cerrar() {
+    const miAlerta = document.getElementById("miAlerta");
+    miAlerta.style.display = "none";
+}
+function cerrar3() {
+    const miAlerta = document.getElementById("miAlerta3");
+    miAlerta.style.display = "none";
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `menu.html?data=${encodedData}`;
+}
 
 function registrarTurno() {
-    alert(JSON.stringify(asesoriaGlobal));
+    const hora = document.getElementById("horaTI");
+    const minuto = document.getElementById("minutoTI");
+    if (hora.value === "" || minuto.value === "") {
+        const campos2 = [];
+        if (hora.value === "") {
+            campos2.push("Hora");
+        }
+        if (minuto.value === "") {
+            campos2.push("Minutos");
+        }
+        const miAlerta = document.getElementById("miAlerta");
+        miAlerta.style.display = "block";
+        const mensajeModal = document.getElementById("mensajeModal");
+        const tituloModal = document.getElementById("tituloModal")
+        tituloModal.innerHTML = "Campos Faltantes:";
+        const campos = campos2;
+
+        let mensaje = "Faltan los siguientes campos:<ul>";
+
+        for (let i = 0; i < campos.length; i++) {
+            mensaje += `<li>${campos[i]}</li>`;
+        }
+
+        mensaje += "</ul>";
+
+        mensajeModal.innerHTML = mensaje;
+    } else {
+        const asesoria = asesoriaGlobal;
+        delete asesoria.turno;
+        const turno = {};
+
+        const fechaActual = new Date();
+        const año = fechaActual.getFullYear();
+        const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+        const dia = String(fechaActual.getDate()).padStart(2, '0');
+        const fecha_registro = `${año}-${mes}-${dia}`;
+        turno.fecha_turno = fecha_registro
+        turno.hora_turno = hora.value + ":" + minuto.value;
+        asesoria.turno = turno;
+        alert(JSON.stringify(asesoria));
+
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Authorization': datosAnalizadosGlobal.token,
+                'Content-Type': 'application/json' // Establecer el tipo de contenido a JSON
+            },
+            body: JSON.stringify(asesoria) // Convertir el objeto asesoria a JSON
+        };
+
+        // Realizar la solicitud AJAX utilizando fetch
+        fetch('http://localhost:3000/asesorias/' + asesoria.datos_asesoria.id_asesoria, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const miAlerta = document.getElementById("miAlerta3");
+                miAlerta.style.display = "block";
+                const mensajeModal = document.getElementById("mensajeModal3");
+                const tituloModal = document.getElementById("tituloModal3")
+                tituloModal.innerHTML = "Turnado de Asesoria:";
+                let mensaje = "El registro del turno de la asesoria se ha realizado correctamente.";
+                mensajeModal.innerHTML = mensaje;
+
+            })
+            .catch(error => {
+                const miAlerta = document.getElementById("miAlerta");
+                miAlerta.style.display = "block";
+                const mensajeModal = document.getElementById("mensajeModal");
+                const tituloModal = document.getElementById("tituloModal")
+                tituloModal.innerHTML = "Mensaje Error:";
+                let mensaje = "Error durante el registro.";
+                mensajeModal.innerHTML = mensaje;
+                console.error('Error al obtener con el turnado', error);
+            });
+
+    }
+
+
 }
 // Función para obtener los parámetros de la URL
 function obtenerParametrosURL() {
@@ -68,13 +160,15 @@ function redirigirSiNoHayDatos() {
         const primerNombre = palabras[0];
 
         usuario.innerHTML = primerNombre;
-
+        const responsableTurno = document.getElementById("responsableTurnoTI");
+        responsableTurno.innerHTML = nombreCompleto;
         // Almacenar los datos en la variable global
         datosAnalizadosGlobal = datosAnalizados;
         asesoriaGlobal = asesoria.asesoria;
         datosColoniaGlobal = datosColonia.colonia;
         rellenarAsesoria(asesoriaGlobal);
         rellenarDataColonia(datosColoniaGlobal);
+        asesores();
 
         // Eliminar los parámetros de la URL
         if (history.replaceState) {
@@ -82,6 +176,26 @@ function redirigirSiNoHayDatos() {
             history.replaceState({}, document.title, nuevaURL);
         }
     }
+}
+function asesores() {
+    fetch('http://localhost:3000/asesores', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${datosAnalizadosGlobal.token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            const selectAsesor = document.getElementById('nombreDeAsesorTI');
+            data.asesores.forEach(asesor => {
+                const option = document.createElement('option');
+                option.value = asesor.id_asesor;
+                option.textContent = asesor.nombre_asesor;
+                selectAsesor.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error al obtener los asesores:', error));
+
 }
 function rellenarAsesoria(asesoria) {
     // Crea variables para cada campo y asigna "----------" si el campo está ausente o es null
@@ -95,9 +209,28 @@ function rellenarAsesoria(asesoria) {
     const numInterior = asesoria.persona.domicilio.numero_interior_domicilio || "----------";
     // Accede al elemento HTML del resumen de hechos y asigna el valor o "----------"
     const resumenHechos = asesoria.datos_asesoria.resumen_asesoria || "----------";
-    document.getElementById("resumenHechosTI").innerHTML = resumenHechos;
+    const nombreCompleto = asesoria.datos_asesoria.usuario;
+    const asesorID = asesoria.asesor.id_asesor;
+    const turnoID = asesoria.turno || "00";
+    if (turnoID !== "00") {
+        const [horas, minutos] = turnoID.hora_turno.split(":");
 
-    // Accede a los elementos HTML correspondientes y asigna el valor de las variables
+        // Obtener los elementos HTML por sus IDs
+        const horaInput = document.getElementById("horaTI");
+        const minutoInput = document.getElementById("minutoTI");
+
+        // Asignar los valores a los elementos HTML
+        horaInput.value = horas;
+        minutoInput.value = minutos;
+    }
+    var checkbox = document.getElementById("turnadoTI");
+
+    // Establece el estado 'checked' del checkbox a true (marcarlo)
+    checkbox.checked = true;
+    document.getElementById("nombreDeAsesorTI").selectedIndex = asesorID;
+
+    document.getElementById("responsableTurnoTI").innerHTML = nombreCompleto;
+    document.getElementById("resumenHechosTI").innerHTML = resumenHechos;
     document.getElementById("nombreTI").innerHTML = nombre;
     document.getElementById("apellidoPaternoTI").innerHTML = apellidoPaterno;
     document.getElementById("apellidoMaternoTI").innerHTML = apellidoMaterno;

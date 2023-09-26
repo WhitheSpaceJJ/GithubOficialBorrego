@@ -115,7 +115,9 @@ const obtenerAsesoriaNombre = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener la persona', 404);
     return next(error);
   } else {
-    const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorado(result2);
+    const  personaJSON=JSON.stringify(result2);
+    const persona=JSON.parse(personaJSON);
+    const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorado(result2.id_persona);
     if (result === null || result === undefined) {
       const error = new CustomeError('Error al obtener la asesoría', 404);
       return next(error);

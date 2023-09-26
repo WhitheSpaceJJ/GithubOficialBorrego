@@ -79,20 +79,21 @@
                 <input type="text" placeholder="Ingrese nombre Asesorado"
                     class="border border-danger btn btn-light border col-12" id="nombreAsesoradoBTI"
                     name="nombreAsesoradoBTN">
-
+              
             </div>
-            <div class="mb-2 mt-2  h5 w-100" style="text-align: center;">
-                <label for="apellidoPaterno">Apellido paterno</label>
-                <input type="text" placeholder="Ingrese apellido paterno del asesorado"
-                    class="border border-danger btn btn-light border col-12" id="paternoAsesoradoBTI"
-                    name="paternoAsesoradoBTN">
-            </div>
-
+            
             <div class="mb-2 mt-2  h5  w-100" style="text-align: center;">
                 <label for="apellidoMaterno">Apellido materno</label>
                 <input type="text" placeholder="Ingrese apellido materno del asesorado"
                     class="border border-danger btn btn-light border col-12" id="maternoAsesoradoBTI"
                     name="maternoAsesoradoBTN">
+            </div>
+
+            <div class="mb-2 mt-2  h5 w-100" style="text-align: center;">
+                <label for="apellidoPaterno">Apellido paterno</label>
+                <input type="text" placeholder="Ingrese apellido paterno del asesorado"
+                    class="border border-danger btn btn-light border col-12" id="paternoAsesoradoBTI"
+                    name="paternoAsesoradoBTN">
             </div>
 
             <button onclick="buscarAsesoria()" class="btn btn-danger float-right  w-50 m-3 p-3"
@@ -107,8 +108,8 @@
             <div class="modal-cerrar">
                 <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
             </div>
-            <h3>Mensaje de Avertencia</h3>
-            <p id="miMensaje">No existen coincidencia.</p>
+            <h3 id="tituloModal"></h3>
+            <p id="mensajeModal"></p>
         </div>
     </div>
 </body>

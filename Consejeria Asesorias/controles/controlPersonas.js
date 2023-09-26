@@ -70,17 +70,14 @@ const obtenerPersonaNombre = async (nombre, apellido_paterno, apellido_materno) 
   try {
     return await modeloPersona.Persona.findOne({
       where: {
-        nombre: {
-          [Op.like]: `%${nombre}%`
-        }
+        nombre:  nombre
         ,
-        apellido_paterno: {
-          [Op.like]: `%${apellido_paterno}%`
-        }
+        apellido_paterno: 
+          apellido_paterno
+        
         ,
-        apellido_materno: {
-          [Op.like]: `%${apellido_materno}%`
-        }
+        apellido_materno: 
+          apellido_materno
       }
       ,
       raw: true,

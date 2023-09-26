@@ -64,7 +64,7 @@ CREATE TABLE `asesores` (
   PRIMARY KEY (`id_asesor`),
   KEY `fk_zona_asesor_idx` (`id_zona`),
   CONSTRAINT `fk_zona_asesor` FOREIGN KEY (`id_zona`) REFERENCES `zonas` (`id_zona`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `asesores` (
 
 LOCK TABLES `asesores` WRITE;
 /*!40000 ALTER TABLE `asesores` DISABLE KEYS */;
-INSERT INTO `asesores` VALUES (1,'JOSE JESUS',1);
+INSERT INTO `asesores` VALUES (1,'Aguilar Delgado Juan Manuel',1),(2,'Esparza Llamas Brenda',1),(3,'Galaz Valenzuela Aracely',1),(4,'García Barceló José Francisco',1),(5,'Huerta Puebla Manuel',1),(6,'Hugez Atondo Alejandra',1),(7,'Leyva Samperio Andrea',1),(8,'Nichols Rodríguez Leslye',1),(9,'Ochoa Vazquez Carlos Rosalio',1),(10,'Perera Garcia Claudia Elena',1),(11,'Reyes Felix Martha Alicia',1),(12,'Rivera Bustamante Melisa Carolina',1),(13,'Romo Vega Ricardo',1),(14,'Yanajara Roman José Guillermo',1),(15,'Gaxiola Santa Cruz Teresita',1),(16,'Vega Torres Carmen Lucía',1),(17,'Leyva Campoy Medardo',1),(18,'Carvajal Perez Luis Ivan',1);
 /*!40000 ALTER TABLE `asesores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,12 +94,15 @@ CREATE TABLE `asesorias` (
   `id_turno` int DEFAULT NULL,
   `id_asesorado` int NOT NULL,
   `usuario` varchar(195) NOT NULL,
+  `id_tipo_juicio` int NOT NULL,
   PRIMARY KEY (`id_asesoria`),
   KEY `fk_asesor_asesoria_idx` (`id_asesor`),
   KEY `fk_asesorado_asesoria_idx` (`id_asesorado`),
   KEY `fk_turno_asesoria_idx` (`id_turno`),
+  KEY `fk_tipo_juicio_idx` (`id_tipo_juicio`),
   CONSTRAINT `fk_asesor_asesoria` FOREIGN KEY (`id_asesor`) REFERENCES `asesores` (`id_asesor`),
   CONSTRAINT `fk_asesorado_asesoria` FOREIGN KEY (`id_asesorado`) REFERENCES `asesorados` (`id_asesorado`),
+  CONSTRAINT `fk_id_tipo_juicio_asesoria` FOREIGN KEY (`id_tipo_juicio`) REFERENCES `tipos_juicios` (`id_tipo_juicio`),
   CONSTRAINT `fk_turno_asesoria` FOREIGN KEY (`id_turno`) REFERENCES `turnos` (`id_turno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -110,7 +113,7 @@ CREATE TABLE `asesorias` (
 
 LOCK TABLES `asesorias` WRITE;
 /*!40000 ALTER TABLE `asesorias` DISABLE KEYS */;
-INSERT INTO `asesorias` VALUES (1,'PRueba Actualiza','Conclusion Orueba Actualiza',0,'2002-10-10',1,NULL,1,'Juan'),(2,'PRueba 2','Conclusion Orueba',0,'2002-10-10',1,NULL,3,'Juan'),(3,'PRueba 3','Conclusion Orueba',0,'2002-10-10',1,NULL,4,'Juan'),(4,'PRueba 5','Conclusion Orueba',0,'2002-10-10',1,NULL,5,'Juan');
+INSERT INTO `asesorias` VALUES (1,'PRueba Actualiza','Conclusion Orueba Actualiza',0,'2002-10-10',1,NULL,1,'Juan',1),(2,'PRueba 2','Conclusion Orueba',0,'2002-10-10',1,NULL,3,'Juan',1),(3,'PRueba 3','Conclusion Orueba',0,'2002-10-10',1,NULL,4,'Juan',1),(4,'PRueba 5','Conclusion Orueba',0,'2002-10-10',1,NULL,5,'Juan',1);
 /*!40000 ALTER TABLE `asesorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +217,7 @@ CREATE TABLE `estados_civiles` (
 
 LOCK TABLES `estados_civiles` WRITE;
 /*!40000 ALTER TABLE `estados_civiles` DISABLE KEYS */;
-INSERT INTO `estados_civiles` VALUES (1,'Soltero(a)'),(2,'Casado(a)'),(3,'Unión Libre'),(4,'Separado(a)'),(5,'Divorciado(a)'),(6,'Viudo(a)'),(8,'Prueba 5');
+INSERT INTO `estados_civiles` VALUES (1,'Soltero(a)'),(2,'Casado(a)'),(3,'Unión Libre'),(4,'Separado(a)'),(5,'Divorciado(a)'),(6,'Viudo(a)');
 /*!40000 ALTER TABLE `estados_civiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,4 +384,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-17 22:28:22
+-- Dump completed on 2023-09-26  1:01:32

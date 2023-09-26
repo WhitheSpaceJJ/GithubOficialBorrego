@@ -415,7 +415,13 @@ function validarRegistro() {
 function cerrar() {
     const miAlerta = document.getElementById("miAlerta");
     miAlerta.style.display = "none";
-
+}
+function cerrar3() {
+    const miAlerta = document.getElementById("miAlerta");
+    miAlerta.style.display = "none";
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `menu.html?data=${encodedData}`;
 }
 
 function validacionAsesoria() {
@@ -424,6 +430,7 @@ function validacionAsesoria() {
         const miAlerta = document.getElementById("miAlerta");
         miAlerta.style.display = "block";
         const mensajeModal = document.getElementById("mensajeModal");
+        const tituloModal = document.getElementById("tituloModal")
         tituloModal.innerHTML = "Campos Faltantes Asesoria:";
         const campos = obtenerCamposFaltantesAsesoria();
 
@@ -451,6 +458,7 @@ function valiarAsesorado() {
         const miAlerta = document.getElementById("miAlerta");
         miAlerta.style.display = "block";
         const mensajeModal = document.getElementById("mensajeModal");
+        const tituloModal = document.getElementById("tituloModal")
         tituloModal.innerHTML = "Campos Faltantes Asesorado:";
         const campos = obtenerCamposFaltantesAsesorado();
 
@@ -487,100 +495,150 @@ function desaparecerRegistro() {
 
 
 function registarAsesoria() {
+    const asesoria = {};
+    //Persona
+    const persona = {};
     const nombreAsesorado = document.getElementById("nombreAsesoradoIT2").value;
+    persona.nombre = nombreAsesorado;
     const apellidoPaternoAsesorado = document.getElementById("apellidoPaternoAsesoradoIT2").value;
+    persona.apellido_materno = apellidoPaternoAsesorado;
     const apellidoMaternoAsesorado = document.getElementById("apellidoMaternoAsesoradoIT2").value;
+    persona.apellido_paterno = apellidoMaternoAsesorado;
     const edad = document.getElementById("edadIT2").value;
-    const sexo = document.getElementById("sexoIT2").value;
+    persona.edad = parseInt(edad, 10);
     const telefonoAsesorado = document.getElementById("telefonoAsesoradoIT2").value;
-    const trabajaSi = document.getElementById("trabajaSiIT2").checked;
-    const trabajaNo = document.getElementById("trabajaNoIT2").checked;
-    const ingresoMenor = document.getElementById("menorOptionIT2").value;
-    const ingresoMayor = document.getElementById("mayorOptionIT2").value;
-    const motivoNoTrabajo = document.getElementById("motivoIT2").value;
-    const estadoCivil = document.getElementById("estadoCivilIT2").value;
-    const numHijos = document.getElementById("numHijosIT2").value;
+    persona.telefono = telefonoAsesorado;
+    const domicilio = {};
     const calle = document.getElementById("calleIT2").value;
+    domicilio.calle_domicilio = calle;
     const numExterior = document.getElementById("numExteriorIT2").value;
+    domicilio.numero_exterior_domicilio = numExterior;
     const numInterior = document.getElementById("numInteriorIT2").value;
-    const codigoPostal = document.getElementById("codigoPostalIT2").value;
-    const txtEstado = document.getElementById("txtEstadoIT2").value;
-    const txtMunicipio = document.getElementById("txtMunicipioIT2").value;
-    const txtCiudad = document.getElementById("txtCiudadIT2").value;
+    domicilio.numero_interior_domicilio = numInterior;
     const cbColonia = document.getElementById("cbColoniaIT2").value;
-    const nombreAsesor = document.getElementById("nombreAsesorIT1").value;
-    const tipoJuicioAplica = document.getElementById("tipoJuicioIT1").value;
+    domicilio.id_colonia = parseInt(cbColonia, 10);
+    persona.domicilio = domicilio;
+    const genero = {};
+    const sexo = document.getElementById("sexoIT2").value;
+    genero.id_genero = parseInt(sexo, 10);
+    persona.genero = genero;
+    asesoria.persona = persona;
+
+    const datos_asesoria = {};
+    //datos-asesoria
     const resumenHecho = document.getElementById("resumenHechoIT1").value;
+    datos_asesoria.resumen_asesoria = resumenHecho;
     const conclusion = document.getElementById("conclusionIT1").value;
+    datos_asesoria.conclusion_asesoria = conclusion;
+    const confirmacionCumple = document.getElementById("confirmacionCumpleIT1").checked;
+    const negacionCumple = document.getElementById("negacionCumpleIT1").checked;
+    const estatus_requisitos = confirmacionCumple ? true : negacionCumple ? false : "nada";
+    datos_asesoria.estatus_requisitos = estatus_requisitos;
+    const fechaActual = new Date();
+    const año = fechaActual.getFullYear();
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+    const dia = String(fechaActual.getDate()).padStart(2, '0');
+    const fecha_registro = `${año}-${mes}-${dia}`;
+    datos_asesoria.fecha_registro = fecha_registro;
+    const usuario = datosAnalizadosGlobal.name;
+    datos_asesoria.usuario = usuario;
+    asesoria.datos_asesoria = datos_asesoria;
+
+    const asesor = {}
+    //Asesor
+    const nombreAsesor = document.getElementById("nombreAsesorIT1").value;
+    asesor.id_asesor = parseInt(nombreAsesor, 10);
+    asesoria.asesor = asesor;
+
+    //Turno
+    asesoria.turno = null;
+
+
+    //Recibidos
     const recibio1 = document.getElementById("recibio1IT1").checked;
     const recibio2 = document.getElementById("recibio2IT1").checked;
     const recibio3 = document.getElementById("recibio3IT1").checked;
-    const confirmacionCumple = document.getElementById("confirmacionCumpleIT1").checked;
-    const negacionCumple = document.getElementById("negacionCumpleIT1").checked;
+    const recibidos = [];
+    if (recibio1) {
+        recibidos.push({ id_catalogo: 1 }); // Agrega el id_catalogo 1
+    }
 
-    // Construir el objeto JSON basado en las constantes
-    const data = {
-        "asesorado": {
-            "estatus_trabajo": trabajaSi,
-            "numero_hijos": numHijos.value,
-            "ingreso_mensual": ingresoMayor,
-            "motivo": {
-                "id_motivo": motivoNoTrabajo.value,
-                "descripcion_motivo":  motivoNoTrabajo.options[motivoNoTrabajo.selectedIndex].text
-            },
-            "estado_civil": {
-                "id_estado_civil": 1,
-                "estado_civil": estadoCivil
-            }
+    if (recibio2) {
+        recibidos.push({ id_catalogo: 2 }); // Agrega el id_catalogo 2
+    }
+
+    if (recibio3) {
+        recibidos.push({ id_catalogo: 3 }); // Agrega el id_catalogo 3
+    }
+    asesoria.recibidos = recibidos;
+
+    const tipos_juicio = {};
+    //tipo-juicio
+    const tipoJuicioAplica = document.getElementById("tipoJuicioIT1").value;
+    tipos_juicio.id_tipo_juicio = parseInt(tipoJuicioAplica, 10);
+    asesoria.tipos_juicio = tipos_juicio;
+
+    const asesorado = {};
+    //asesorado
+    const motivoNoTrabajo = document.getElementById("motivoIT2").value;
+    const trabajaSi = document.getElementById("trabajaSiIT2").checked;
+    const trabajaNo = document.getElementById("trabajaNoIT2").checked;
+    const opcionSeleccionada = trabajaSi ? true : trabajaNo ? false : "nada";
+    asesorado.estatus_trabajo = opcionSeleccionada;
+    const ingresoMenor = document.getElementById("menorOptionIT2").value;
+    const ingresoMayor = document.getElementById("mayorOptionIT2").value;
+    const ingresoSeleccionado = ingresoMenor ? 9999 : ingresoMayor ? 10001 : "nada";
+    if (trabajaNo) {
+        const motivo = {};
+        motivo.id_motivo = parseInt(motivoNoTrabajo, 10);
+        asesorado.motivo = motivo;
+    }
+    if (trabajaSi) {
+        asesorado.ingreso_mensual = parseFloat(ingresoSeleccionado);
+    }
+    const numHijos = document.getElementById("numHijosIT2").value;
+    asesorado.numero_hijos = parseInt(numHijos, 10);
+    const estado_civil = {};
+    const estadoCivil = document.getElementById("estadoCivilIT2").value;
+    estado_civil.id_estado_civil = parseInt(estadoCivil, 10);
+    asesorado.estado_civil = estado_civil;
+    asesoria.asesorado = asesorado;
+    // Crear un objeto de opciones de la solicitud
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': datosAnalizadosGlobal.token,
+            'Content-Type': 'application/json' // Establecer el tipo de contenido a JSON
         },
-        "asesor": {
-            "id_asesor": 1,
-            "nombre_asesor": nombreAsesor
-        },
-        "turno": null,
-        "recibidos": [
-            {
-                "id_catalogo": 1,
-                "descripcion_catalogo": recibio1 ? "Requisitos" : ""
-            },
-            {
-                "id_catalogo": 2,
-                "descripcion_catalogo": recibio2 ? "Carta compromiso" : ""
-            },
-            {
-                "id_catalogo": 3,
-                "descripcion_catalogo": recibio3 ? "Citatorio" : ""
-            }
-        ],
-        "datos_asesoria": {
-            "resumen_asesoria": resumenHecho.value,
-            "conclusion_asesoria": conclusion.vaue,
-            "estatus_requisitos": false,
-            "fecha_registro": "2002-10-10",
-            "usuario": "Juan"
-        },
-        "persona": {
-            "nombre": nombreAsesorado.value,
-            "apellido_materno": apellidoMaternoAsesorado.value,
-            "apellido_paterno": apellidoPaternoAsesorado.value,
-            "edad": edad.value,
-            "telefono": telefonoAsesorado.value,
-            "domicilio": {
-                "calle_domicilio": calle.value,
-                "numero_exterior_domicilio": numExterior.value,
-                "numero_interior_domicilio": numInterior,
-                "id_colonia": cbColonia.value
-            },
-            "genero": {
-                "id_genero":sexo.value ,
-                "descripcion_genero": sexo.options[sexo.selectedIndex].text
-            }
-        }
+        body: JSON.stringify(asesoria) // Convertir el objeto asesoria a JSON
     };
 
-    // Convertir el objeto JSON a una cadena y mostrarlo en un alert
-    const jsonData = JSON.stringify(data, null, 2);
-    alert(jsonData);
+    // Realizar la solicitud AJAX utilizando fetch
+    fetch('http://localhost:3000/asesorias', options)
+        .then(response => response.json())
+        .then(data => {
+            const miAlerta = document.getElementById("miAlerta3");
+            miAlerta.style.display = "block";
+            const mensajeModal = document.getElementById("mensajeModal3");
+            const tituloModal = document.getElementById("tituloModal3")
+            tituloModal.innerHTML = "Registro de Asesoria:";
+            let mensaje = "El registro de la asesoria se ha realizado correctamente.";
+            mensajeModal.innerHTML = mensaje;
+
+        })
+        .catch(error => {
+            const miAlerta = document.getElementById("miAlerta");
+            miAlerta.style.display = "block";
+            const mensajeModal = document.getElementById("mensajeModal");
+            const tituloModal = document.getElementById("tituloModal")
+            tituloModal.innerHTML = "Mensaje Error:";
+            let mensaje = "Error durante el registro.";
+            mensajeModal.innerHTML = mensaje;
+            console.error('Error al obtener los motivos:', error);
+        });
+
+
+
 }
 
 

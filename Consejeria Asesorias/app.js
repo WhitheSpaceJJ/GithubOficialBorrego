@@ -32,7 +32,6 @@ app.use(cors());
 //Aqui se utilizara el servicio GRPC de usuarios ya que ahi estara el token.
 const jwtMiddleware = async (req, res, next) => {
   const tokenHeader = req.headers.authorization; // Obtener el valor del encabezado "Authorization"
-
   // Verificar si el token existe en el encabezado
   if (!tokenHeader) {
     const customeError = new CustomeError('Token no proporcionado.', 401);
