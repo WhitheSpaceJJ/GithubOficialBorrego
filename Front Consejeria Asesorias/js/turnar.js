@@ -62,7 +62,6 @@ function registrarTurno() {
         turno.fecha_turno = fecha_registro
         turno.hora_turno = hora.value + ":" + minuto.value;
         asesoria.turno = turno;
-        alert(JSON.stringify(asesoria));
 
         const options = {
             method: 'PUT',
