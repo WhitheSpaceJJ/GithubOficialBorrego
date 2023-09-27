@@ -12,18 +12,74 @@ const controlDetalleAsesoria = require('./controlDetalleAsesoria');
 
 const obtenerAsesorias = async () => {
   try {
-    controlCatalogoRequisito.obtenerCatalogoRequisitoPorId
-    return await modeloAsesoria.Asesoria.findAll({
+    const asesorias_pre = await modeloAsesoria.Asesoria.findAll({
       raw: false,
-      nest: true
-      ,
+      nest: true,
       attributes: {
-        exclude: ['id_asesorado', 'id_turno', "id_asesor", "id_tipo_juicio"]
+        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
       },
-      include: [modeloAsesoria.Asesorado, modeloAsesoria.DetalleAsesoriaCatalogo,
-      modeloAsesoria.Turno, modeloAsesoria.Asesor, modeloAsesoria.TipoJuicio]
-
+      include: [
+        modeloAsesoria.Asesorado,
+        modeloAsesoria.DetalleAsesoriaCatalogo,
+        modeloAsesoria.Turno,
+        modeloAsesoria.Asesor,
+        modeloAsesoria.TipoJuicio
+      ]
     });
+
+    const asesorias = [];
+
+    for (const asesoria_pre of asesorias_pre) {
+      const asesoria_obj = JSON.parse(JSON.stringify(asesoria_pre));
+
+      if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
+        const recibidos = [];
+        for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
+          const id_catalogo = detalle.id_catalogo;
+          const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
+          recibidos.push(catalogo);
+        }
+        delete asesoria_obj.detalle_asesorias_catalogos;
+        asesoria_obj.recibidos = recibidos;
+      }
+
+      // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+
+      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
+      delete asesoria_obj.asesor.id_zona;
+      asesoria_obj.asesor.zona = zona;
+
+      const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
+      asesoria_obj.persona = persona;
+
+      if (asesoria_obj.asesorado.id_motivo !== null) {
+        const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
+        delete asesoria_obj.asesorado.id_motivo;
+        asesoria_obj.asesorado.motivo = motivo;
+      }
+
+      const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
+      delete asesoria_obj.asesorado.id_estado_civil;
+      asesoria_obj.asesorado.estado_civil = estado_civil;
+      const datos_asesoria={};
+      datos_asesoria.id_asesoria=asesoria_obj.id_asesoria;
+      datos_asesoria.resumen_asesoria=asesoria_obj.resumen_asesoria;
+      datos_asesoria.conclusion_asesoria=asesoria_obj.conclusion_asesoria;
+      datos_asesoria.estatus_requisitos=asesoria_obj.estatus_requisitos;
+      datos_asesoria.fecha_registro=asesoria_obj.fecha_registro;
+      datos_asesoria.usuario=asesoria_obj.usuario;
+      delete asesoria_obj.id_asesoria;
+      delete asesoria_obj.resumen_asesoria;
+      delete asesoria_obj.conclusion_asesoria;
+      delete asesoria_obj.estatus_requisitos;
+      delete asesoria_obj.fecha_registro;
+      delete asesoria_obj.usuario;
+      asesoria_obj.datos_asesoria=datos_asesoria;
+ 
+      asesorias.push(asesoria_obj);
+    }
+
+    return asesorias;
   } catch (error) {
     console.log("Error:", error.message);
     return null;

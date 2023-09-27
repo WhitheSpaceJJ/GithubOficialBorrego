@@ -257,14 +257,29 @@ function rellenarDataColonia(datosColonia) {
 }
 
 
+
+function menu() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `menu.html?data=${encodedData}`;
+}
+
+function turnar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `busqueda-turnar.html?data=${encodedData}`;
+}
+function consultar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `consulta.html?data=${encodedData}`;
+}
 function asesoria() {
     const dataString = JSON.stringify(datosAnalizadosGlobal);
     const encodedData = encodeURIComponent(dataString);
     window.location.href = `asesoria.html?data=${encodedData}`;
 }
-function menu() {
-    const dataString = JSON.stringify(datosAnalizadosGlobal);
-    const encodedData = encodeURIComponent(dataString);
-    window.location.href = `menu.html?data=${encodedData}`;
+function salir(){
+    window.location.href = `login.html?`;
 }
 window.addEventListener('load', redirigirSiNoHayDatos);

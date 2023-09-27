@@ -47,10 +47,18 @@ function redirigirSiNoHayDatos() {
         }
     }
 }
+function salir(){
+    window.location.href = `login.html?`;
+}
 function turnar() {
     const dataString = JSON.stringify(datosAnalizadosGlobal);
     const encodedData = encodeURIComponent(dataString);
     window.location.href = `busqueda-turnar.html?data=${encodedData}`;
+}
+function consultar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `consulta.html?data=${encodedData}`;
 }
 function asesoria() {
     const dataString = JSON.stringify(datosAnalizadosGlobal);

@@ -1,81 +1,188 @@
-<!DOCTYPE html>
-<html>
+// Función para obtener los parámetros de la URL
+function obtenerParametrosURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get('data');
+    return data;
+}
 
-<head>
-    <title>Sistema Asesoría</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+// Función para decodificar y analizar el JSON
+function analizarDatosJSON(data) {
+    if (data) {
+        try {
+            const decodedData = decodeURIComponent(data);
+            const jsonData = JSON.parse(decodedData);
+            return jsonData;
+        } catch (error) {
+            console.error('Error al analizar los datos JSON:', error);
+        }
+    }
+    return null;
+}
 
-    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="css/asesoria.css">
-    <script src="js/asesoria.js">
-    </script>
-  
-</head>
+// Declarar una variable global para almacenar los datos
+let datosAnalizadosGlobal = null;
 
-<body>
+// Función para redirigir a la página de inicio de sesión si no hay datos
+function redirigirSiNoHayDatos() {
+    const data = obtenerParametrosURL();
+    const datosAnalizados = analizarDatosJSON(data);
+    if (!datosAnalizados) {
+        window.location.href = 'login.html';
+    } else {
+        // Analizar Token 
+        const usuario = document.getElementById("user-name");
+        const nombreCompleto = datosAnalizados.name;
+        const palabras = nombreCompleto.split(" ");
+        const primerNombre = palabras[0];
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#99260E;">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="img/DPS.png" width="75" height="75" alt="" class="mr-5">
-            </a>
-            <div class="d-flex align-items-center">
-                <ul class="navbar-nav mr-5">
-                    <li class="nav-item">
-                        <a class="nav-link  h5" onclick="menu()" id="navbardrop" data-toggle="dropdown"
-                            style="color:white;">INICIO</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle h5" id="navbardrop" data-toggle="dropdown"
-                            style="color:white; ">
-                            SERVICIO
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="turnar()">
-                                <p style="font-size: 20px;">Turnar asesoria</p>
-                            </a>
-                        </div>
-                    </li>
-                 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle h5"   id="navbardrop" data-toggle="dropdown" style="color:white;">
-                            CONSULTA
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="consultar()">
-                                <p style="font-size: 20px;">Consultar asesorias</p>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="d-flex align-self">
-                    <div class="text-white  h5 d-flex flex-column align-items-center">
-                        <label>Usuario</label>
-                        <label id="user-name"></label>
-                    </div>
-                    <div class="d-flex flex-column align-items-center">
-                        <img src="img/perfil.png" width="60" height="60" alt="">
-                        <label onclick="salir()">Salir</label>
-                    </div>
-                </div>
-            </div>
+        usuario.innerHTML = primerNombre;
 
-        </div>
-    </nav>
+        // Almacenar los datos en la variable global
+        datosAnalizadosGlobal = datosAnalizados;
+        rellenarTabla();
+        // Eliminar los parámetros de la URL
+        if (history.replaceState) {
+            const nuevaURL = window.location.pathname; // Obtener la ruta de la página actual
+            history.replaceState({}, document.title, nuevaURL);
+        }
+    }
+}
+function turnar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `busqueda-turnar.html?data=${encodedData}`;
+}
+function asesoria() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `asesoria.html?data=${encodedData}`;
+}
 
-    <nav class="navbar navbar-dark" style="background-color:#704414;">
-        <div id="titulo" class="d-flex justify-content-start  px-5">
-            <label style="color:white;">REGISTRO DE ASESORIA</label>
-        </div>
-    </nav>
-    <br>
+// Llamar a la función de redirección al cargar la página
+window.addEventListener('load', redirigirSiNoHayDatos);
+/*
+function rellenarTabla() {
+    // Fetch data from the API
+    const apiUrl = 'http://localhost:3000/asesorias';
+    const opciones = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${datosAnalizadosGlobal.token}`
+        }
+    };
+
+    // Fetch data and populate the table
+    fetch(apiUrl, opciones)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const asesorias_s = JSON.stringify(data);
+            const asesorias = JSON.parse(asesorias_s);
+            const tableBody = document.getElementById('asesorias-table-body');
+
+            for (let i = 0; i < asesorias.length; i++) {
+                const asesoria = asesorias[i];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${asesoria.datos_asesoria.id_asesoria}</td>
+                    <td>${asesoria.persona.nombre} ${asesoria.persona.apellido_paterno} ${asesoria.persona.apellido_materno}</td>
+                    <td>${asesoria.turno.fecha_turno}</td>
+                    <td>${asesoria.tipos_juicio.tipo_juicio}</td>
+                    <td>${asesoria.datos_asesoria.resumen_asesoria}</td>
+                    <td>${asesoria.datos_asesoria.usuario}</td>
+                    <td><button class="btn btn-primary" value="${asesoria.datos_asesoria.id_asesoria}" onclick="consultarAsesoria(this.value)">Consultar</button></td>
+                `;
+            
+                tableBody.table.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
+
+
+}
+*/
+function rellenarTabla() {
+    // Fetch data from the API
+    const apiUrl = 'http://localhost:3000/asesorias';
+    const opciones = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${datosAnalizadosGlobal.token}`
+        }
+    };
+
+    // Fetch data and populate the table
+    fetch(apiUrl, opciones)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const asesorias = data.asesorias; // Access the 'asesorias' array
+
+            const tableBody = document.getElementById('asesorias-table-body');
+
+            for (let i = 0; i < asesorias.length; i++) {
+                const asesoria = asesorias[i];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${asesoria.datos_asesoria.id_asesoria}</td>
+                    <td>${asesoria.persona.nombre} ${asesoria.persona.apellido_paterno} ${asesoria.persona.apellido_materno}</td>
+                    <td>${asesoria.turno.fecha_turno}</td>
+                    <td>${asesoria.tipos_juicio.tipo_juicio}</td>
+                    <td>${asesoria.datos_asesoria.resumen_asesoria}</td>
+                    <td>${asesoria.datos_asesoria.usuario}</td>
+                    <td><button class="btn btn-primary" value="${asesoria.datos_asesoria.id_asesoria}" onclick="consultarAsesoria(this.value)">Consultar</button></td>
+                `;
+            
+                tableBody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
+}
+
+function consultarAsesoria(asesoriaId) {
  
+}
+function menu() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `menu.html?data=${encodedData}`;
+}
+function turnar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `busqueda-turnar.html?data=${encodedData}`;
+}
+function salir(){
+    window.location.href = `login.html?`;
+}
+function consultar() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `consulta.html?data=${encodedData}`;
+}
+function asesoria() {
+    const dataString = JSON.stringify(datosAnalizadosGlobal);
+    const encodedData = encodeURIComponent(dataString);
+    window.location.href = `asesoria.html?data=${encodedData}`;
+}
 
+function cerrar() {
+    const miAlerta = document.getElementById("miAlerta");
+    miAlerta.style.display = "none";
+}
+/*
     <div class="tabs mt-3">
         <div class="tab-container">
             <!--id="tab1"-->
@@ -523,27 +630,4 @@
         </div>
 
     </div>
-    <div id="miAlerta" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
-            </div>
-            <h3 id="tituloModal"></h3>
-            <p id="mensajeModal"></p>
-        </div>
-    </div>
-
-    <div id="miAlerta3" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta3" onclick="cerrar3()">&times;</span>
-            </div>
-            <h3 id="tituloModal3"></h3>
-            <p id="mensajeModal3"></p>
-        </div>
-    </div>
-
-  <p id="json"></p>
-</body>
-
-</html>
+*/
