@@ -136,7 +136,6 @@ function rellenarTabla() {
                 row.innerHTML = `
                     <td>${asesoria.datos_asesoria.id_asesoria}</td>
                     <td>${asesoria.persona.nombre} ${asesoria.persona.apellido_paterno} ${asesoria.persona.apellido_materno}</td>
-                    <td>${asesoria.turno.fecha_turno}</td>
                     <td>${asesoria.tipos_juicio.tipo_juicio}</td>
                     <td>${asesoria.datos_asesoria.resumen_asesoria}</td>
                     <td>${asesoria.datos_asesoria.usuario}</td>
