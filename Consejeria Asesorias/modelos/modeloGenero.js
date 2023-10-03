@@ -1,3 +1,3 @@
-const {Genero}=require("../utilidades/modelosBase");
+const { Genero } = require("../utilidades/modelosBase");
 
-module.exports = {Genero};
+module.exports = { Genero };
