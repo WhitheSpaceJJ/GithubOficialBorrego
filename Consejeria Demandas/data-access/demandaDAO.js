@@ -1,6 +1,6 @@
-const { Demanda } = require('../models/demanda')
+const Demanda = require('../schemas/demandaSchema')
 
-export class DemandaDAO {
+class DemandaDAO {
     constructor() { }
 
     async crearDemanda({ id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda }) {
@@ -62,5 +62,6 @@ export class DemandaDAO {
         }
     }
 
-
 }
+
+module.exports = new DemandaDAO();

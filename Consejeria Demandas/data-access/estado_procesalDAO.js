@@ -1,6 +1,6 @@
-const { estado_procesal } = require('../models/estado_procesal')
+const estado_procesal = require('../schemas/estadoProcesalSchema')
 
-export class EstadoProcesalDAO {
+class EstadoProcesalDAO {
     constructor() { }
 
     async crearEstadoProcesal({ descripcion_estado_procesal, fecha_estado_procesal, id_proceso_judicial }) {
@@ -63,3 +63,5 @@ export class EstadoProcesalDAO {
     }
 
 }
+
+module.exports = new EstadoProcesalDAO();
