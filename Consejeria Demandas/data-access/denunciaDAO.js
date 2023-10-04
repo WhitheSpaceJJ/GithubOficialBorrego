@@ -51,3 +51,5 @@ class DenunciaDAO{
         }
     }
 }
+
+module.exports = new DenunciaDAO();

@@ -41,7 +41,7 @@ class ParticipanteDAO{
 
     async eliminarParticipante(id){
         try{
-            const participante = await Participante.findByPk(id)
+            const participante = await Participante.findByPk(id);
             if(!participante){
                 throw new Error('No existe el participante');
             }
@@ -52,3 +52,5 @@ class ParticipanteDAO{
         }
     }
 }
+
+module.exports = new ParticipanteDAO();
