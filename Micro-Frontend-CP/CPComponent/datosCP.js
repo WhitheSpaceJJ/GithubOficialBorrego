@@ -92,22 +92,6 @@ class DatosCP extends HTMLElement {
 </div>
 `;
 
-    // `
-    //  <section>
-    //  <label for="codigoPostal">Codigo Postal</label>
-    //      <input id="codigoPostal">...</input>
-    //      <label for="estado">Estado</label>
-    //      <p id="estado">...</p>
-    //      <label for="municipio">Municipio</label>
-    //      <p id="municipio">...</p>
-    //      <label for "ciudad">Ciudad</label>
-    //      <p id="ciudad">...</p>
-    //      <label for="colonia">Colonia</label>
-    //       <select id="cbColonias">
-    //           <option value="">Seleciona una opción</option>
-    //   </section>
-
-    //      `;
   }
 
   #getCodigoPostal() {
@@ -119,20 +103,19 @@ class DatosCP extends HTMLElement {
 
 
     fetch(this.#urlCodigoPostal + codigoPostal)
-      .then((response) => response.json())
+      .then(response => {
+        if (!response.ok) {
+          alert(`El codigo postal ${codigoPostal} no existe`);
+          this.#clear();
+        }
+        return response.json();
+      })
       .then((datos) => {
-        // let dato = this.shadowRoot.querySelector("#codigoPostal");
-        // dato.innerHTML = datos.info.codigo_postal.codigo_postal;
-        // dato = this.shadowRoot.querySelector("#estado");
-        // dato.innerHTML = datos.info.estado.nombre_estado;
-        // dato = this.shadowRoot.querySelector("#municipio");
-        // dato.innerHTML = datos.info.municipio.nombre_municipio;
-        // dato = this.shadowRoot.querySelector("#ciudad");
-        // dato.innerHTML = datos.info.ciudad.nombre_ciudad;
-        // dato = this.shadowRoot.querySelector("#colonia");
-        // dato.innerHTML = this.#llenaColonias(datos.info.colonias);
+
+
+
         this.shadowRoot.getElementById("codigoPostal").value =  datos.info.codigo_postal.codigo_postal;
-        //dato.innerHTML = datos.info.codigo_postal.codigo_postal;
+        
         this.shadowRoot.getElementById("estado").value = datos.info.estado.nombre_estado;
         
         this.shadowRoot.getElementById("municipio").value = datos.info.municipio.nombre_municipio;
@@ -148,23 +131,10 @@ class DatosCP extends HTMLElement {
           option.innerHTML = colonia.nombre_colonia;
           selectColonias.appendChild(option);
         });
-
-        
-         
-        // let dato = this.shadowRoot.querySelector("#colonia");
-        // dato.innerHTML = this.#llenaColonias(datos.info.colonias);
       });
   }
 
-  // #llenaColonias(colonias) {
-  //   let cbColonias = this.shadowRoot.querySelector("#cbColonias");
-  //   colonias.forEach((colonia) => {
-  //     let option = document.createElement("option");
-  //     option.setAttribute("value", colonia.nombre_colonia);
-  //     option.innerHTML = colonia.nombre_colonia;
-  //     cbColonias.appendChild(option);
-  //   });
-  // }
+
 
   #agregaEstilo() {
     let link = document.createElement("link");
@@ -178,14 +148,23 @@ class DatosCP extends HTMLElement {
 
   #validarCodigoPostal() {
     let codigoPostal = this.shadowRoot.querySelector("#codigoPostal").value;
-    if (codigoPostal.length == 5 && !isNaN(codigoPostal)) {
+    if (codigoPostal.length == 5 && !isNaN(codigoPostal) ) {
       return codigoPostal;
     } else {
       alert("El codigo postal debe de ser de 5 digitos");
+      this.#clear();
     }
 
 
 
+  }
+
+  #clear() {
+    this.shadowRoot.querySelector("#codigoPostal").value = "";
+    this.shadowRoot.querySelector("#estado").value = "";
+    this.shadowRoot.querySelector("#municipio").value = "";
+    this.shadowRoot.querySelector("#ciudad").value = "";
+    this.shadowRoot.querySelector("#cbColonias").innerHTML = "";
   }
 
   #pushBoton() {
