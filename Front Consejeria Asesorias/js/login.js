@@ -1,7 +1,9 @@
-function ingresar() {
+function ingresar(event) {
+    event.preventDefault()
+
     const usuario = document.getElementById("usuario").value;
-    const contraseña = document.getElementById("contraseña").value;
-    const url = `http://localhost:3002/usuarios/usuario?correo=${usuario}&password=${contraseña}`;
+    const contrasena = document.getElementById("contrasena").value;
+    const url = `http://localhost:3002/usuarios/usuario?correo=${usuario}&password=${contrasena}`;
 
     fetch(url, {
         method: "GET",
@@ -22,14 +24,15 @@ function ingresar() {
             window.location.href = `menu.html?data=${encodedData}`;
         })
         .catch(error => {
-            const miAlerta = document.getElementById("miAlerta");
-            miAlerta.style.display = "block";
+            const miAlerta = document.getElementById("alerta");
+            miAlerta.style.display = "flex";
             console.error("Error de conexión:", error);
         });
 }
 
 function cerrar() {
-    const miAlerta = document.getElementById("miAlerta");
-    miAlerta.style.display = "none";
+    const alerta = document.getElementById("alerta");
+    alerta.style.display = "none";
 }
 
+document.getElementById("login").addEventListener("submit", ingresar)
