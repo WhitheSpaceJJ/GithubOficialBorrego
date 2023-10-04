@@ -3,40 +3,60 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/img/DPS.png">
+
     <title>Iniciar sesión</title>
-    <link rel="stylesheet" type="text/css" href="css/login.css">
-    <script src="js/login.js">
-    </script>
 </head>
 
-<body>
+<body class="h-screen bg-gray-50">
+    <header
+        class="flex w-full bg-[#a52a2a] text-white h-32 items-center justify-left border-b-[20px] border-[#693c09] px-8 gap-6">
+        <img src="./img/DPS.png" alt="dps-logo" class="w-16 ">
+        <p class="my-auto text-4xl font-semibold text-center ">CONSEJERÍA FISCAL</p>
+    </header>
 
-    <div class="header">
-        <h1>CONSEJERÍA FISCAL</h1>
-        <h2>Iniciar sesión</h2>
-    </div>
-    <main class="contenedor">
-        <div class="contenido">
-            <label for="usuario">Usuario</label>
-            <input id="usuario" name="usuario" type="text" placeholder="Ingresa tu usuario">
-            <label for="contraseña">Contraseña</label>
-            <input id="contraseña" name="contraseña" type="password" placeholder="Ingresa tu contraseña">
-            <input type="submit" value="Ingresar" onclick="ingresar()">
-            <a href="recuperacion.html" id="olvideContraseña">Olvidé la contraseña</a>
-        </div>
-    </main>
-    <div id="miAlerta" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
+    <main class="flex items-center justify-center mt-40 mb-auto">
+        <section class="w-full max-w-md max-h-full p-12 text-center bg-white shadow-xl rounded-xl">
+            <h1 class="mb-4 text-3xl font-bold">Iniciar sesión</h1>
+            <form id="login">
+                <input required type="text" id="usuario" name="usuario" placeholder="Usuario"
+                    class="w-full p-3 mb-4 border rounded border-grey-light">
+                <input required type="password" id="contrasena" name="contrasena" placeholder="Contraseña"
+                    class="w-full p-3 mb-4 border rounded border-grey-light">
+                <button type="submit"
+                    class="w-full text-center py-3 rounded bg-[#a52a2a] text-white hover:bg-[#db2424] my-1 font-semibold transition duration-200" onclick="ingresar()">Iniciar
+                    sesión</button>
+            </form>
+            <div class="mt-4 text-sm">
+                <a href="#" class="hover:text-[#ee4f4f] hover:underline transition duration-200">Olvidé mi contraseña</a>
             </div>
-            <h3>Mensaje de Avertencia</h3>
-            <p id="miMensaje">Usuario o contraseña erroneos.</p>
+        </section>
+    </main>
+    <!-- MODAL ADVERTENCIA -->
+    <div class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50" id="alerta">
+        <div class="relative w-auto max-w-sm p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full">
+            <button
+                class="absolute top-0 right-0 z-50 flex items-center justify-center w-10 h-10 mt-4 mr-4 text-2xl font-bold rounded-full" id="cerrar" onclick="cerrar()">
+                <svg class="w-6 h-6 text-black fill-current hover:text-red-700" viewBox="0 0 24 24">
+                    <path
+                        d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"/>
+                </svg>
+            </button>
+
+            <h1 class="pt-4 text-3xl font-bold text-center text-black">
+                Advertencia
+            </h1>
+
+            <div class="flex flex-col items-center justify-center p-4">
+                <p class="mb-2 text-lg text-center text-black ">
+                    El usuario o la contraseña son incorrectos.
+                </p>
+            </div>
         </div>
     </div>
-
 </body>
+<script src="./js/login.js"></script>
 
 </html>
