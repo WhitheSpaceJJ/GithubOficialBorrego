@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+const { Sequelize, DataTypes } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
   return sequelize.define('etnia', {
     id_etnia: {
       autoIncrement: true,
