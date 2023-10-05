@@ -3,46 +3,74 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
     <title>Recuperar Contraseña</title>
-    <link rel="stylesheet" type="text/css" href="css/recuperacion.css">
-    <script src="js/recuperacions.js">
-    </script>
+    <link rel="icon" href="/img/DPS.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/lib/include-html.js" type="module"></script>
 
 </head>
 
 <body>
-    <div class="header">
-        <h1>Recuperar Contraseña</h1>
-    </div>
-    <main class="contenedor">
-        <div class="contenido">
-            <label for="correo">Correo Electrónico</label>
-            <input id="correoI" name="correoN" type="text" placeholder="Ingresa tu correo electrónico">
-            <input type="submit" onclick="" value="Recuperar Contraseña">
-            <a href="login.html" id="olvideContraseña">Regresar Inicio</a>
-        </div>
+    <div data-include="assets/header.html"></div>
+    <main class="flex items-center justify-center mt-40 mb-auto">
+        <section class="w-full max-w-md max-h-full p-12 text-center bg-white shadow-xl rounded-xl">
+            <h1 class="mb-4 text-3xl font-bold">Recuperar contraseña</h1>
+            <form id="recuperar">
+                <input required type="text" id="correo" name="correo" placeholder="Correo electrónico"
+                    class="w-full p-3 mb-4 border rounded border-grey-light">
+                <button type="submit"
+                    class="w-full text-center py-3 rounded bg-[#a52a2a] text-white hover:bg-[#db2424] my-1 font-semibold transition duration-200">Recuperar
+                    contraseña</button>
+            </form> 
+            <div class="mt-4 text-sm">
+                <a href="login.html" class="hover:text-[#ee4f4f] hover:underline transition duration-200">Volver a
+                    inicio</a>
+            </div>
+        </section>
     </main>
-    <div id="miAlerta" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
+    <!-- MODAL DE ADVERTENCIA -->
+    <div class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50" id="alerta">
+        <div class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full">
+            <button
+                class="absolute top-0 right-0 z-50 flex items-center justify-center w-10 h-10 mt-4 mr-4 text-2xl font-bold rounded-full" 
+                id="cerrar" onclick="cerrar()">
+                <svg class="w-6 h-6 text-black fill-current hover:text-red-700" viewBox="0 0 24 24">
+                    <path
+                        d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
+                </svg>
+            </button>
+
+            <h1 class="pt-4 text-3xl font-bold text-center text-black">
+                Advertencia
+            </h1>
+
+            <div class="flex flex-col items-center justify-center p-4">
+                <p class="mb-2 text-lg text-center text-black ">
+                    No existe usuario con el correo proporcionado.
+                </p>
             </div>
-            <h3>Mensaje de Avertencia</h3>
-            <p id="miMensaje">No exise usuario con el correo proporcionado.</p>
         </div>
     </div>
-    <div id="miAlerta2" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta2"  onclick="cerrar2()">&times;</span>
+
+    <!-- MODAL DE RECUPERACION EXITOSA -->
+    <div class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50" id="alerta-recuperada">
+        <div class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full">
+            <h1 class="pt-4 mb-4 text-3xl font-bold text-center text-black">
+                Recuperación exitosa
+            </h1>
+
+            <div class="flex flex-col items-center justify-center px-4">
+                <p class="mb-4 text-lg text-center text-black ">
+                    Se ha enviado una contraseña nueva al correo ingresado.
+                </p>
+                <button
+                    class="w-full text-center py-3 rounded bg-[#24ce49] text-white hover:bg-[#2af155] font-semibold transition duration-200"
+                    id="aceptar" onclick="aceptar()">Aceptar</button>
             </div>
-            <h3>Recuperacion Existoso</h3>
-            <p id="miMensaje2">Se ha enviado una contraseña al correo.</p>
         </div>
-    </div>
 </body>
+<script src="./js/recuperacion.js"></script>
 
 </html>
