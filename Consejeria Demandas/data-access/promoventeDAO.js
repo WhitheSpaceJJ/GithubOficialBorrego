@@ -1,4 +1,4 @@
-const { Promovente } = require('../models');
+const Promovente = require('../schemas/promoventeSchema');
 
 class PromoventeDAO {
   constructor() {}

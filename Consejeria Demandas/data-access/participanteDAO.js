@@ -1,4 +1,4 @@
-const {Participante} = require('../models');
+const Participante = require('../schemas/participanteSchemas');
 
 class ParticipanteDAO{
     constructor(){}
