@@ -1,14 +1,13 @@
-const config = require('./configuracion.json');
 const { Sequelize } = require('sequelize');
 
 // Crear instancia de Sequelize y establecer conexión a la base de datos
 const sequelize = new Sequelize(
-    config.database.databaseName,
-    config.database.username,
-    config.database.password,
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
-        host: config.database.host,
-        port: config.database.port,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
         dialect: 'mysql',
         logging: false
     }
