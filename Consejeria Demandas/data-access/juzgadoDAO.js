@@ -1,56 +1,56 @@
-const Juzgado = require('../models/juzgado'); 
+const Juzgado = require('../models/juzgado')
 
 class JuzgadoDAO {
-  constructor() {}
+  constructor () {}
 
-  async crearJuzgado({ nombre_juzgado }) {
+  async crearJuzgado ({ nombre_juzgado }) {
     try {
-      const juzgado = await Juzgado.create({ nombre_juzgado });
-      return juzgado;
+      const juzgado = await Juzgado.create({ nombre_juzgado })
+      return juzgado
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerJuzgados() {
+  async obtenerJuzgados () {
     try {
-      const juzgados = await Juzgado.findAll();
-      return juzgados;
+      const juzgados = await Juzgado.findAll()
+      return juzgados
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerJuzgadoPorId(id) {
+  async obtenerJuzgadoPorId (id) {
     try {
-      const juzgado = await Juzgado.findByPk(id);
-      return juzgado;
+      const juzgado = await Juzgado.findByPk(id)
+      return juzgado
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async actualizarJuzgado(id, { nombre_juzgado }) {
+  async actualizarJuzgado (id, { nombre_juzgado }) {
     try {
-      const juzgado = await Juzgado.update({ nombre_juzgado }, { where: { id } });
-      return juzgado;
+      const juzgado = await Juzgado.update({ nombre_juzgado }, { where: { id } })
+      return juzgado
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async eliminarJuzgado(id) {
+  async eliminarJuzgado (id) {
     try {
-      const juzgado = await Juzgado.findByPk(id);
+      const juzgado = await Juzgado.findByPk(id)
       if (!juzgado) {
-        throw new Error('No existe el juzgado');
+        throw new Error('No existe el juzgado')
       }
-      await juzgado.destroy();
-      return 'Juzgado eliminado con éxito';
+      await juzgado.destroy()
+      return 'Juzgado eliminado con éxito'
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 }
 
-module.exports = new JuzgadoDAO();
+module.exports = new JuzgadoDAO()
