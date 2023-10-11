@@ -119,7 +119,7 @@ const obtenerUsuarioCorreoPassword = asyncError(async (req, res, next) => {
     const token = await jwtController.generateToken(payload);
     res.status(200).json({
       token: token,
-      user: usuarioObj.tipo_user.tipo_usuario,
+      role: usuarioObj.tipo_user.tipo_usuario,
       name: usuarioObj.nombre + " " + usuarioObj.materno + " " + usuarioObj.paterno
     });
     /*
