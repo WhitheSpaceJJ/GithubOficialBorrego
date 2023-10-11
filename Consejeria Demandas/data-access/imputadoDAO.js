@@ -1,5 +1,5 @@
 
-const Imputado = require("../schemas/imputadoSchema");
+const Imputado = require("../models/Imputado");
 
 class ImputadoDAO{
 

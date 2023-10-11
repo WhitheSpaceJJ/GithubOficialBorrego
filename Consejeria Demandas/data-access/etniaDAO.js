@@ -1,4 +1,4 @@
-const Etnia = require('../schemas/etniaSchema');
+const Etnia = require('../models/etnia');
 
 class EtniaDAO {
     constructor() { }

@@ -1,6 +1,7 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('proceso_judicial', {
+const sequelize = require("../config/db");
+const { DataTypes } = require("sequelize");
+
+const procesoJudicial = sequelize.define('proceso_judicial', {
     id_proceso_judicial: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -61,4 +62,5 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+
+  module.exports = procesoJudicial;

@@ -1,4 +1,4 @@
-const estado_procesal = require('../schemas/estadoProcesalSchema')
+const estado_procesal = require('../models/estado_procesal')
 
 class EstadoProcesalDAO {
     constructor() { }

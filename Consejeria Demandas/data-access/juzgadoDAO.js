@@ -1,4 +1,4 @@
-const Juzgado = require('../schemas/juzgadoSchema'); 
+const Juzgado = require('../models/juzgado'); 
 
 class JuzgadoDAO {
   constructor() {}

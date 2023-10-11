@@ -1,4 +1,4 @@
-const Denuncia = require('../schemas/denunciaSchema');
+const Denuncia = require('../models/denuncia');
 class DenunciaDAO{
     constructor(){}
 

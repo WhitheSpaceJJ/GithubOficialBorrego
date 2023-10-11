@@ -1,4 +1,4 @@
-const Demanda = require('../schemas/demandaSchema')
+const Demanda = require('../models/demanda');
 
 class DemandaDAO {
     constructor() { }

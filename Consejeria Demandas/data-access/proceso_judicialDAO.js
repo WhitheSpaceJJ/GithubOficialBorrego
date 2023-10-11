@@ -1,4 +1,4 @@
-const proceso_judicial = require('../schemas/procesoJudicialSchema');
+const proceso_judicial = require('../models/proceso_judicial');
 
 class ProcesoJudicialDAO {
   constructor() {}

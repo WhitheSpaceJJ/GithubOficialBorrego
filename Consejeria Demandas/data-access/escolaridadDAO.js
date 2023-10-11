@@ -1,4 +1,4 @@
-const Escolaridad = require('../schemas/escolaridadSchema');
+const Escolaridad = require('../models/escolaridad');
 
 class EscolaridadDAO{
     constructor(){}
