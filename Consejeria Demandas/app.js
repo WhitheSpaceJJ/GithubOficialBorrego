@@ -1,8 +1,6 @@
-require('dotenv').config();
+require('dotenv').config()
 
+const Server = require('./schemas/server')
 
-const Server = require("./schemas/server");
-
-const server = new Server();
-server.listen();
-
+const server = new Server()
+server.listen()
