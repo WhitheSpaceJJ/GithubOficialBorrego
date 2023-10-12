@@ -26,7 +26,7 @@ const obtenerJuzgado = async (req, res) => {
 const crearJuzgado = async (req, res) => {
   try {
     const { nombre_juzgado } = req.body
-    const juzgado = await juzgadoDAO.crearJuez({ nombre_juzgado })
+    const juzgado = await juzgadoDAO.crearJuzgado({ nombre_juzgado })
     res.json(juzgado)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarJuzgado = async (req, res) => {
     await juzgadoDAO.actualizarJuzgado(Number(id), {
       nombre_juzgado
     })
-    const juzgado = juzgadoDAO.obtenerJuzgadoPorId(Number(id))
+    const juzgado = await juzgadoDAO.obtenerJuzgadoPorId(Number(id))
     res.json(juzgado)
   } catch (error) {
     res.status(500).json({

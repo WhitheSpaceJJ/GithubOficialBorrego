@@ -25,9 +25,9 @@ const obtenerDenuncia = async (req, res) => {
 
 const crearDenuncia = async (req, res) => {
   try {
-    const { id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez } = req.body
+    const { id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez } = req.body
 
-    const denuncia = await denunciaDAO.crearDenuncia({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez })
+    const denuncia = await denunciaDAO.crearDenuncia({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez })
 
     res.json(denuncia)
   } catch (error) {
@@ -40,7 +40,7 @@ const crearDenuncia = async (req, res) => {
 const actualizarDenuncia = async (req, res) => {
   try {
     const { id } = req.params
-    const { id_denuncia, ...data} = req.body
+    const { id_denuncia, ...data } = req.body
     await denunciaDAO.actualizarDenuncia(Number(id), data)
     const denuncia = await denunciaDAO.obtenerDenunciaPorId(Number(id))
     res.json(denuncia)

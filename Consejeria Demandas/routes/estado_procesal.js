@@ -1,14 +1,15 @@
 const { Router } = require('express')
 const {
-    obtenerEstadoProcesales,
-    obtenerEstadoProcesal,
-    crearEstadoProcesal,
-    actualizarEstadoProcesal,
-    eliminarEstadoProcesal } = require('../controllers/estado_procesal')
+  obtenerEstadosProcesales,
+  obtenerEstadoProcesal,
+  crearEstadoProcesal,
+  actualizarEstadoProcesal,
+  eliminarEstadoProcesal
+} = require('../controllers/estado_procesal')
 
 const router = Router()
 
-router.get('/', obtenerEstadoProcesales)
+router.get('/', obtenerEstadosProcesales)
 router.get('/:id', obtenerEstadoProcesal)
 router.post('/', crearEstadoProcesal)
 router.put('/:id', actualizarEstadoProcesal)

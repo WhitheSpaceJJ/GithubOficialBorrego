@@ -30,18 +30,18 @@ class JuezDAO {
     }
   }
 
-  async actualizarJuez (id, { nombre_juez }) {
+  async actualizarJuez (id_juez, { nombre_juez }) {
     try {
-      const juez = await Juez.update({ nombre_juez }, { where: { id } })
+      const juez = await Juez.update({ nombre_juez }, { where: { id_juez } })
       return juez
     } catch (e) {
       throw e
     }
   }
 
-  async borrarJuez (id) {
+  async borrarJuez (id_juez) {
     try {
-      const juez = await Juez.destroy({ where: { id } })
+      const juez = await Juez.destroy({ where: { id_juez } })
       return juez
     } catch (e) {
       throw e

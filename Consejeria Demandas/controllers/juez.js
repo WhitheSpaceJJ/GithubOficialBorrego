@@ -38,11 +38,11 @@ const crearJuez = async (req, res) => {
 const actualizarJuez = async (req, res) => {
   try {
     const { id } = req.params
-    const { nombre_juez } = req.body
+    const { id_juez, nombre_juez } = req.body
     await juezDAO.actualizarJuez(Number(id), {
       nombre_juez
     })
-    const juez = juezDAO.obtenerJuezPorId(Number(id))
+    const juez = await juezDAO.obtenerJuezPorId(Number(id))
     res.json(juez)
   } catch (error) {
     res.status(500).json({

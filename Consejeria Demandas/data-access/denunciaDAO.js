@@ -2,9 +2,9 @@ const Denuncia = require('../models/denuncia')
 class DenunciaDAO {
   constructor () {}
 
-  async crearDenuncia ({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez }) {
+  async crearDenuncia ({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez }) {
     try {
-      const denuncia = await Denuncia.create({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez })
+      const denuncia = await Denuncia.create({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez })
       return denuncia
     } catch (err) {
       throw err
@@ -29,9 +29,9 @@ class DenunciaDAO {
     }
   }
 
-  async actualizarDenuncia (id, { id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez }) {
+  async actualizarDenuncia (id_denuncia, { id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez }) {
     try {
-      const denuncia = await Denuncia.update({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez }, { where: { id } })
+      const denuncia = await Denuncia.update({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mpi, estrategia, id_juez }, { where: { id_denuncia } })
       return denuncia
     } catch (err) {
       throw err

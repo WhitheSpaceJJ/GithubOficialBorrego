@@ -30,9 +30,9 @@ class JuzgadoDAO {
     }
   }
 
-  async actualizarJuzgado (id, { nombre_juzgado }) {
+  async actualizarJuzgado (id_juzgado, { nombre_juzgado }) {
     try {
-      const juzgado = await Juzgado.update({ nombre_juzgado }, { where: { id } })
+      const juzgado = await Juzgado.update({ nombre_juzgado }, { where: { id_juzgado } })
       return juzgado
     } catch (err) {
       throw err

@@ -14,7 +14,7 @@ const obtenerDemandas = async (_, res) => {
 const obtenerDemanda = async (req, res) => {
   try {
     const { id } = req.params
-    const demanda = await demandaDAO.obtenerDemandaID(Number(id))
+    const demanda = await demandaDAO.obtenerDemandaID({ id_demanda: Number(id) })
     res.json(demanda)
   } catch (error) {
     res.status(500).json({
@@ -25,7 +25,7 @@ const obtenerDemanda = async (req, res) => {
 
 const crearDemanda = async (req, res) => {
   try {
-    const { id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda  } = req.body
+    const { id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda } = req.body
 
     const demanda = await demandaDAO.crearDemanda({ id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda })
 
@@ -40,11 +40,9 @@ const crearDemanda = async (req, res) => {
 const actualizarDemanda = async (req, res) => {
   try {
     const { id } = req.params
-    const { id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda } = req.body
-    await demandaDAO.actualizarDemanda(Number(id), {
-        id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda
-    })
-    const demanda = await demandaDAO.obtenerDemandaID(Number(id))
+    const { id_demanda, ...data } = req.body
+    await demandaDAO.actualizarDemanda(Number(id), data)
+    const demanda = await demandaDAO.obtenerDemandaID({ id_demanda: Number(id) })
     res.json(demanda)
   } catch (error) {
     res.status(500).json({
@@ -56,7 +54,7 @@ const actualizarDemanda = async (req, res) => {
 const eliminarDemanda = async (req, res) => {
   try {
     const { id } = req.params
-    const demanda = demandaDAO.eliminarDemanda(Number(id))
+    const demanda = demandaDAO.eliminarDemanda({ id_demanda: Number(id) })
     res.json(demanda)
   } catch (error) {
     res.status(500).json({

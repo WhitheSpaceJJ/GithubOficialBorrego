@@ -37,11 +37,11 @@ const crearEscolaridad = async (req, res) => {
   }
 }
 
-const actualizarEscolaridad= async (req, res) => {
+const actualizarEscolaridad = async (req, res) => {
   try {
     const { id } = req.params
     const { descripcion } = req.body
-    await escolaridadDAO.actualizarEscolaridad(Number(id), descripcion)
+    await escolaridadDAO.actualizarEscolaridad(Number(id), { descripcion })
     const escolaridad = await escolaridadDAO.obtenerEscolaridadPorId(Number(id))
     res.json(escolaridad)
   } catch (error) {
