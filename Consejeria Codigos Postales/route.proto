@@ -1,0 +1,15 @@
+
+syntax = "proto3";
+
+package tokenService;
+
+service TokenService {
+  rpc validarToken(ValidacionRequest) returns (ValidacionResponse) {}
+}
+message ValidacionRequest {
+  string token = 1;
+}
+
+message ValidacionResponse {
+  string message = 1;
+}

@@ -1,14 +1,14 @@
 const express = require("express");
-const estadosRoutes = require('./rutas/estados.routes.js');
-const municipiosRoutes = require('./rutas/municipios.routes.js');
-const codigosPostalesRoutes = require('./rutas/codigosPostales.routes.js');
-const ciudadesRoutes = require('./rutas/ciudades.routes.js');
-const coloniasRoutes = require('./rutas/colonias.routes.js');
-const CustomeError = require("./utilidades/customeError");
+const estadosRoutes = require('./routes/estados.routes.js');
+const municipiosRoutes = require('./routes/municipios.routes.js');
+const codigosPostalesRoutes = require('./routes/codigosPostales.routes.js');
+const ciudadesRoutes = require('./routes/ciudades.routes.js');
+const coloniasRoutes = require('./routes/colonias.routes.js');
+const CustomeError = require("./utilities/customeError.js");
 const grpc = require('@grpc/grpc-js');
 const {packageDefinition}=require("../cliente/cliente.js")
 
-const errorController = require("./utilidades/errrorController")
+const errorController = require("./utilities/errrorController.js")
 
 const cors = require('cors');
 const app = express();
