@@ -9,7 +9,7 @@ router.route('/usuario')
 
   router.route('/recuperacion')
   .get(servicioUsuarios.recuperarContraseña);
-/*
+
 
 router.route('/')
   .get(servicioUsuarios.obtenerUsuarioPorId)
@@ -21,7 +21,7 @@ router.route('/:id')
   .delete(servicioUsuarios.eliminarUsuario)
   .put(servicioUsuarios.actualizarUsuario)
   ;
-*/
+
 /** Operaciones Requeridas */
 
 module.exports = router;
