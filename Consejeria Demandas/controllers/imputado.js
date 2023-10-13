@@ -14,7 +14,7 @@ const obtenerImputados = async (req, res) => {
 const obtenerImputado = async (req, res) => {
   try {
     const { id } = req.params
-    const imputado = await imputadoDAO.obtenerImputadoPorId(Number(id))
+    const imputado = await imputadoDAO.obtenerImputado(Number(id))
     res.json(imputado)
   } catch (error) {
     res.status(500).json({
@@ -40,7 +40,7 @@ const actualizarImputado = async (req, res) => {
     const { id } = req.params
     const { id_imputado, ...data } = req.body
     await imputadoDAO.actualizarImputado(Number(id), data)
-    const actualizado = await imputadoDAO.obtenerImputadoPorId(Number(id))
+    const actualizado = await imputadoDAO.obtenerImputado(Number(id))
     res.json(actualizado)
   } catch (error) {
     res.status(500).json({

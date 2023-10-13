@@ -1,8 +1,6 @@
 const Etnia = require('../models/etnia')
 
 class EtniaDAO {
-  constructor () { }
-
   async crearEtnia ({ nombre }) {
     try {
       const etnia = await Etnia.create({ nombre })
@@ -21,7 +19,7 @@ class EtniaDAO {
     }
   }
 
-  async obtenerEtniaPorId (id) {
+  async obtenerEtnia (id) {
     try {
       const etnia = await Etnia.findByPk(id)
       return etnia
@@ -42,11 +40,8 @@ class EtniaDAO {
   async eliminarEtnia (id) {
     try {
       const etnia = await Etnia.findByPk(id)
-      if (!etnia) {
-        throw new Error('No existe la etnia')
-      }
       await etnia.destroy()
-      return 'etnia eliminada con exito'
+      return 'Etnia eliminada con éxito'
     } catch (err) {
       throw err
     }

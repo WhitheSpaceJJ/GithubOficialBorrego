@@ -19,7 +19,7 @@ class ImputadoDAO {
     }
   }
 
-  async obtenerImputadoPorId (id) {
+  async obtenerImputado (id) {
     try {
       const imputado = await Imputado.findByPk(id)
       return imputado
@@ -28,9 +28,9 @@ class ImputadoDAO {
     }
   }
 
-  async actualizarImputado (id_imputado, { id_participante, delito }) {
+  async actualizarImputado (idParticipante, { delito }) {
     try {
-      const imputado = await Imputado.update({ id_participante, delito }, { where: { id_imputado } })
+      const imputado = await Imputado.update({ delito }, { where: { id_participante: idParticipante } })
       return imputado
     } catch (err) {
       throw err
@@ -40,9 +40,6 @@ class ImputadoDAO {
   async eliminarImputado (id) {
     try {
       const imputado = await Imputado.findByPk(id)
-      if (!imputado) {
-        throw new Error('Denuncia no encontrada')
-      }
       await imputado.destroy()
       return 'Imputado eliminado con exito.'
     } catch (err) {

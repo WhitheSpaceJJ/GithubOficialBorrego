@@ -34,7 +34,7 @@ const obtenerParticipantes = async (req, res) => {
 const obtenerParticipante = async (req, res) => {
   try {
     const { id } = req.params
-    const participante = await participanteDAO.obtenerParticipantePorId(Number(id))
+    const participante = await participanteDAO.obtenerParticipante(Number(id))
     res.json(participante)
   } catch (error) {
     res.status(500).json({
@@ -48,7 +48,7 @@ const actualizarParticipante = async (req, res) => {
     const { id } = req.params
     const { id_participante, ...data } = req.body
     await participanteDAO.actualizarParticipante(Number(id), data)
-    const actualizado = await participanteDAO.obtenerParticipantePorId(Number(id))
+    const actualizado = await participanteDAO.obtenerParticipante(Number(id))
     res.json(actualizado)
   } catch (error) {
     res.status(500).json({

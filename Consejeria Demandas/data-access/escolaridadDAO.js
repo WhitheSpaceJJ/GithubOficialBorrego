@@ -1,8 +1,6 @@
 const Escolaridad = require('../models/escolaridad')
 
 class EscolaridadDAO {
-  constructor () {}
-
   async crearEscolaridad ({ descripcion }) {
     try {
       const escolaridad = await Escolaridad.create({ descripcion })
@@ -42,11 +40,8 @@ class EscolaridadDAO {
   async eliminarEscolaridad (id) {
     try {
       const escolaridad = await Escolaridad.findByPk(id)
-      if (!escolaridad) {
-        throw new Error('No existe la escolaridad')
-      }
       await escolaridad.destroy()
-      return 'escolaridad eliminada con exito'
+      return 'Escolaridad eliminada con exito'
     } catch (err) {
       throw err
     }

@@ -14,7 +14,7 @@ const obtenerDemandas = async (_, res) => {
 const obtenerDemanda = async (req, res) => {
   try {
     const { id } = req.params
-    const demanda = await demandaDAO.obtenerDemandaID({ id_demanda: Number(id) })
+    const demanda = await demandaDAO.obtenerDemanda(Number(id))
     res.json(demanda)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarDemanda = async (req, res) => {
     const { id } = req.params
     const { id_demanda, ...data } = req.body
     await demandaDAO.actualizarDemanda(Number(id), data)
-    const demanda = await demandaDAO.obtenerDemandaID({ id_demanda: Number(id) })
+    const demanda = await demandaDAO.obtenerDemanda(Number(id))
     res.json(demanda)
   } catch (error) {
     res.status(500).json({
@@ -54,7 +54,7 @@ const actualizarDemanda = async (req, res) => {
 const eliminarDemanda = async (req, res) => {
   try {
     const { id } = req.params
-    const demanda = demandaDAO.eliminarDemanda({ id_demanda: Number(id) })
+    const demanda = await demandaDAO.eliminarDemanda(Number(id))
     res.json(demanda)
   } catch (error) {
     res.status(500).json({

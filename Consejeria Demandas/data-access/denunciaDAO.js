@@ -1,7 +1,5 @@
 const Denuncia = require('../models/denuncia')
 class DenunciaDAO {
-  constructor () {}
-
   async crearDenuncia ({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez }) {
     try {
       const denuncia = await Denuncia.create({ id_proceso_judicial, causa_penal, delito, modalidad, hechos, plazo_cierre, unidad_mp, estrategia, id_juez })
@@ -20,7 +18,7 @@ class DenunciaDAO {
     }
   }
 
-  async obtenerDenunciaPorId (id) {
+  async obtenerDenuncia (id) {
     try {
       const denuncia = await Denuncia.findByPk(id)
       return denuncia
@@ -41,11 +39,8 @@ class DenunciaDAO {
   async eliminarDenuncia (id) {
     try {
       const denuncia = await Denuncia.findByPk(id)
-      if (!denuncia) {
-        throw new Error('Denuncia no encontrada')
-      }
       await denuncia.destroy()
-      return true
+      return 'Denuncia eliminada con éxito'
     } catch (e) {
       throw e
     }

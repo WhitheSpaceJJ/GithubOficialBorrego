@@ -14,7 +14,7 @@ const obtenerDenuncias = async (_, res) => {
 const obtenerDenuncia = async (req, res) => {
   try {
     const { id } = req.params
-    const denuncia = await denunciaDAO.obtenerDenunciaPorId(Number(id))
+    const denuncia = await denunciaDAO.obtenerDenuncia(Number(id))
     res.json(denuncia)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarDenuncia = async (req, res) => {
     const { id } = req.params
     const { id_denuncia, ...data } = req.body
     await denunciaDAO.actualizarDenuncia(Number(id), data)
-    const denuncia = await denunciaDAO.obtenerDenunciaPorId(Number(id))
+    const denuncia = await denunciaDAO.obtenerDenuncia(Number(id))
     res.json(denuncia)
   } catch (error) {
     res.status(500).json({
@@ -54,7 +54,7 @@ const actualizarDenuncia = async (req, res) => {
 const eliminarDenuncia = async (req, res) => {
   try {
     const { id } = req.params
-    const denuncia = denunciaDAO.eliminarDenuncia(Number(id))
+    const denuncia = await denunciaDAO.eliminarDenuncia(Number(id))
     res.json(denuncia)
   } catch (error) {
     res.status(500).json({

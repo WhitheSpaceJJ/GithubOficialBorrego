@@ -1,8 +1,6 @@
 const Juez = require('../models/juez')
 
 class JuezDAO {
-  constructor () {}
-
   async crearJuez ({ nombre_juez }) {
     try {
       const juez = await Juez.create({ nombre_juez })
@@ -12,7 +10,7 @@ class JuezDAO {
     }
   }
 
-  async obtenerTodosJuez () {
+  async obtenerJueces () {
     try {
       const juez = await Juez.findAll()
       return juez
@@ -21,7 +19,7 @@ class JuezDAO {
     }
   }
 
-  async obtenerJuezPorId (id) {
+  async obtenerJuez (id) {
     try {
       const juez = await Juez.findByPk(id)
       return juez
@@ -39,10 +37,10 @@ class JuezDAO {
     }
   }
 
-  async borrarJuez (id_juez) {
+  async eliminarJuez (id_juez) {
     try {
-      const juez = await Juez.destroy({ where: { id_juez } })
-      return juez
+      await Juez.destroy({ where: { id_juez } })
+      return 'Juez eliminado con éxito'
     } catch (e) {
       throw e
     }

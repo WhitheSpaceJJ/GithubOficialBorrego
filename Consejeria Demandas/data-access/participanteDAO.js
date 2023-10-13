@@ -1,8 +1,6 @@
 const Participante = require('../models/participante')
 
 class ParticipanteDAO {
-  constructor () {}
-
   async crearParticipante ({ nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona }) {
     try {
       const participante = await Participante.create({ nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona })
@@ -21,7 +19,7 @@ class ParticipanteDAO {
     }
   }
 
-  async obtenerParticipantePorId (id) {
+  async obtenerParticipante (id) {
     try {
       const participante = await Participante.findByPk(id)
       return participante
@@ -42,9 +40,6 @@ class ParticipanteDAO {
   async eliminarParticipante (id) {
     try {
       const participante = await Participante.findByPk(id)
-      if (!participante) {
-        throw new Error('No existe el participante')
-      }
       await participante.destroy()
       return 'participante eliminado con exito'
     } catch (err) {

@@ -14,7 +14,7 @@ const obtenerOcupaciones = async (req, res) => {
 const obtenerOcupacion = async (req, res) => {
   try {
     const { id } = req.params
-    const ocupacion = await ocupacionDAO.obtenerOcupacionPorId(Number(id))
+    const ocupacion = await ocupacionDAO.obtenerOcupacion(Number(id))
     res.json(ocupacion)
   } catch (error) {
     res.status(500).json({
@@ -41,10 +41,10 @@ const actualizarOcupacion = async (req, res) => {
   try {
     const { id } = req.params
     const { descripcion_ocupacion } = req.body
-    const actualizacion = await ocupacionDAO.actualizarOcupacion(Number(id), {
+    await ocupacionDAO.actualizarOcupacion(Number(id), {
       descripcion_ocupacion
     })
-    const ocupacion = await ocupacionDAO.obtenerOcupacionPorId(Number(id))
+    const ocupacion = await ocupacionDAO.obtenerOcupacion(Number(id))
     res.json(ocupacion)
   } catch (error) {
     res.status(500).json({
@@ -56,7 +56,7 @@ const actualizarOcupacion = async (req, res) => {
 const eliminarOcupacion = async (req, res) => {
   try {
     const { id } = req.params
-    const ocupacion = ocupacionDAO.eliminarOcupacion(Number(id))
+    const ocupacion = await ocupacionDAO.eliminarOcupacion(Number(id))
     res.json(ocupacion)
   } catch (error) {
     res.status(500).json({

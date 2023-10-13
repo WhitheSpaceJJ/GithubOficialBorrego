@@ -14,7 +14,7 @@ const obtenerJuzgados = async (_, res) => {
 const obtenerJuzgado = async (req, res) => {
   try {
     const { id } = req.params
-    const juzgado = await juzgadoDAO.obtenerJuzgadoPorId(Number(id))
+    const juzgado = await juzgadoDAO.obtenerJuzgado(Number(id))
     res.json(juzgado)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarJuzgado = async (req, res) => {
     await juzgadoDAO.actualizarJuzgado(Number(id), {
       nombre_juzgado
     })
-    const juzgado = await juzgadoDAO.obtenerJuzgadoPorId(Number(id))
+    const juzgado = await juzgadoDAO.obtenerJuzgado(Number(id))
     res.json(juzgado)
   } catch (error) {
     res.status(500).json({
@@ -54,7 +54,7 @@ const actualizarJuzgado = async (req, res) => {
 const eliminarJuzgado = async (req, res) => {
   try {
     const { id } = req.params
-    const juez = juzgadoDAO.eliminarJuzgado(Number(id))
+    const juez = await juzgadoDAO.eliminarJuzgado(Number(id))
     res.json(juez)
   } catch (error) {
     res.status(500).json({

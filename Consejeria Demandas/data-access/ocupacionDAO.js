@@ -1,8 +1,6 @@
 const Ocupacion = require('../models/ocupacion')
 
 class OcupacionDAO {
-  constructor () {}
-
   async crearOcupacion ({ descripcion_ocupacion }) {
     try {
       const ocupacion = await Ocupacion.create({ descripcion_ocupacion })
@@ -21,7 +19,7 @@ class OcupacionDAO {
     }
   }
 
-  async obtenerOcupacionPorId (id) {
+  async obtenerOcupacion (id) {
     try {
       const ocupacion = await Ocupacion.findByPk(id)
       return ocupacion
@@ -42,9 +40,6 @@ class OcupacionDAO {
   async eliminarOcupacion (id) {
     try {
       const ocupacion = await Ocupacion.findByPk(id)
-      if (!ocupacion) {
-        throw new Error('No existe la ocupación')
-      }
       await ocupacion.destroy()
       return 'Ocupación eliminada con éxito'
     } catch (err) {

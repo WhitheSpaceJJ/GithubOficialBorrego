@@ -34,7 +34,7 @@ const obtenerProcesosJudiciales = async (req, res) => {
 const obtenerProcesoJudicial = async (req, res) => {
   try {
     const { id } = req.params
-    const procesoJudicial = await procesoJudicialDAO.obtenerProcesoJudicialPorId(Number(id))
+    const procesoJudicial = await procesoJudicialDAO.obtenerProcesoJudicial(Number(id))
     res.json(procesoJudicial)
   } catch (error) {
     res.status(500).json({
@@ -48,7 +48,7 @@ const actualizarProcesoJudicial = async (req, res) => {
     const { id } = req.params
     const { id_proceso_judicial, ...data } = req.body
     await procesoJudicialDAO.actualizarProcesoJudicial(Number(id), data)
-    const actualizado = await procesoJudicialDAO.obtenerProcesoJudicialPorId(Number(id))
+    const actualizado = await procesoJudicialDAO.obtenerProcesoJudicial(Number(id))
     res.json(actualizado)
   } catch (error) {
     res.status(500).json({

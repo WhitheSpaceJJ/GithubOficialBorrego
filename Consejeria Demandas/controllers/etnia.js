@@ -14,7 +14,7 @@ const obtenerEtnias = async (req, res) => {
 const obtenerEtnia = async (req, res) => {
   try {
     const { id } = req.params
-    const etnia = await etniaDAO.obtenerEtniaPorId(Number(id))
+    const etnia = await etniaDAO.obtenerEtnia(Number(id))
     res.json(etnia)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarEtnia = async (req, res) => {
     await etniaDAO.actualizarEtnia(Number(id), {
       nombre
     })
-    const actualizado = await etniaDAO.obtenerEtniaPorId(Number(id))
+    const actualizado = await etniaDAO.obtenerEtnia(Number(id))
     res.json(actualizado)
   } catch (error) {
     res.status(500).json({

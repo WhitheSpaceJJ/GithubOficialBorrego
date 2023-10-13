@@ -14,9 +14,10 @@ const obtenerEstadosProcesales = async (req, res) => {
 const obtenerEstadoProcesal = async (req, res) => {
   try {
     const { id } = req.params
-    const estado_procesal = await estado_procesalDAO.obtenerEstadoProcesalID({ id_estado_procesal: Number(id) })
+    const estado_procesal = await estado_procesalDAO.obtenerEstadoProcesal(Number(id))
     res.json(estado_procesal)
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       message: 'Error al realizar la consulta con bd'
     })
@@ -40,10 +41,9 @@ const actualizarEstadoProcesal = async (req, res) => {
     const { id } = req.params
     const { id_estado_procesal, ...data } = req.body
     await estado_procesalDAO.actualizarEstadoProcesal(Number(id), data)
-    const actualizado = await estado_procesalDAO.obtenerEstadoProcesalID({ id_estado_procesal: Number(id) })
+    const actualizado = await estado_procesalDAO.obtenerEstadoProcesal(Number(id))
     res.json(actualizado)
   } catch (error) {
-    console.log(error)
     res.status(500).json({
       message: 'Error al realizar la consulta con bd'
     })
@@ -53,7 +53,7 @@ const actualizarEstadoProcesal = async (req, res) => {
 const eliminarEstadoProcesal = async (req, res) => {
   try {
     const { id } = req.params
-    const estado_procesal = await estado_procesalDAO.eliminarEstadoProcesal({ id_estado_procesal: Number(id) })
+    const estado_procesal = await estado_procesalDAO.eliminarEstadoProcesal(Number(id))
     res.json(estado_procesal)
   } catch (error) {
     res.status(500).json({

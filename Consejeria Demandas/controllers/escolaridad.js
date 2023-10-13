@@ -54,7 +54,7 @@ const actualizarEscolaridad = async (req, res) => {
 const eliminarEscolaridad = async (req, res) => {
   try {
     const { id } = req.params
-    const escolaridad = escolaridadDAO.eliminarEscolaridad(Number(id))
+    const escolaridad = await escolaridadDAO.eliminarEscolaridad(Number(id))
     res.json(escolaridad)
   } catch (error) {
     res.status(500).json({

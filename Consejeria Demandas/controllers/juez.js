@@ -2,7 +2,7 @@ const juezDAO = require('../data-access/juezDAO')
 
 const obtenerJueces = async (_, res) => {
   try {
-    const jueces = await juezDAO.obtenerTodosJuez()
+    const jueces = await juezDAO.obtenerJueces()
     res.json(jueces)
   } catch (error) {
     res.status(500).json({
@@ -14,7 +14,7 @@ const obtenerJueces = async (_, res) => {
 const obtenerJuez = async (req, res) => {
   try {
     const { id } = req.params
-    const juez = await juezDAO.obtenerJuezPorId(Number(id))
+    const juez = await juezDAO.obtenerJuez(Number(id))
     res.json(juez)
   } catch (error) {
     res.status(500).json({
@@ -42,7 +42,7 @@ const actualizarJuez = async (req, res) => {
     await juezDAO.actualizarJuez(Number(id), {
       nombre_juez
     })
-    const juez = await juezDAO.obtenerJuezPorId(Number(id))
+    const juez = await juezDAO.obtenerJuez(Number(id))
     res.json(juez)
   } catch (error) {
     res.status(500).json({
@@ -54,7 +54,7 @@ const actualizarJuez = async (req, res) => {
 const eliminarJuez = async (req, res) => {
   try {
     const { id } = req.params
-    const juez = juezDAO.borrarJuez(Number(id))
+    const juez = await juezDAO.eliminarJuez(Number(id))
     res.json(juez)
   } catch (error) {
     res.status(500).json({

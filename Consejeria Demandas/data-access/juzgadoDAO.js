@@ -1,8 +1,6 @@
 const Juzgado = require('../models/juzgado')
 
 class JuzgadoDAO {
-  constructor () {}
-
   async crearJuzgado ({ nombre_juzgado }) {
     try {
       const juzgado = await Juzgado.create({ nombre_juzgado })
@@ -21,7 +19,7 @@ class JuzgadoDAO {
     }
   }
 
-  async obtenerJuzgadoPorId (id) {
+  async obtenerJuzgado (id) {
     try {
       const juzgado = await Juzgado.findByPk(id)
       return juzgado
@@ -42,9 +40,6 @@ class JuzgadoDAO {
   async eliminarJuzgado (id) {
     try {
       const juzgado = await Juzgado.findByPk(id)
-      if (!juzgado) {
-        throw new Error('No existe el juzgado')
-      }
       await juzgado.destroy()
       return 'Juzgado eliminado con éxito'
     } catch (err) {

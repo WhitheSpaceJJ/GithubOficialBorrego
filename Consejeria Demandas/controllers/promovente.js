@@ -29,7 +29,7 @@ const obtenerPromoventes = async (req, res) => {
 const obtenerPromovente = async (req, res) => {
   try {
     const { id } = req.params
-    const promovente = await promoventeDAO.obtenerPromoventePorId(Number(id))
+    const promovente = await promoventeDAO.obtenerPromoventePorParticipante(Number(id))
     res.json(promovente)
   } catch (error) {
     res.status(500).json({
@@ -43,10 +43,9 @@ const actualizarPromovente = async (req, res) => {
     const { id } = req.params
     const { id_participante, espanol } = req.body
     await promoventeDAO.actualizarPromovente(Number(id), {
-      id_participante,
       espanol
     })
-    const actualizado = await promoventeDAO.obtenerPromoventePorId(Number(id))
+    const actualizado = await promoventeDAO.obtenerPromoventePorParticipante(Number(id))
     res.json(actualizado)
   } catch (error) {
     res.status(500).json({
