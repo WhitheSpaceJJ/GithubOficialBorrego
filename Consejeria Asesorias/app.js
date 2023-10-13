@@ -62,8 +62,6 @@ app.use('/tipos-de-juicio',jwtMiddleware, tipoDeJuiciosRutas);
 app.use('/asesores',jwtMiddleware,asesoresRutas);
 app.use('/generos',jwtMiddleware, generosRutas);
 app.use('/estados-civiles',jwtMiddleware, estadosCivilesRutas);
-app.use('/motivos',jwtMiddleware, motivosRutas);
-/*
 
 app.use('/zonas',jwtMiddleware, zonasRutas);
 app.use('/detalle-asesoria',jwtMiddleware, detalleAsesoriaRutas);
@@ -75,7 +73,6 @@ app.use('/turnos',jwtMiddleware,turnoRutas);
 app.use('/personas',jwtMiddleware,personasRutas);
 app.use('/asesorados',jwtMiddleware,asesoradoRutas);
 app.use('/catalogo-requisitos',jwtMiddleware,catalogoRequisitosRutas);
-*/
 app.all("*", (req, res, next) => {
   const err = new CustomeError("Cannot find " + req.originalUrl + " on the server", 404);
   next(err);
