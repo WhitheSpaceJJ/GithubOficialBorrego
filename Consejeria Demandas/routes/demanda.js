@@ -6,17 +6,29 @@ const {
   actualizarDemanda,
   eliminarDemanda
 } = require('../controllers/demanda')
+const {
+  existeDemanda,
+  existeProcesoJudicial
+} = require('../middlewares/demanda')
 
 const router = Router()
 
 router.get('/', obtenerDemandas)
 
-router.get('/:id', obtenerDemanda)
+router.get('/:id', [
+  existeDemanda
+], obtenerDemanda)
 
-router.post('/', crearDemanda)
+router.post('/', [
+  existeProcesoJudicial
+], crearDemanda)
 
-router.put('/:id', actualizarDemanda)
+router.put('/:id', [
+  existeDemanda
+], actualizarDemanda)
 
-router.delete('/:id', eliminarDemanda)
+router.delete('/:id', [
+  existeDemanda
+], eliminarDemanda)
 
 module.exports = router

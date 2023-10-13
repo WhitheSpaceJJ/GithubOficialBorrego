@@ -3,6 +3,9 @@ const demandaDAO = require('../data-access/demandaDAO')
 const obtenerDemandas = async (_, res) => {
   try {
     const demandas = await demandaDAO.obtenerDemandas()
+    if (demandas.length === 0) {
+      return res.status(204).json(demandas)
+    }
     res.json(demandas)
   } catch (error) {
     res.status(500).json({
