@@ -31,7 +31,7 @@ const jwtMiddleware = async (req, res, next) => {
   const token = tokenHeader.replace('Bearer ', ''); // Quita "Bearer " del encabezado
 
   let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
-  const validador = new token_client.TokenService('198.101.238.125:3007', grpc.credentials.createInsecure());
+  const validador = new token_client.TokenService('localhost:3004', grpc.credentials.createInsecure());
   
   validador.validarToken({ token: token }, function (err, response) {
     if (response.message === "Token inválido") {
@@ -44,12 +44,14 @@ const jwtMiddleware = async (req, res, next) => {
 };
 
 
-app.use('/colonias',jwtMiddleware, coloniasRoutes);
-app.use('/codigospostales',jwtMiddleware, codigosPostalesRoutes);
-app.use('/estados',jwtMiddleware,estadosRoutes);
+app.use('/colonias', jwtMiddleware,coloniasRoutes);
+app.use('/codigospostales', jwtcodigosPostalesRoutes);
+
+/*
+app.use('/estados', jwtMiddleware,estadosRoutes);
 app.use('/municipios',jwtMiddleware, municipiosRoutes);
 app.use('/ciudades',jwtMiddleware, ciudadesRoutes);
-
+*/
 
 
 app.all("*", (req, res, next) => {
