@@ -8,7 +8,7 @@ class LoginController {
     const correo = document.getElementById("correo").value
     const password = document.getElementById("password").value
     try {
-      const user = await this.model.login(correo, password)
+      const user = await this.model.login({ correo, password })
       sessionStorage.setItem("user", JSON.stringify(user))
       window.location.replace("index.html")
     } catch (error) {
