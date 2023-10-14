@@ -7,17 +7,23 @@ const {
   actualizarParticipante,
   eliminarParticipante
 } = require('../controllers/participante');
+const{
+  existeEscolaridad,
+  existeEtnia,
+  existeOcupacion,
+  existeParticipante
+} = require('../middlewares/participante')
 
 const router = Router();
 
-router.post('/', crearParticipante);
+router.post('/', [existeEscolaridad, existeEtnia, existeOcupacion], crearParticipante);
 
 router.get('/', obtenerParticipantes);
 
-router.get('/:id', obtenerParticipante);
+router.get('/:id', [existeParticipante], obtenerParticipante);
 
-router.put('/:id', actualizarParticipante);
+router.put('/:id', [existeParticipante], actualizarParticipante);
 
-router.delete('/:id', eliminarParticipante);
+router.delete('/:id', [existeParticipante], eliminarParticipante);
 
 module.exports = router;

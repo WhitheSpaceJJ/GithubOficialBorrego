@@ -6,13 +6,17 @@ const {
   actualizarEstadoProcesal,
   eliminarEstadoProcesal
 } = require('../controllers/estado_procesal')
+const{
+  existeEstadoProcesal,
+  existeProcesoJudicial
+} = require('../middlewares/estado_procesal')
 
 const router = Router()
 
 router.get('/', obtenerEstadosProcesales)
-router.get('/:id', obtenerEstadoProcesal)
-router.post('/', crearEstadoProcesal)
-router.put('/:id', actualizarEstadoProcesal)
-router.delete('/:id', eliminarEstadoProcesal)
+router.get('/:id', [existeEstadoProcesal], obtenerEstadoProcesal)
+router.post('/', [existeProcesoJudicial], crearEstadoProcesal)
+router.put('/:id', [existeEstadoProcesal], actualizarEstadoProcesal)
+router.delete('/:id', [existeEstadoProcesal], eliminarEstadoProcesal)
 
 module.exports = router

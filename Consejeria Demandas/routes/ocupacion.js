@@ -7,17 +7,20 @@ const {
   actualizarOcupacion,
   eliminarOcupacion
 } = require('../controllers/ocupacion')
+const{
+  existeOcupacion
+} = require('../middlewares/ocupacion')
 
 const router = Router()
 
 router.get('/', obtenerOcupaciones)
 
-router.get('/:id', obtenerOcupacion)
+router.get('/:id', [existeOcupacion], obtenerOcupacion)
 
 router.post('/', crearOcupacion)
 
-router.put('/:id', actualizarOcupacion)
+router.put('/:id', [existeOcupacion], actualizarOcupacion)
 
-router.delete('/:id', eliminarOcupacion)
+router.delete('/:id', [existeOcupacion], eliminarOcupacion)
 
 module.exports = router

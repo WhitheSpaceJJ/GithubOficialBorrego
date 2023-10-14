@@ -6,12 +6,15 @@ const {
     actualizarEtnia,
     eliminarEtnia } = require('../controllers/etnia')
 
+const{
+    existeEtnia
+} = require('../middlewares/etnias')
 const router = Router()
 
 router.get('/', obtenerEtnias)
-router.get('/:id', obtenerEtnia)
+router.get('/:id', [existeEtnia], obtenerEtnia)
 router.post('/', crearEtnia)
-router.put('/:id', actualizarEtnia)
-router.delete('/:id', eliminarEtnia)
+router.put('/:id', [existeEtnia], actualizarEtnia)
+router.delete('/:id', [existeEtnia], eliminarEtnia)
 
 module.exports = router

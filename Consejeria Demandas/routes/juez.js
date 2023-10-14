@@ -6,17 +6,20 @@ const {
   actualizarJuez,
   eliminarJuez
 } = require('../controllers/juez')
+const{
+  existeJuez
+} = require('../middlewares/juez')
 
 const router = Router()
 
 router.get('/', obtenerJueces)
 
-router.get('/:id', obtenerJuez)
+router.get('/:id', [existeJuez], obtenerJuez)
 
 router.post('/', crearJuez)
 
-router.put('/:id', actualizarJuez)
+router.put('/:id', [existeJuez], actualizarJuez)
 
-router.delete('/:id', eliminarJuez)
+router.delete('/:id', [existeJuez], eliminarJuez)
 
 module.exports = router
