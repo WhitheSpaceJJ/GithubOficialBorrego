@@ -61,7 +61,7 @@ function asesoria() {
 }
 
 // Llamar a la función de redirección al cargar la página
-window.addEventListener('load', redirigirSiNoHayDatos);
+//window.addEventListener('load', redirigirSiNoHayDatos);
 
 function rellenarTabla() {
     // Fetch data from the API
@@ -84,39 +84,44 @@ function rellenarTabla() {
         .then(data => {
             const asesorias = data.asesorias; // Access the 'asesorias' array
 
-            const tableBody = document.getElementById('asesorias-table-body');
+            const tableBody = document.getElementById('table-body');
 
-            for (let i = 0; i < asesorias.length; i++) {
-                const asesoria = asesorias[i];
-                const row = document.createElement('tr');
-                row.classList.add('bg-white border-b hover:bg-gray-50')
-
-                row.innerHTML =
-                    `<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                        ${asesoria.datos_asesoria.id_asesoria}
-                    </td>
-                    <td class="px-6 py-4">
-                        ${asesoria.persona.nombre} ${asesoria.persona.apellido_paterno} ${asesoria.persona.apellido_materno}
-                    </td>
-                    <td class="px-6 py-4">
-                        ${asesoria.tipos_juicio.tipo_juicio}
-                    </td>
-                    <td class="px-6 py-4">
-                        ${asesoria.datos_asesoria.resumen_asesoria}
-                    </td>
-                    <td class="px-6 py-4">
-                        ${asesoria.datos_asesoria.usuario}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button href="#" class="font-medium text-[#db2424] hover:underline" onclick="consultarAsesoria(this.value)" value="${asesoria.datos_asesoria.id_asesoria}">Consultar</button>
-                    </td>`;
-
+            asesorias.forEach(asesoria => {
+                const row = crearRow(asesoria);
                 tableBody.appendChild(row);
-            }
+            })
+
         })
         .catch(error => {
             console.error('Error:', error.message);
         });
+}
+
+function crearRow(asesoria) {
+    const row = document.createElement('tr');
+    row.classList.add('bg-white', 'border-b', 'hover:bg-gray-50')
+
+    row.innerHTML =
+        `<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            ${asesoria.datos_asesoria.id_asesoria}
+        </td>
+        <td class="px-6 py-4">
+            ${asesoria.persona.nombre} ${asesoria.persona.apellido_paterno} ${asesoria.persona.apellido_materno}
+        </td>
+        <td class="px-6 py-4">
+            ${asesoria.tipos_juicio.tipo_juicio}
+        </td>
+        <td class="px-6 py-4">
+            ${asesoria.datos_asesoria.resumen_asesoria}
+        </td>
+        <td class="px-6 py-4">
+            ${asesoria.datos_asesoria.usuario}
+        </td>
+        <td class="px-6 py-4 text-right">
+            <button href="#" class="font-medium text-[#db2424] hover:underline" onclick="consultarAsesoria(this.value)" value="${asesoria.datos_asesoria.id_asesoria}">Consultar</button>
+        </td>`;
+
+    return row
 }
 
 function consultarAsesoria(asesoriaId) {
