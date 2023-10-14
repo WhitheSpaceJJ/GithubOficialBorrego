@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const manejadorErrores = require('../middlewares/manejador-errores')
+const verify_jwt = require('../middlewares/verify-jwt')
 const sequelize = require('../config/db')
 const {
   routerOcupacion,
@@ -51,18 +52,18 @@ class Server {
   }
 
   routes () {
-    this.app.use(this.paths.ocupacion, routerOcupacion)
-    this.app.use(this.paths.demanda, routerDemanda)
-    this.app.use(this.paths.estadoProcesal, routerEstadoProcesal)
-    this.app.use(this.paths.procesoJudicial, routerProcesoJudicial)
-    this.app.use(this.paths.juzgado, routerJuzgado)
-    this.app.use(this.paths.juez, routerJuez)
-    this.app.use(this.paths.denuncia, routerDenuncia)
-    this.app.use(this.paths.escolaridad, routerEscolaridad)
-    this.app.use(this.paths.etnia, routerEtnia)
-    this.app.use(this.paths.imputado, routerImputado)
-    this.app.use(this.paths.participante, routerParticipante)
-    this.app.use(this.paths.promovente, routerPromovente)
+    this.app.use(this.paths.ocupacion, verify_jwt, routerOcupacion)
+    this.app.use(this.paths.demanda, verify_jwt, routerDemanda)
+    this.app.use(this.paths.estadoProcesal, verify_jwt, routerEstadoProcesal)
+    this.app.use(this.paths.procesoJudicial, verify_jwt, routerProcesoJudicial)
+    this.app.use(this.paths.juzgado, verify_jwt, routerJuzgado)
+    this.app.use(this.paths.juez, verify_jwt, routerJuez)
+    this.app.use(this.paths.denuncia, verify_jwt, routerDenuncia)
+    this.app.use(this.paths.escolaridad, verify_jwt, routerEscolaridad)
+    this.app.use(this.paths.etnia, verify_jwt, routerEtnia)
+    this.app.use(this.paths.imputado, verify_jwt, routerImputado)
+    this.app.use(this.paths.participante, verify_jwt, routerParticipante)
+    this.app.use(this.paths.promovente, verify_jwt, routerPromovente)
   }
 
   listen () {

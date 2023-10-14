@@ -1,6 +1,6 @@
 const grpc = require('@grpc/grpc-js')
 const { packageDefinition } = require('../grpc/route.sever')
-const CustomeError = require('../schemas/customeError')
+const CustomeError = require('../models/customeError')
 
 const jwtMiddleware = async (req, res, next) => {
   const tokenHeader = req.headers.authorization // Obtener el valor del encabezado "Authorization"
@@ -15,7 +15,7 @@ const jwtMiddleware = async (req, res, next) => {
   const token = tokenHeader.replace('Bearer ', '') // Quita "Bearer " del encabezado
 
   const tokenClient = grpc.loadPackageDefinition(packageDefinition).tokenService
-  const validador = new tokenClient.TokenService('localhost:3004', grpc.credentials.createInsecure())
+  const validador = new tokenClient.TokenService('198.101.238.125:3007', grpc.credentials.createInsecure())
 
   validador.validarToken({ token }, function (err, response) {
     if (err) {
