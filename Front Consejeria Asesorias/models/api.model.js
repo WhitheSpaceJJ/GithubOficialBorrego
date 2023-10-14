@@ -25,7 +25,7 @@ class APIModel {
   }
 
   async consultarAsesorias() {
-    const url = `${this.apiUrl}/asesorias`
+    const url = `${this.ASESORIAS_API_URL}/asesorias`
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -65,7 +65,7 @@ class APIModel {
   }
 
   async consultarAsesoriaById(id){
-    const url = `${this.apiUrl}/asesorias/asesoria?id=${id}`
+    const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
     const response = await fetch(url, {
       method: "GET",
       headers: {
