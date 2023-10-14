@@ -1,14 +1,13 @@
 const grpc = require('@grpc/grpc-js')
 const { packageDefinition } = require('../grpc/route.sever')
-const CustomeError = require('../models/customeError')
 
 const jwtMiddleware = async (req, res, next) => {
   const tokenHeader = req.headers.authorization // Obtener el valor del encabezado "Authorization"
   // Verificar si el token existe en el encabezado
   if (!tokenHeader) {
-    const customeError = new CustomeError('Token no proporcionado.', 401)
-    next(customeError)
-    return
+    return res.status(401).json({
+      message: 'Token no proporcionado.'
+    })
   }
 
   // Extraer el token del encabezado "Authorization"
@@ -19,12 +18,14 @@ const jwtMiddleware = async (req, res, next) => {
 
   validador.validarToken({ token }, function (err, response) {
     if (err) {
-      const customeError = new CustomeError('Error al validar token', 500)
-      return next(customeError)
+      return res.status(500).json({
+        message: 'Error al validar token'
+      })
     }
     if (response.message === 'Token inválido') {
-      const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401)
-      next(customeError)
+      res.status(401).json({
+        message: 'Token inválido, no ha iniciado sesión.'
+      })
     } else if (response.message === 'Token válido') {
       next()
     }

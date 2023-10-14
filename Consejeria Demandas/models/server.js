@@ -1,6 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-const manejadorErrores = require('../middlewares/manejador-errores')
 const verify_jwt = require('../middlewares/verify-jwt')
 const sequelize = require('../config/db')
 const {
@@ -48,7 +47,6 @@ class Server {
   middlewares () {
     this.app.use(express.json())
     this.app.use(cors())
-    this.app.use(manejadorErrores)
   }
 
   routes () {
