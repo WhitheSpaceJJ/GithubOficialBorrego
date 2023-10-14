@@ -1,7 +1,7 @@
 class APIModel {
-  USERS_API_URL = "http://localhost:3002"
-  ASESORIAS_API_URL = "http://localhost:3000"
-  CP_API_URL = "http://localhost:3001"
+  USERS_API_URL = "http://198.101.238.125:3002"
+  ASESORIAS_API_URL = "http://192.101.238.125:3009"
+  CP_API_URL = "http://198.101.238.125:3012"
   user = JSON.parse(sessionStorage.getItem("user"))
 
   constructor() {}

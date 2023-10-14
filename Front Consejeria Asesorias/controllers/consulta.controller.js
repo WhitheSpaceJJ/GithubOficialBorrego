@@ -1,6 +1,9 @@
+import { ControllerUtils } from "../lib/controllerUtils"
+
 class ConsultaController {
     constructor(model) {
         this.model = model
+        this.utils = new ControllerUtils(model.user)
     }
 
     //DOMContentLoaded
