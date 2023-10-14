@@ -3,6 +3,9 @@ const imputadoDAO = require('../data-access/imputadoDAO')
 const obtenerImputados = async (req, res) => {
   try {
     const imputados = await imputadoDAO.obtenerImputados()
+    if(imputados.length === 0){
+      return res.status(204).json(imputados)
+    }
     res.json(imputados)
   } catch (error) {
     res.status(500).json({

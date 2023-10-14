@@ -3,6 +3,9 @@ const juzgadoDAO = require('../data-access/juzgadoDAO')
 const obtenerJuzgados = async (_, res) => {
   try {
     const juzgados = await juzgadoDAO.obtenerJuzgados()
+    if(juzgados.length === 0){
+      return res.status(204).json(juzgados)
+    }
     res.json(juzgados)
   } catch (error) {
     res.status(500).json({

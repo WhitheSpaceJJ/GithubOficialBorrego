@@ -3,6 +3,9 @@ const ocupacionDAO = require('../data-access/ocupacionDAO')
 const obtenerOcupaciones = async (req, res) => {
   try {
     const ocupaciones = await ocupacionDAO.obtenerOcupaciones()
+    if(ocupaciones.length === 0){
+      return res.status(204).json(ocupaciones)
+    }
     res.json(ocupaciones)
   } catch (error) {
     res.status(500).json({

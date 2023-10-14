@@ -3,6 +3,9 @@ const etniaDAO = require('../data-access/etniaDAO')
 const obtenerEtnias = async (req, res) => {
   try {
     const etnias = await etniaDAO.obtenerEtnias()
+    if(etnias.length === 0) {
+      return res.status(204).json(etnias)
+    }
     res.json(etnias)
   } catch (error) {
     res.status(500).json({

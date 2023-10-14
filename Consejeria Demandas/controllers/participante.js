@@ -23,6 +23,9 @@ const crearParticipante = async (req, res) => {
 const obtenerParticipantes = async (req, res) => {
   try {
     const participantes = await participanteDAO.obtenerParticipantes()
+    if(participantes.length === 0){
+      return res.status(204).json(participantes)
+    }
     res.json(participantes)
   } catch (error) {
     res.status(500).json({

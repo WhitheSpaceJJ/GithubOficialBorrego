@@ -23,6 +23,9 @@ const crearProcesoJudicial = async (req, res) => {
 const obtenerProcesosJudiciales = async (req, res) => {
   try {
     const procesosJudiciales = await procesoJudicialDAO.obtenerProcesosJudiciales()
+    if(procesosJudiciales.length === 0){
+      return res.status(204).json(procesosJudiciales)
+    }
     res.json(procesosJudiciales)
   } catch (error) {
     res.status(500).json({

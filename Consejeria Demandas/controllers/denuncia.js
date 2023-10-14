@@ -3,6 +3,9 @@ const denunciaDAO = require('../data-access/denunciaDAO')
 const obtenerDenuncias = async (_, res) => {
   try {
     const denuncias = await denunciaDAO.obtenerDenuncias()
+    if(denuncias.length === 0){
+      return res.status(204).json(denuncias);
+    }
     res.json(denuncias)
   } catch (error) {
     res.status(500).json({

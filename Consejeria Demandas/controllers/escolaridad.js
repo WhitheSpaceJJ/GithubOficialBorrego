@@ -3,6 +3,9 @@ const escolaridadDAO = require('../data-access/escolaridadDAO')
 const obtenerEscolaridades = async (_, res) => {
   try {
     const escolaridades = await escolaridadDAO.obtenerEscolaridades()
+    if(escolaridades.length === 0){
+      return res.status(204).json(escolaridades);
+    }
     res.json(escolaridades)
   } catch (error) {
     res.status(500).json({

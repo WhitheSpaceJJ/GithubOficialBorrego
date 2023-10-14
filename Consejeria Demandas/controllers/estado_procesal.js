@@ -3,6 +3,9 @@ const estado_procesalDAO = require('../data-access/estado_procesalDAO')
 const obtenerEstadosProcesales = async (req, res) => {
   try {
     const estados_procesales = await estado_procesalDAO.obtenerEstadosProcesales()
+    if(estados_procesales.length === 0){
+      return res.status(204).json(estados_procesales)
+    }
     res.json(estados_procesales)
   } catch (error) {
     res.status(500).json({
