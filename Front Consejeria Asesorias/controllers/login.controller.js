@@ -1,3 +1,4 @@
+import { ValidationError } from "../lib/errors"
 import { validateNonEmptyFields } from "../lib/utils"
 
 class LoginController {
@@ -11,23 +12,25 @@ class LoginController {
     const password = document.getElementById("password").value
     try {
       if (!validateNonEmptyFields([correo, password])) {
-        throw new Error("Campos obligatorios en blanco, por favor revise.")
+        throw new ValidationError(
+          "Campos obligatorios en blanco, por favor revise."
+        )
       }
 
       const user = await this.model.login({ correo, password })
       sessionStorage.setItem("user", JSON.stringify(user))
       window.location.replace("index.html")
     } catch (error) {
-      const miAlerta = document.getElementById("alerta")
-      document.getElementById("mensaje-alerta").innerHTML = error.message
-      miAlerta.style.display = "flex"
-      //console.error("Error:", error.message)
+      if (error instanceof ValidationError) {
+        const modal = document.querySelector("modal-warning")
+        modal.message = error.message
+        modal.open = true
+      } else {
+        const modal = document.querySelector("modal-warning")
+        modal.message = "Error al iniciar sesión, por favor intenta de nuevo."
+        modal.open = true
+      }
     }
-  }
-
-  cerrar() {
-    const alerta = document.getElementById("alerta")
-    alerta.style.display = "none"
   }
 }
 
