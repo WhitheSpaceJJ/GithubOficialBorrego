@@ -5,9 +5,9 @@ class ControllerUtils {
 
   //Methods
 
-  validatePermissions = ({ permissions = [], redirect = "index.html" }) => {
+  validatePermissions = ({ permissions = [], redirect = 'index.html' }) => {
     if (!this.user) {
-      window.location.replace("login.html")
+      window.location.replace('login.html')
       return false
     }
     if (permissions.length === 0) return true
@@ -25,8 +25,8 @@ class ControllerUtils {
   }
 
   handleLogout = () => {
-    sessionStorage.removeItem("user")
-    window.location.replace("login.html")
+    sessionStorage.removeItem('user')
+    window.location.replace('login.html')
   }
 }
 

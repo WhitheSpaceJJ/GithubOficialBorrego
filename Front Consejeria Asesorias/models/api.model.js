@@ -1,8 +1,8 @@
 class APIModel {
-  USERS_API_URL = "http://198.101.238.125:3002"
-  ASESORIAS_API_URL = "http://192.101.238.125:3009"
-  CP_API_URL = "http://198.101.238.125:3012"
-  user = JSON.parse(sessionStorage.getItem("user"))
+  USERS_API_URL = 'http://198.101.238.125:3002'
+  ASESORIAS_API_URL = 'http://192.101.238.125:3009'
+  CP_API_URL = 'http://198.101.238.125:3012'
+  user = JSON.parse(sessionStorage.getItem('user'))
 
   constructor() {}
 
@@ -11,25 +11,25 @@ class APIModel {
   async login({ correo, password }) {
     const url = `${this.USERS_API_URL}/usuarios/usuario?correo=${correo}&password=${password}`
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
     if (response.ok) {
       const data = await response.json()
       return data
     } else {
-      throw new Error("Error en la petición")
+      throw new Error('Error en la petición')
     }
   }
 
   async consultarAsesorias() {
     const url = `${this.ASESORIAS_API_URL}/asesorias`
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${this.user.token}`,
       },
     })
@@ -37,7 +37,7 @@ class APIModel {
       const data = await response.json()
       return data
     } else {
-      throw new Error("Error en la petición")
+      throw new Error('Error en la petición')
     }
   }
 
@@ -51,7 +51,7 @@ class APIModel {
     url.search = new URLSearchParams(params).toString()
 
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${this.user.token}`,
       },
@@ -60,30 +60,30 @@ class APIModel {
       const data = await response.json()
       return data
     } else {
-      throw new Error("Error en la petición")
+      throw new Error('Error en la petición')
     }
   }
 
   async consultarAsesoriaById(id) {
     const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
     if (response.ok) {
       const data = await response.json()
       return data
     } else {
-      throw new Error("Error en la petición")
+      throw new Error('Error en la petición')
     }
   }
 
   async getColoniaById(idColonia) {
     const url = `${this.CP_API_URL}/colonias/${idColonia}`
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${this.user.token}`,
       },
@@ -92,7 +92,7 @@ class APIModel {
       const data = await response.json()
       return data
     } else {
-      throw new Error("Error en la petición")
+      throw new Error('Error en la petición')
     }
   }
 }

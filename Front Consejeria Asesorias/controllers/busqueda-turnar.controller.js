@@ -9,6 +9,7 @@ class BusquedaTurnar {
   // Methods
   handleSearch = async inputs => {
     const [nombre, apellidoPaterno, apellidoMaterno] = inputs
+    console.log(nombre, apellidoPaterno, apellidoMaterno)
     try {
       if (!validateNonEmptyFields(inputs)) {
         throw new ValidationError(

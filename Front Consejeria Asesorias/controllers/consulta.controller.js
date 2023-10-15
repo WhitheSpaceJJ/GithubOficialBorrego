@@ -1,45 +1,44 @@
-import { ControllerUtils } from "../lib/controllerUtils"
+import { ControllerUtils } from '../lib/controllerUtils'
 
 class ConsultaController {
-    constructor(model) {
-        this.model = model
-        this.utils = new ControllerUtils(model.user)
+  constructor(model) {
+    this.model = model
+    this.utils = new ControllerUtils(model.user)
+  }
+
+  // DOMContentLoaded
+  handleDOMContentLoaded = () => {
+    // add permissions
+    this.utils.validatePermissions({})
+    this.handleConsultarAsesorias()
+  }
+
+  handleConsultarAsesorias = async () => {
+    try {
+      const asesorias = await this.model.consultarAsesorias()
+      const table = document.getElementById('table-asesorias')
+      asesorias.forEach(asesoria => {
+        table.appendChild(this.crearRow(asesoria))
+      })
+    } catch (error) {
+      console.error('Error:', error.message)
     }
+  }
 
-    //DOMContentLoaded
-    handleDOMContentLoaded = () => {
-        //add permissions
-        this.utils.validatePermissions({})
-        this.handleConsultarAsesorias
+  handleConsultarAsesoriasById = async id => {
+    try {
+      const asesoria = await this.model.consultarAsesoriaById(id)
+      return asesoria
+    } catch (error) {
+      console.error('Error:', error.message)
     }
+  }
 
-    handleConsultarAsesorias = async () => {
-        try {
-            const asesorias = await this.model.consultarAsesorias()
-            const table = document.getElementById('table-asesorias')
-            asesorias.forEach(asesoria => {
-                table.appendChild(this.crearRow(asesoria))
-            })
-        } catch (error) {
-            console.error("Error:", error.message)
-        }
-    }
+  crearRow(asesoria) {
+    const row = document.createElement('tr')
+    row.classList.add('bg-white', 'border-b', 'hover:bg-gray-50')
 
-    handleConsultarAsesoriasById = async (id) => {
-        try {
-            const asesoria = await this.model.consultarAsesoriaById(id)
-            return asesoria
-        } catch (error) {
-            console.error("Error:", error.message)
-        }
-    }
-
-    crearRow(asesoria) {
-        const row = document.createElement('tr');
-        row.classList.add('bg-white', 'border-b', 'hover:bg-gray-50')
-
-        row.innerHTML =
-            `<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+    row.innerHTML = `<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                 ${asesoria.datos_asesoria.id_asesoria}
             </td>
             <td class="px-6 py-4">
@@ -56,10 +55,10 @@ class ConsultaController {
             </td>
             <td class="px-6 py-4 text-right">
                 <button href="#" class="font-medium text-[#db2424] hover:underline" onclick="consultarAsesoria(this.value)" value="${asesoria.datos_asesoria.id_asesoria}">Consultar</button>
-            </td>`;
+            </td>`
 
-        return row
-    }
+    return row
+  }
 }
 
 export { ConsultaController }

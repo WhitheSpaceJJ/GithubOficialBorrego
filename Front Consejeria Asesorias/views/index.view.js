@@ -1,10 +1,10 @@
-import "../components/navbar/navbar.js"
+import '../components/navbar/navbar.js'
 
 class IndexView {
   constructor(controller) {
     this.controller = controller
     document.addEventListener(
-      "DOMContentLoaded",
+      'DOMContentLoaded',
       this.controller.handleDOMContentLoaded()
     )
   }

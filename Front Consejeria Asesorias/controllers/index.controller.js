@@ -1,4 +1,4 @@
-import { ControllerUtils } from "../lib/controllerUtils"
+import { ControllerUtils } from '../lib/controllerUtils'
 
 class IndexController {
   constructor(model) {
@@ -6,11 +6,10 @@ class IndexController {
     this.utils = new ControllerUtils(model.user)
   }
 
-  //DOMContentLoaded
+  // DOMContentLoaded
   handleDOMContentLoaded = () => {
-    //add permissions
-    if (this.utils.validatePermissions({})) {
-    }
+    // add permissions
+    this.utils.validatePermissions({})
   }
 }
 
