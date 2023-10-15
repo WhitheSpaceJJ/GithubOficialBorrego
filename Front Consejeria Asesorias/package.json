@@ -22,9 +22,10 @@
     "rules": {
       "quotes": [
         "error",
-        "double"
+        "single"
       ],
       "space-before-function-paren": [
+        "error",
         "never"
       ]
     }
