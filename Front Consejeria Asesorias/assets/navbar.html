@@ -1,12 +1,12 @@
-<!-- prettier-ignore -->
+<link rel="stylesheet" href="/tailwind.css" />
 <header class="bg-[#972727] h-32 border-b-[20px] border-[#693c09]">
   <nav
-    class="max-w-screen-xl flex flex-wrap items-center justify-between p-4 mx-auto h-full"
+    class="relative flex flex-wrap items-center justify-between h-full max-w-screen-xl p-4 mx-auto"
   >
-    <a href="#" class="flex items-center">
+    <a href="/" class="flex items-center">
       <img src="./img/DPS.png" class="w-16 mr-3" alt="DPS Logo" />
       <span
-        class="my-auto text-4xl font-semibold text-center hidden lg:block text-white"
+        class="hidden my-auto text-4xl font-semibold text-center text-white lg:block"
         translate="no"
         >CONSEJERÍA FISCAL</span
       >
@@ -14,9 +14,8 @@
     <button
       data-collapse-toggle="navbar-dropdown"
       type="button"
-      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden"
-      aria-controls="navbar-dropdown"
-      aria-expanded="false"
+      class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-white rounded-lg md:hidden"
+      id="mobile-menu-toggle"
     >
       <span class="sr-only">Open main menu</span>
       <svg
@@ -35,23 +34,25 @@
         />
       </svg>
     </button>
-    <div class="hidden w-full md:block md:w-auto z-50" id="navbar-dropdown">
+    <div
+      class="absolute right-0 z-50 hidden w-full top-full md:block md:w-auto md:relative md:top-0 md:z-0"
+      id="navbar-dropdown"
+    >
       <ul
-        class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-300 rounded-lg bg-gray-50 md:bg-transparent md:flex-row md:space-x-8 md:mt-0 md:border-0 text-black"
+        class="flex flex-col p-4 mt-4 font-medium text-black border border-gray-300 rounded-lg md:p-0 bg-gray-50 md:bg-transparent md:flex-row md:space-x-8 md:mt-0 md:border-0"
       >
         <li>
           <a
-            href="menu.html"
-            class="block py-2 pl-3 pr-4 text-black md:text-white md:p-0 text-xl md:hover:text-gray-300"
+            href="/"
+            class="block py-2 pl-3 pr-4 text-xl text-black md:text-white md:p-0 md:hover:text-gray-300"
             aria-current="page"
             >Inicio</a
           >
         </li>
-        <li>
+        <li class="relative">
           <button
             id="dropdownServicioLink"
-            data-dropdown-toggle="dropdownNavbarServicio"
-            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-black md:text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-300 text-xl md:p-0 md:w-auto"
+            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-xl text-black rounded md:text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-300 md:p-0 md:w-auto"
           >
             Servicio
             <svg
@@ -73,12 +74,9 @@
           <!-- Dropdown menu -->
           <div
             id="dropdownNavbarServicio"
-            class="z-10 hidden font-normal bg-white rounded-lg shadow w-44"
+            class="absolute z-10 hidden font-normal transform -translate-x-1/2 bg-white rounded-lg shadow w-44 top-10 left-1/2"
           >
-            <ul
-              class="py-2 text-sm text-gray-700"
-              aria-labelledby="dropdownLargeButton"
-            >
+            <ul class="py-2 text-sm text-gray-700">
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100"
                   >Registrar asesoría</a
@@ -92,11 +90,10 @@
             </ul>
           </div>
         </li>
-        <li>
+        <li class="relative">
           <button
             id="dropdownConsultaLink"
-            data-dropdown-toggle="dropdownNavbarConsulta"
-            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:text-white md:hover:bg-transparent md:border-0 md:hover:text-gray-300 text-xl md:p-0 md:w-auto"
+            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-xl text-gray-900 rounded hover:bg-gray-100 md:text-white md:hover:bg-transparent md:border-0 md:hover:text-gray-300 md:p-0 md:w-auto"
           >
             Consulta
             <svg
@@ -118,12 +115,9 @@
           <!-- Dropdown menu -->
           <div
             id="dropdownNavbarConsulta"
-            class="z-10 hidden font-normal bg-white rounded-lg shadow w-44"
+            class="absolute z-10 hidden font-normal transform -translate-x-1/2 bg-white rounded-lg shadow w-44 top-10 left-1/2"
           >
-            <ul
-              class="py-2 text-sm text-gray-700"
-              aria-labelledby="dropdownLargeButton"
-            >
+            <ul class="py-2 text-sm text-gray-700">
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100"
                   >Consultar asesorías</a
@@ -133,13 +127,13 @@
           </div>
         </li>
         <li>
-          <a
-            id="salir"
+          <button
+            id="btn-logout"
             href="login.html"
-            class="flex w-full py-2 pl-3 pr-4 text-red-600 font-bold rounded hover:bg-gray-100 md:text-white md:font-medium md:hover:bg-transparent md:border-0 md:hover:text-gray-300 text-xl md:p-0 md:w-auto"
+            class="flex w-full py-2 pl-3 pr-4 text-xl font-bold text-red-600 rounded hover:bg-gray-100 md:text-white md:font-medium md:hover:bg-transparent md:border-0 md:hover:text-gray-300 md:p-0 md:w-auto"
           >
             Salir
-          </a>
+          </button>
         </li>
       </ul>
     </div>

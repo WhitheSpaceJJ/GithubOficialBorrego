@@ -1,3 +1,5 @@
+import "../components/navbar/navbar.js"
+
 class IndexView {
   constructor(controller) {
     this.controller = controller
