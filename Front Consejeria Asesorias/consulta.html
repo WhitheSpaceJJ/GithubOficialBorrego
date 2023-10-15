@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./tailwind.css" />
     
-    <script src="js/consulta.js"></script>
+    <script src="src/consulta.js" type="module"></script>
     <script src="/lib/include-html.js" type="module"></script>
 </head>
 
@@ -18,7 +18,7 @@
     <div data-include="assets/navbar.html"></div>
     <div class="w-full max-w-screen-lg px-1 mx-auto mt-12 overflow-x-auto">
         <h1 class="mb-8 text-4xl font-semibold">Asesorías</h1>
-
+        
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-left text-gray-500 ">
                 <thead class="text-gray-700 uppercase bg-gray-100 ">
@@ -43,7 +43,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <!-- Rows will be added from consultas.js -->
                 </tbody>
             </table>

@@ -1,7 +1,7 @@
 class APIModel {
-  USERS_API_URL = "http://localhost:3002"
-  ASESORIAS_API_URL = "http://localhost:3000"
-  CP_API_URL = "http://localhost:3001"
+  USERS_API_URL = "http://198.101.238.125:3002"
+  ASESORIAS_API_URL = "http://192.101.238.125:3009"
+  CP_API_URL = "http://198.101.238.125:3012"
   user = JSON.parse(sessionStorage.getItem("user"))
 
   constructor() {}
@@ -24,6 +24,23 @@ class APIModel {
     }
   }
 
+  async consultarAsesorias() {
+    const url = `${this.ASESORIAS_API_URL}/asesorias`
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error("Error en la petición")
+    }
+  }
+  
   async getAsesoriaByFullName({ nombre, apellidoPaterno, apellidoMaterno }) {
     const url = new URL(`${this.ASESORIAS_API_URL}/asesorias/buscar`)
     const params = {
@@ -37,6 +54,22 @@ class APIModel {
       method: "GET",
       headers: {
         Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error("Error en la petición")
+    }
+  }
+
+  async consultarAsesoriaById(id){
+    const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
     })
     if (response.ok) {
