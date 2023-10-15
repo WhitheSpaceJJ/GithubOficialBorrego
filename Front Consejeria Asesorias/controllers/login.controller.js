@@ -6,7 +6,7 @@ class LoginController {
     this.model = model
   }
 
-  //Methods
+  // Methods
   handleLogin = async () => {
     const correo = document.getElementById("correo").value
     const password = document.getElementById("password").value

@@ -40,7 +40,7 @@ class APIModel {
       throw new Error("Error en la petición")
     }
   }
-  
+
   async getAsesoriaByFullName({ nombre, apellidoPaterno, apellidoMaterno }) {
     const url = new URL(`${this.ASESORIAS_API_URL}/asesorias/buscar`)
     const params = {
@@ -64,7 +64,7 @@ class APIModel {
     }
   }
 
-  async consultarAsesoriaById(id){
+  async consultarAsesoriaById(id) {
     const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
     const response = await fetch(url, {
       method: "GET",

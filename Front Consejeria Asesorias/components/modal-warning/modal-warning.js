@@ -7,11 +7,13 @@ export class Modal extends HTMLElement {
   static get observedAttributes() {
     return ["open", "message"]
   }
+
   constructor() {
     super()
     const shadow = this.attachShadow({ mode: "open" })
     shadow.appendChild(template.content.cloneNode(true))
   }
+
   connectedCallback() {
     this.btnCloseAlerta = this.shadowRoot.getElementById("btn-close-alerta")
     this.idAlerta = this.shadowRoot.getElementById("alerta")
