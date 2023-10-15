@@ -52,37 +52,6 @@
       </section>
     </main>
     <!-- MODAL ADVERTENCIA -->
-    <div
-      class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50"
-      id="alerta"
-    >
-      <div
-        class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full"
-      >
-        <button
-          class="absolute z-50 flex items-center justify-center text-2xl font-bold rounded-full top-4 right-4"
-          id="btn-close-alerta"
-        >
-          <svg
-            class="w-6 h-6 text-black fill-current hover:text-red-700"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
-            />
-          </svg>
-        </button>
-
-        <h1 class="pt-4 text-3xl font-bold text-center text-black">
-          Advertencia
-        </h1>
-
-        <div class="flex flex-col items-center justify-center p-4">
-          <p class="mb-2 text-lg text-center text-black" id="mensaje-alerta">
-            El usuario o la contraseña son incorrectos.
-          </p>
-        </div>
-      </div>
-    </div>
+    <modal-warning> El usuario o la contraseña son incorrectos.</modal-warning>
   </body>
 </html>
