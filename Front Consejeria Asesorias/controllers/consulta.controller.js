@@ -15,8 +15,10 @@ class ConsultaController {
 
   handleConsultarAsesorias = async () => {
     try {
-      const asesorias = await this.model.consultarAsesorias()
-      const table = document.getElementById('table-asesorias')
+      const asesoriasResponse = await this.model.getAsesorias()
+      const asesorias = asesoriasResponse.asesorias
+
+      const table = document.getElementById('table-body')
       asesorias.forEach(asesoria => {
         table.appendChild(this.crearRow(asesoria))
       })
@@ -27,7 +29,7 @@ class ConsultaController {
 
   handleConsultarAsesoriasById = async id => {
     try {
-      const asesoria = await this.model.consultarAsesoriaById(id)
+      const asesoria = await this.model.getAsesoriaById(id)
       return asesoria
     } catch (error) {
       console.error('Error:', error.message)
