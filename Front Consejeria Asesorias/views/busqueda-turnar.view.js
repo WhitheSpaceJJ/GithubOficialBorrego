@@ -9,6 +9,11 @@ class BusquedaTurnarView {
     this.searchForm = document.getElementById('registrar-turno')
 
     // Agrega manejadores de eventos
+    document.addEventListener(
+      'DOMContentLoaded',
+      this.controller.handleDOMContentLoaded()
+    )
+
     this.searchForm.addEventListener('submit', e => {
       e.preventDefault()
 

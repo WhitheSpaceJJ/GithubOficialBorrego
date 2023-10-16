@@ -1,12 +1,13 @@
 class APIModel {
   USERS_API_URL = 'http://198.101.238.125:3002'
-  ASESORIAS_API_URL = 'http://192.101.238.125:3009'
+  ASESORIAS_API_URL = 'http://198.101.238.125:3009'
   CP_API_URL = 'http://198.101.238.125:3012'
   user = JSON.parse(sessionStorage.getItem('user'))
 
+  // eslint-disable-next-line no-useless-constructor
   constructor() {}
 
-  //GET methods
+  // GET methods
 
   async login({ correo, password }) {
     const url = `${this.USERS_API_URL}/usuarios/usuario?correo=${correo}&password=${password}`
@@ -44,7 +45,7 @@ class APIModel {
   async getAsesoriaByFullName({ nombre, apellidoPaterno, apellidoMaterno }) {
     const url = new URL(`${this.ASESORIAS_API_URL}/asesorias/buscar`)
     const params = {
-      nombre: nombre,
+      nombre,
       apellido_paterno: apellidoPaterno,
       apellido_materno: apellidoMaterno,
     }
