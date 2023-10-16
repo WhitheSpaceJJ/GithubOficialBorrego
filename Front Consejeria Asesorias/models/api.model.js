@@ -1,12 +1,12 @@
 class APIModel {
   USERS_API_URL = 'http://198.101.238.125:3002'
-  ASESORIAS_API_URL = 'http://192.101.238.125:3009'
+  ASESORIAS_API_URL = 'http://198.101.238.125:3009'
   CP_API_URL = 'http://198.101.238.125:3012'
   user = JSON.parse(sessionStorage.getItem('user'))
 
   constructor() {}
 
-  //GET methods
+  // GET methods
 
   async login({ correo, password }) {
     const url = `${this.USERS_API_URL}/usuarios/usuario?correo=${correo}&password=${password}`
@@ -24,7 +24,7 @@ class APIModel {
     }
   }
 
-  async consultarAsesorias() {
+  async getAsesorias() {
     const url = `${this.ASESORIAS_API_URL}/asesorias`
     const response = await fetch(url, {
       method: 'GET',
@@ -64,7 +64,7 @@ class APIModel {
     }
   }
 
-  async consultarAsesoriaById(id) {
+  async getAsesoriaById(id) {
     const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
     const response = await fetch(url, {
       method: 'GET',
