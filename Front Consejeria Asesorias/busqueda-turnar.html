@@ -1,7 +1,7 @@
 <!doctype html>
-<html>
+<html lang="es">
   <head>
-    <title>Sistema Asesoría</title>
+    <title>Sistema de Asesoría</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/img/DPS.png" />
@@ -9,12 +9,16 @@
     <script src="./src/busqueda-turnar.js" type="module"></script>
   </head>
 
-  <body class="h-screen md:bg-gray-50">
+  <body
+    class="flex flex-col h-screen bg-gray-50 md:bg-[url('/img/bg-desierto.jpg')] bg-cover bg-center"
+  >
     <navbar-comp></navbar-comp>
 
-    <main class="flex items-center justify-center md:mt-[10vh] mb-auto md:">
+    <main
+      class="flex items-top justify-center mb-auto flex-1 md:pt-[10vh] backdrop-blur-md"
+    >
       <section
-        class="w-full max-w-md max-h-full p-12 text-center bg-white md:shadow-xl rounded-xl"
+        class="w-full max-w-md p-12 text-center bg-white h-fit md:shadow-xl rounded-xl"
       >
         <h1 class="mb-4 text-3xl font-bold">Registrar turno</h1>
         <form id="registrar-turno">
