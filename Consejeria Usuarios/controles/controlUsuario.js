@@ -105,6 +105,9 @@ const obtenerUsuarioCorreo = async (correo, password) => {
 
 const agregarUsuario = async (usuario) => {
   try {
+    const hashedPassword = await bcrypt.hash(usuario.password, 10);
+    delete usuario.password;
+    usuario.password = hashedPassword;
     return (await modelUsuario.Usuario.create(usuario, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);
