@@ -18,15 +18,11 @@ export class Modal extends HTMLElement {
     this.btnCloseAlerta = this.shadowRoot.getElementById('btn-close-alerta')
     this.idAlerta = this.shadowRoot.getElementById('alerta')
 
-    this.btnCloseAlerta.addEventListener(
-      'click',
-      () => {
-        const alerta = this.shadowRoot.getElementById('alerta')
-        alerta.style.display = 'none'
-        this.setAttribute('open', 'false')
-      },
-      { once: true }
-    )
+    this.btnCloseAlerta.addEventListener('click', () => {
+      const alerta = this.shadowRoot.getElementById('alerta')
+      alerta.style.display = 'none'
+      this.setAttribute('open', 'false')
+    })
 
     this.idAlerta.addEventListener('click', e => {
       if (e.target === this.idAlerta) {
