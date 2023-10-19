@@ -186,10 +186,8 @@ const actualizarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
     const asesoria_obj = JSON.parse(asesoria_str)
-    /*Persona
     const persona = asesoria_obj.persona;
-    const domicilio_pre = await controlDomicilios.actualizarDomicilio(
-      persona.domicilio);
+    const domicilio_pre = await controlDomicilios.actualizarDomicilio(persona.domicilio);
     console.log(domicilio_pre);
     persona.id_domicilio = persona.domicilio.id_domicilio;
     persona.id_genero = persona.genero.id_genero;
@@ -197,8 +195,6 @@ const actualizarAsesoria = async (asesoria_pre) => {
     delete persona.domicilio;
     const persona_pre = await controlPersonas.actualizarPersona(persona);
     console.log(persona_pre);
-*/
-    /*
         //Asesorado
         const asesorado = asesoria_obj.asesorado;
         asesorado.id_estado_civil = asesorado.estado_civil.id_estado_civil;
@@ -211,7 +207,6 @@ const actualizarAsesoria = async (asesoria_pre) => {
         }
         const asesorado_pre = await controlAsesorados.actualizarAsesorado(asesorado)
         console.log(asesorado_pre);
-    */
 
     const datos_asesoria = asesoria_obj.datos_asesoria;
     datos_asesoria.id_asesorado = asesoria_obj.asesorado.id_asesorado;
