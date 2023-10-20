@@ -3,29 +3,55 @@
   class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50"
   id="alerta"
 >
-  <div
-    class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full"
-  >
-    <button
-      class="absolute z-50 flex items-center justify-center text-2xl font-bold rounded-full top-4 right-4"
-      id="btn-close-alerta"
-    >
-      <svg
-        class="w-6 h-6 text-black fill-current hover:text-red-700"
-        viewBox="0 0 24 24"
+  <div class="relative w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex items-center justify-between p-5 border-b rounded-t">
+        <h3 class="text-xl font-medium text-gray-900" id="title-alerta">
+          Advertencia
+        </h3>
+        <button
+          type="button"
+          id="btn-close-alerta"
+          class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-6 space-y-6">
+        <p class="text-base leading-relaxed text-black" id="mensaje-alerta">
+          <slot></slot>
+        </p>
+      </div>
+      <!-- Modal footer -->
+      <div
+        class="flex items-center justify-center p-2 space-x-2 border-t border-gray-200 rounded-b"
       >
-        <path
-          d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
-        />
-      </svg>
-    </button>
-
-    <h2 class="pt-4 text-3xl font-bold text-center text-black">Advertencia</h2>
-
-    <div class="flex flex-col items-center justify-center p-4">
-      <p class="mb-2 text-lg text-center text-black" id="mensaje-alerta">
-        <slot></slot>
-      </p>
+        <button
+          type="button"
+          id="btn-aceptar-alerta"
+          class="px-6 text-center py-2 rounded-md bg-[#a52a2a] text-white hover:bg-[#db2424] font-semibold transition duration-200"
+        >
+          Aceptar
+        </button>
+      </div>
     </div>
   </div>
 </div>
