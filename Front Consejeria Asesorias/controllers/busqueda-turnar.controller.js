@@ -2,7 +2,7 @@ import { ControllerUtils } from '../lib/controllerUtils.js'
 import { ValidationError } from '../lib/errors.js'
 import { validateNonEmptyFields } from '../lib/utils.js'
 
-class BusquedaTurnar {
+class BusquedaTurnarController {
   constructor(model) {
     this.model = model
     this.utils = new ControllerUtils(model.user)
@@ -17,7 +17,7 @@ class BusquedaTurnar {
   // Methods
   handleSearch = async inputs => {
     const [nombre, apellidoPaterno, apellidoMaterno] = inputs
-    console.log(nombre, apellidoPaterno, apellidoMaterno)
+
     try {
       if (!validateNonEmptyFields(inputs)) {
         throw new ValidationError(
@@ -30,16 +30,13 @@ class BusquedaTurnar {
         apellidoPaterno,
         apellidoMaterno,
       })
-      console.log(asesoria)
-      console.log(asesoria.persona.domicilio.id_colonia)
 
       const dataColonia = await this.model.getColoniaById(
         asesoria.persona.domicilio.id_colonia
       )
-      console.log(dataColonia)
 
       sessionStorage.setItem('asesoria', JSON.stringify(asesoria))
-      sessionStorage.setItem('colonia', JSON.stringify(dataColonia))
+      sessionStorage.setItem('colonia', JSON.stringify(dataColonia.data))
 
       location.href = 'turnar.html'
     } catch (error) {
@@ -56,4 +53,4 @@ class BusquedaTurnar {
   }
 }
 
-export { BusquedaTurnar }
+export { BusquedaTurnarController }
