@@ -5,32 +5,47 @@ template.innerHTML = html
 
 export class Modal extends HTMLElement {
   static get observedAttributes() {
-    return ['open', 'message']
+    return ['open', 'message', 'title', 'onClose']
   }
 
   constructor() {
     super()
     const shadow = this.attachShadow({ mode: 'open' })
     shadow.appendChild(template.content.cloneNode(true))
+
+    this._onCloseCallback = null
+
+    this.onClose = () => {
+      const alerta = this.shadowRoot.getElementById('alerta')
+      alerta.style.display = 'none'
+      this.setAttribute('open', 'false')
+
+      // Si hay una función de cierre configurada, llámala
+      if (typeof this._onCloseCallback === 'function') {
+        this._onCloseCallback()
+      }
+    }
   }
 
   connectedCallback() {
     this.btnCloseAlerta = this.shadowRoot.getElementById('btn-close-alerta')
     this.idAlerta = this.shadowRoot.getElementById('alerta')
+    this.btnAceptarAlerta = this.shadowRoot.getElementById('btn-aceptar-alerta')
 
-    this.btnCloseAlerta.addEventListener('click', () => {
-      const alerta = this.shadowRoot.getElementById('alerta')
-      alerta.style.display = 'none'
-      this.setAttribute('open', 'false')
-    })
+    this.btnCloseAlerta.addEventListener('click', this.onClose)
+
+    this.btnAceptarAlerta.addEventListener('click', this.onClose)
 
     this.idAlerta.addEventListener('click', e => {
       if (e.target === this.idAlerta) {
-        const alerta = this.shadowRoot.getElementById('alerta')
-        alerta.style.display = 'none'
-        this.setAttribute('open', 'false')
+        this.onClose()
       }
     })
+  }
+
+  setOnCloseCallback(callback) {
+    // Permite configurar la función de cierre desde fuera de la clase
+    this._onCloseCallback = callback
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -54,6 +69,14 @@ export class Modal extends HTMLElement {
 
   set open(value) {
     this.setAttribute('open', value)
+  }
+
+  get title() {
+    return this.getAttribute('title')
+  }
+
+  set title(value) {
+    this.shadowRoot.getElementById('title-alerta').innerHTML = value
   }
 }
 
