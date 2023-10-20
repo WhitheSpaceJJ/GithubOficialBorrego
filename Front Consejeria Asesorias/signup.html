@@ -7,13 +7,14 @@
     <link rel="icon" href="/img/DPS.png" />
     <link rel="stylesheet" href="./tailwind.css" />
     <script src="./lib/include-html.js" type="module"></script>
+    <script src="./src/signup.js" type="module" defer></script>
 </head>
 <body class="h-screen bg-gray-50">
     <div data-include="assets/header.html"></div>
     <main class="flex items-center justify-center mt-10 mb-auto 2xl:mt-28">
         <section class="w-full max-w-lg max-h-full p-6 text-center bg-white shadow-xl rounded-xl md:p-12">
             <h1 class="mb-4 text-3xl font-bold">Registro de Usuario</h1>
-            <form id="registro">
+            <form id="signup">
                 <input 
                 required 
                 type="text" 
@@ -40,7 +41,7 @@
 
                 <input 
                 required 
-                type="text" 
+                type="email" 
                 id="correo" 
                 name="correo" 
                 placeholder="Correo" 
@@ -57,10 +58,10 @@
                 <input 
                 required 
                 type="password" 
-                id="password2" 
-                name="password2" 
+                id="password-confirm" 
+                name="password-confirm" 
                 placeholder="Confirmar Contraseña" 
-                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+                class="w-full p-3 mb-4 border border-gray-200 rounded" minlength="8"/>
 
                 <section class="flex flex-col items-center justify-between w-full max-w-lg gap-2 mb-4 sm:flex-row">
                     <select
@@ -69,14 +70,24 @@
                     class="w-full max-w-lg border-gray-200 overflow-ellipsis">
                         <option 
                         value="0">Seleccione una zona</option>
+                        <option 
+                        value="1">Norte</option>
+                        <option 
+                        value="2">Centro</option>
+                        <option 
+                        value="3">Sur</option>
                     </select>
 
                     <select
                     name="comboBox-rolUsuario" 
-                    id="rolUsuario" 
+                    id="rol-usuario" 
                     class="w-full max-w-lg border-gray-200 overflow-ellipsis">
                         <option 
                         value="0">Rol de usuario</option>
+                        <option 
+                        value="1">Admin</option>
+                        <option 
+                        value="2">Normal</option>
                     </select>
 
                 </section>
@@ -91,5 +102,7 @@
             </form>
         </section>
     </main>
+    <!-- MODAL ADVERTENCIA -->
+    <modal-warning> Las contraseñas no coinciden.</modal-warning>
   </body>
 </html>

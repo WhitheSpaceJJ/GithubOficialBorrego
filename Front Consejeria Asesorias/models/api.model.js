@@ -25,6 +25,24 @@ class APIModel {
     }
   }
 
+  async signUp(userObject) {
+    const url = `${this.USERS_API_URL}/usuarios`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: ` ${this.user.token}`,
+      },
+      body: JSON.stringify(userObject),
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
   async getAsesorias() {
     const url = `${this.ASESORIAS_API_URL}/asesorias`
     const response = await fetch(url, {
