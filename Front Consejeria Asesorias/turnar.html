@@ -3,49 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema Asesoría</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="lib/include-html.js" type="module"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <script src="js/turnar.js" type="module"></script>
-    <style type="text/tailwindcss">
-      @layer base {
-        input[type='number']::-webkit-inner-spin-button,
-        input[type='number']::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-      }
-    </style>
+    <title>Sistema de Asesoría</title>
+    <link rel="icon" href="/img/DPS.png" />
+    <link rel="stylesheet" href="./tailwind.css" />
+    <script src="src/turnar.js" type="module"></script>
   </head>
-  <body>
-    <div data-include="assets/navbar.html"></div>
+  <body
+    class="flex flex-col h-screen bg-gray-50 md:bg-[url('/img/bg-desierto.jpg')] bg-cover bg-center"
+  >
+    <navbar-comp></navbar-comp>
 
-    <main class="flex items-center justify-center md:mt-[10vh] mb-auto">
+    <main
+      class="flex justify-center flex-1 mb-auto items-top backdrop-blur-md md:pt-[5vh]"
+    >
       <section
-        class="w-full max-w-5xl max-h-full p-5 md:p-12 bg-white md:shadow-xl rounded-xl flex flex-col"
+        class="flex flex-col w-full max-w-5xl max-h-full p-5 bg-white md:p-12 md:shadow-xl rounded-xl h-fit"
       >
         <!-- Tabs -->
-        <div data-include="assets/turnar/tabs.html"></div>
-        <div id="turnar-content">
+        <turnar-tabs></turnar-tabs>
+        <form id="turnar-content" class="flex flex-col">
           <!-- Contenido Tab 1 -->
-          <div data-include="assets/turnar/asesorado_tab.html"></div>
+          <asesorado-tab></asesorado-tab>
+
           <!-- Contenido Tab 2 -->
-          <div data-include="assets/turnar/domicilio_tab.html"></div>
+          <domicilio-tab></domicilio-tab>
           <!-- Contenido Tab 3 -->
-          <div data-include="assets/turnar/turno_tab.html"></div>
-        </div>
-        <button
-          type="submit"
-          class="px-5 text-center py-3 rounded bg-[#a52a2a] text-white hover:bg-[#db2424] mt-2 font-semibold transition duration-200 w-fit ml-auto"
-        >
-          Registrar turno
-        </button>
+          <turno-tab></turno-tab>
+        </form>
       </section>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+    <!-- MODAL ADVERTENCIA -->
+    <modal-warning></modal-warning>
   </body>
 </html>
