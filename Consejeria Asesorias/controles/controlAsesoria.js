@@ -179,12 +179,13 @@ const eliminarAsesoria = async (id) => {
     return false;
   }
 };
+
+
 const actualizarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
     const asesoria_obj = JSON.parse(asesoria_str);
 
-    // Manejo de persona
     const persona = asesoria_obj.persona;
     const domicilio_pre = await controlDomicilios.actualizarDomicilio(persona.domicilio);
     persona.id_domicilio = domicilio_pre.id_domicilio;
@@ -193,29 +194,25 @@ const actualizarAsesoria = async (asesoria_pre) => {
     delete persona.domicilio;
     const persona_pre = await controlPersonas.actualizarPersona(persona);
 
-    // Manejo de asesorado
     const asesorado = asesoria_obj.asesorado;
     asesorado.id_estado_civil = asesorado.estado_civil.id_estado_civil;
     delete asesorado.estado_civil;
-    if (asesorado.motivo !== null) {
-      const motivo_pre = await controlMotivo.actualizarMotivo(asesorado.motivo);
-      asesorado.id_motivo = motivo_pre.id_motivo;
-      delete asesorado.motivo;
-    }
     const asesorado_pre = await controlAsesorados.actualizarAsesorado(asesorado);
 
-    // Manejo de datos de asesoría
     const datos_asesoria = asesoria_obj.datos_asesoria;
     datos_asesoria.id_asesorado = asesorado_pre.id_asesorado;
     datos_asesoria.id_asesor = asesoria_obj.asesor.id_asesor;
     datos_asesoria.id_tipo_juicio = asesoria_obj.tipos_juicio.id_tipo_juicio;
-    const turno = await controlTurnos.agregarTurno(asesoria_obj.turno);
-    datos_asesoria.id_turno = turno.id_turno;
 
-    // Actualización de asesoría
+    if (asesoria_obj.hasOwnProperty("turno")) {
+      if (typeof asesoria_obj.turno === "object" && Object.keys(asesoria_obj.turno).length > 0) {
+        const turno = await controlTurnos.agregarTurno(asesoria_obj.turno);
+        datos_asesoria.id_turno = turno.id_turno;
+      }
+    }
+
     const asesoria_cre = (await modeloAsesoria.Asesoria.update(datos_asesoria, { where: { id_asesoria: datos_asesoria.id_asesoria } }));
-
-    return asesoria_cre;
+    return  await  obtenerAsesoriaPorIdAsesorado (datos_asesoria.id_asesorado);
   } catch (error) {
     console.log("Error:", error.message);
     return false;
@@ -227,10 +224,11 @@ const actualizarAsesoria = async (asesoria_pre) => {
 
 /** Operaciones Requeridas */
 const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
+
   try {
     const asesoria_pre = await modeloAsesoria.Asesoria.findOne({
       where: { id_asesorado: id_asesorado },
-      raw: false,
+      raw: true,
       nest: true,
       attributes: {
         exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
