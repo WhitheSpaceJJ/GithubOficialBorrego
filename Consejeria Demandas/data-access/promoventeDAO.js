@@ -1,56 +1,52 @@
-const { Promovente } = require('../models');
+const Promovente = require('../models/promovente')
 
 class PromoventeDAO {
-  constructor() {}
-
-  async crearPromovente({ id_participante, espanol }) {
+  async crearPromovente ({ id_participante, espanol }) {
     try {
-      const promovente = await Promovente.create({ id_participante, espanol });
-      return promovente;
+      const promovente = await Promovente.create({ id_participante, espanol })
+      return promovente
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerPromoventes() {
+  async obtenerPromoventes () {
     try {
-      const promoventes = await Promovente.findAll();
-      return promoventes;
+      const promoventes = await Promovente.findAll()
+      return promoventes
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerPromoventePorId(id) {
+  async obtenerPromoventePorParticipante (idParticipante) {
     try {
-      const promovente = await Promovente.findByPk(id);
-      return promovente;
+      const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
+      return promovente
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async actualizarPromovente(id, { id_participante, espanol }) {
+  async actualizarPromovente (idParticipante, { id_participante, espanol }) {
     try {
-      const promovente = await Promovente.update({ id_participante, espanol }, { where: { id_participante: id } });
-      return promovente;
+      const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
+      const promoventeActualizado = await promovente.update({ id_participante, espanol })
+      return promoventeActualizado
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async eliminarPromovente(id) {
+  async eliminarPromovente (idParticipante) {
     try {
-      const promovente = await Promovente.findByPk(id);
-      if (!promovente) {
-        throw new Error('No existe el promovente');
-      }
-      await promovente.destroy();
-      return 'Promovente eliminado con éxito';
+      const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
+      await promovente.destroy()
+      return 'Promovente eliminado con éxito'
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 }
 
-module.exports = new PromoventeDAO();
+module.exports = new PromoventeDAO()

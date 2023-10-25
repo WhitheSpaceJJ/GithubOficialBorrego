@@ -1,14 +1,14 @@
 const express = require("express");
-const estadosRoutes = require('./rutas/estados.routes.js');
-const municipiosRoutes = require('./rutas/municipios.routes.js');
-const codigosPostalesRoutes = require('./rutas/codigosPostales.routes.js');
-const ciudadesRoutes = require('./rutas/ciudades.routes.js');
-const coloniasRoutes = require('./rutas/colonias.routes.js');
-const CustomeError = require("./utilidades/customeError");
+const estadosRoutes = require('./routes/estados.routes.js');
+const municipiosRoutes = require('./routes/municipios.routes.js');
+const codigosPostalesRoutes = require('./routes/codigosPostales.routes.js');
+const ciudadesRoutes = require('./routes/ciudades.routes.js');
+const coloniasRoutes = require('./routes/colonias.routes.js');
+const CustomeError = require("./utilities/customeError.js");
 const grpc = require('@grpc/grpc-js');
 const {packageDefinition}=require("../cliente/cliente.js")
 
-const errorController = require("./utilidades/errrorController")
+const errorController = require("./utilities/errrorController.js")
 
 const cors = require('cors');
 const app = express();
@@ -31,7 +31,7 @@ const jwtMiddleware = async (req, res, next) => {
   const token = tokenHeader.replace('Bearer ', ''); // Quita "Bearer " del encabezado
 
   let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
-  const validador = new token_client.TokenService('localhost:3004', grpc.credentials.createInsecure());
+  const validador = new token_client.TokenService('198.101.238.125:3007', grpc.credentials.createInsecure());
   
   validador.validarToken({ token: token }, function (err, response) {
     if (response.message === "Token inválido") {
@@ -44,14 +44,12 @@ const jwtMiddleware = async (req, res, next) => {
 };
 
 
-app.use('/colonias', jwtMiddleware,coloniasRoutes);
-app.use('/codigospostales', jwtMiddleware,codigosPostalesRoutes);
-
-/*
-app.use('/estados', jwtMiddleware,estadosRoutes);
+app.use('/colonias',jwtMiddleware, coloniasRoutes);
+app.use('/codigospostales',jwtMiddleware, codigosPostalesRoutes);
+app.use('/estados',jwtMiddleware,estadosRoutes);
 app.use('/municipios',jwtMiddleware, municipiosRoutes);
 app.use('/ciudades',jwtMiddleware, ciudadesRoutes);
-*/
+
 
 
 app.all("*", (req, res, next) => {

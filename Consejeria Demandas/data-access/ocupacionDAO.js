@@ -1,56 +1,51 @@
-const { Ocupacion } = require('../models');
+const Ocupacion = require('../models/ocupacion')
 
 class OcupacionDAO {
-  constructor() {}
-
-  async crearOcupacion({ descripcion_ocupacion }) {
+  async crearOcupacion ({ descripcion_ocupacion }) {
     try {
-      const ocupacion = await Ocupacion.create({ descripcion_ocupacion });
-      return ocupacion;
+      const ocupacion = await Ocupacion.create({ descripcion_ocupacion })
+      return ocupacion
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerOcupaciones() {
+  async obtenerOcupaciones () {
     try {
-      const ocupaciones = await Ocupacion.findAll();
-      return ocupaciones;
+      const ocupaciones = await Ocupacion.findAll()
+      return ocupaciones
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async obtenerOcupacionPorId(id) {
+  async obtenerOcupacion (id) {
     try {
-      const ocupacion = await Ocupacion.findByPk(id);
-      return ocupacion;
+      const ocupacion = await Ocupacion.findByPk(id)
+      return ocupacion
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async actualizarOcupacion(id, { descripcion_ocupacion }) {
+  async actualizarOcupacion (id_ocupacion, { descripcion_ocupacion }) {
     try {
-      const ocupacion = await Ocupacion.update({ descripcion_ocupacion }, { where: { id } });
-      return ocupacion;
+      const ocupacion = await Ocupacion.update({ descripcion_ocupacion }, { where: { id_ocupacion } })
+      return ocupacion
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  async eliminarOcupacion(id) {
+  async eliminarOcupacion (id) {
     try {
-      const ocupacion = await Ocupacion.findByPk(id);
-      if (!ocupacion) {
-        throw new Error('No existe la ocupación');
-      }
-      await ocupacion.destroy();
-      return 'Ocupación eliminada con éxito';
+      const ocupacion = await Ocupacion.findByPk(id)
+      await ocupacion.destroy()
+      return 'Ocupación eliminada con éxito'
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 }
 
-module.exports = new OcupacionDAO();
+module.exports = new OcupacionDAO()

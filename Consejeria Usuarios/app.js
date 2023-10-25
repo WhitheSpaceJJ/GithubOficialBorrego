@@ -55,7 +55,7 @@ function getServer() {
 
 var server = getServer();
 server.bindAsync(
-  `localhost:${3004}`,
+  `198.101.238.125:${3007}`,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err != null) {
