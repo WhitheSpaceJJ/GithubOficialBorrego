@@ -1,7 +1,7 @@
 class APIModel {
-  USERS_API_URL = 'http://198.101.238.125:3002'
-  ASESORIAS_API_URL = 'http://198.101.238.125:3009'
-  CP_API_URL = 'http://198.101.238.125:3012'
+  USERS_API_URL = 'http://200.58.127.244:3002'
+  ASESORIAS_API_URL = 'http://200.58.127.244:3009'
+  CP_API_URL = 'http://200.58.127.244:3012'
   user = JSON.parse(sessionStorage.getItem('user'))
 
   // eslint-disable-next-line no-useless-constructor
@@ -34,6 +34,23 @@ class APIModel {
         Authorization: ` ${this.user.token}`,
       },
       body: JSON.stringify(userObject),
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async recover(correo) {
+    const url = `${this.USERS_API_URL}/usuarios/recuperacion?correo=${correo}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: ` ${this.user.token}`,
+      },
     })
     if (response.ok) {
       const data = await response.json()
