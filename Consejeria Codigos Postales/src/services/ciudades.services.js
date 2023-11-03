@@ -5,8 +5,7 @@ const CustomeError = require('../utilities/customeError.js');
 exports.getCiudades = asyncError(async (req, res, next) => {
     const ciudades = await controlCiudades.getCiudades();
     res.status(200).json({
-        status: 'success',
-        data: ciudades
+        ciudades: ciudades
     });
 });
 
@@ -16,8 +15,7 @@ exports.getCiudad = asyncError(async (req, res, next) => {
         return next(new CustomeError('No se encontró la ciudad', 404));
     }
     res.status(200).json({
-        status: 'success',
-        data: ciudad
+        ciudad: ciudad
     });
 });
 

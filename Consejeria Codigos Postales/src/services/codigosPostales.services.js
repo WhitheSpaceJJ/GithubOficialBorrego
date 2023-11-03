@@ -8,8 +8,7 @@ exports.getCodigosPostales = asyncError(async (req, res, next) => {
         return next(new CustomeError('No se encontraron codigos postales', 404));
     }
     res.status(200).json({
-        success: true,
-        data: codigosPostales
+        codigosPostales: codigosPostales
     });
 });
 
@@ -19,8 +18,7 @@ exports.getCodigoPostal = asyncError(async (req, res, next) => {
         return next(new CustomeError('No se encontro el codigo postal', 404));
     }
     res.status(200).json({
-        success: true,
-        data: codigoPostal
+        codigoPostal: codigoPostal
     });
 });
 
@@ -30,8 +28,7 @@ exports.getColoniasByCodigoPostal = asyncError(async (req, res, next) => {
         return next(new CustomeError('No se encontraron colonias', 404));
     }
     res.status(200).json({
-        success: true,
-        data: colonias
+        colonias: colonias
     });
 });
 

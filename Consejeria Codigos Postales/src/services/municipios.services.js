@@ -5,8 +5,7 @@ const CustomeError = require('../utilities/customeError.js');
 exports.getMunicipios = asyncError(async (req, res, next) => {
     const municipios = await controlMunicipios.getMunicipios();
     res.status(200).json({
-        status: 'success',
-        data: municipios,
+        municipios: municipios
     });
 });
 
@@ -16,8 +15,7 @@ exports.getMunicipio = asyncError(async (req, res, next) => {
         return next(new CustomeError('No se encontró el municipio', 404));
     }
     res.status(200).json({
-        status: 'success',
-        data: municipio,
+        municipio: municipio
     });
 });
 
