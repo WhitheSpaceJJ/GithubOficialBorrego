@@ -11,14 +11,7 @@ const agregarAsesorado = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un asesorado', 400);
     return next(error);
   } else {
-/*
- res.status(201).json({
-      status: 'success',
-      data: {
-        asesorado: result
-      }
-    });
-*/
+
 res.status(201).json({
     asesorado: result
 });
@@ -32,14 +25,7 @@ const obtenerAsesorados = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron asesorados', 404);
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        asesorados: result
-      }
-    });
-    */
+
     res.status(200).json({
         asesorados: result
     });
@@ -52,14 +38,7 @@ const eliminarAsesorado = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar el asesorado', 400);
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        menssage: "El asesorado ha sido eliminado"
-      }
-    });
-    */
+
     res.status(200).json({
         menssage: "El asesorado ha sido eliminado"
     });
@@ -72,14 +51,7 @@ const actualizarAsesorado = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar el asesorado', 400);
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        asesorado: req.body
-      }
-    });
-    */
+
     res.status(200).json({
         asesorado: req.body
     });
@@ -92,14 +64,7 @@ const obtenerAsesoradoPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener el asesorado', 404);
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        asesorado: result
-      }
-    });
-    */
+
     res.status(200).json({
         asesorado: result
     });

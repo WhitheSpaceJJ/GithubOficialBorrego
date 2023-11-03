@@ -9,14 +9,7 @@ const agregarZona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar una zona', 400);
     return next(error);
   } else {
-    /*
-   
-    res.status(201).json({
-      status: 'success',
-      data: {
-        zona: result
-      }
-    }); */
+ 
     res.status(201).json({
         zona: result
     });
@@ -30,14 +23,7 @@ const obtenerZonas = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron zonas', 404);
     return next(error);
   } else {
-   /*
- res.status(200).json({
-      status: 'success',
-      data: {
-        zonas: result
-      }
-    });
-   */
+
     res.status(200).json({
         zonas: result
     });
@@ -50,14 +36,7 @@ const eliminarZona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar la zona', 400);
     return next(error);
   } else {
-  /*
-  res.status(200).json({
-      status: 'success',
-      data: {
-        menssage: "La zona ha sido eliminada"
-      }
-    });
-  */
+
     res.status(200).json({
         menssage: "La zona ha sido eliminada"
     });
@@ -70,14 +49,7 @@ const actualizarZona = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar la zona', 400);
     return next(error);
   } else {
-  /*
-  res.status(200).json({
-      status: 'success',
-      data: {
-        zona: req.body
-      }
-    });
-  */
+
     res.status(200).json({
         zona: req.body
     });
@@ -90,14 +62,7 @@ const obtenerZonaPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener la zona', 404);
     return next(error);
   } else {
-  /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        zona: result
-      }
-    });
-  */
+
     res.status(200).json({
         zona: result
     });

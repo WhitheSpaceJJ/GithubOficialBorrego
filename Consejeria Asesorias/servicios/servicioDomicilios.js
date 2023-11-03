@@ -10,14 +10,7 @@ const agregarDomicilio = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un domicilio', 400);
     return next(error);
   } else {
-    /*
-  res.status(201).json({
-      status: 'success',
-      data: {
-        domicilio: result
-      }
-    });
-    */
+
     res.status(201).json({
         domicilio: result
     });
@@ -30,14 +23,7 @@ const obtenerDomicilios = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron domicilios', 404);
     return next(error);
   } else {
-    /*
- res.status(200).json({
-      status: 'success',
-      data: {
-        domicilios: result
-      }
-    });
-    */
+
     res.status(200).json({
         domicilios: result
     });
@@ -50,14 +36,7 @@ const eliminarDomicilio = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar el domicilio', 400);
     return next(error);
   } else {
-    /*
-res.status(200).json({
-      status: 'success',
-      data: {
-        message: "El domicilio ha sido eliminado"
-      }
-    });
-    */
+
     res.status(200).json({
         message: "El domicilio ha sido eliminado"
     });
@@ -70,14 +49,7 @@ const actualizarDomicilio = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar el domicilio', 400);
     return next(error);
   } else {
-    /*
- res.status(200).json({
-      status: 'success',
-      data: {
-        domicilio: req.body
-      }
-    });
-    */
+
     res.status(200).json({
         domicilio: req.body
     });
@@ -90,14 +62,7 @@ const obtenerDomicilioPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener el domicilio', 404);
     return next(error);
   } else {
-   /*
- res.status(200).json({
-      status: 'success',
-      data: {
-        domicilio: result
-      }
-    });
-   */
+
     res.status(200).json({
         domicilio: result
     });

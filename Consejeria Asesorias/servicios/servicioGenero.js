@@ -11,11 +11,7 @@ const agregarGenero = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al agregar un género', 400);
     return next(error);
   } else {
-    /*
- res.status(201).json({
-        genero: result
-    });
-    */
+
     res.status(201).json({
       genero: result
   });
@@ -28,14 +24,7 @@ const obtenerGeneros = asyncError(async (req, res, next) => {
     const error = new CustomeError('No se encontraron géneros', 404);
     return next(error);
   } else {
-    /*
-res.status(200).json({
-      status: 'success',
-      data: {
-        generos: result
-      }
-    });
-    */
+
     res.status(200).json({
         generos: result
     });
@@ -48,14 +37,7 @@ const eliminarGenero = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al eliminar el género', 400);
     return next(error);
   } else {
-   /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        menssage: "El genero ha sido eliminado"
-      }
-    });
-   */
+ 
     res.status(200).json({
         menssage: "El genero ha sido eliminado"
     });
@@ -68,14 +50,7 @@ const actualizarGenero = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al actualizar el género', 400);
     return next(error);
   } else {
-   /*
- res.status(200).json({
-      status: 'success',
-      data: {
-        genero: req.body
-      }
-    });
-   */
+
     res.status(200).json({
         genero: req.body
     });
@@ -88,14 +63,7 @@ const obtenerGeneroPorId = asyncError(async (req, res, next) => {
     const error = new CustomeError('Error al obtener el género', 404);
     return next(error);
   } else {
-    /*
-res.status(200).json({
-      status: 'success',
-      data: {
-        genero: result
-      }
-    });
-    */
+
     res.status(200).json({
         genero: result
     });
