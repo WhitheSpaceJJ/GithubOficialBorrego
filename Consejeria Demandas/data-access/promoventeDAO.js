@@ -1,7 +1,7 @@
 const Promovente = require('../models/promovente')
 
 class PromoventeDAO {
-  async crearPromovente ({ id_participante, espanol }) {
+  async crearPromovente({ id_participante, espanol }) {
     try {
       const promovente = await Promovente.create({ id_participante, espanol })
       return promovente
@@ -10,7 +10,7 @@ class PromoventeDAO {
     }
   }
 
-  async obtenerPromoventes () {
+  async obtenerPromoventes() {
     try {
       const promoventes = await Promovente.findAll()
       return promoventes
@@ -19,7 +19,16 @@ class PromoventeDAO {
     }
   }
 
-  async obtenerPromoventePorParticipante (idParticipante) {
+  async obtenerPromovente(id) {
+    try {
+      const promovente = await Promovente.findByPk(id)
+      return promovente
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async obtenerPromoventePorParticipante(idParticipante) {
     try {
       const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
       return promovente
@@ -28,7 +37,7 @@ class PromoventeDAO {
     }
   }
 
-  async actualizarPromovente (idParticipante, { id_participante, espanol }) {
+  async actualizarPromovente(idParticipante, { id_participante, espanol }) {
     try {
       const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
       const promoventeActualizado = await promovente.update({ id_participante, espanol })
@@ -38,7 +47,7 @@ class PromoventeDAO {
     }
   }
 
-  async eliminarPromovente (idParticipante) {
+  async eliminarPromovente(idParticipante) {
     try {
       const promovente = await Promovente.findOne({ where: { id_participante: idParticipante } })
       await promovente.destroy()
