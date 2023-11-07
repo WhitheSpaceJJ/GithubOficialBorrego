@@ -16,10 +16,6 @@ const participante = sequelize.define('participante', {
     type: DataTypes.INTEGER,
     allowNull: true
   },
-  DTYPE: {
-    type: DataTypes.STRING(20),
-    allowNull: true
-  },
   id_escolaridad: {
     type: DataTypes.INTEGER,
     allowNull: true,
