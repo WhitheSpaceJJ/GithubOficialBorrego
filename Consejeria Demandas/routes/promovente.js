@@ -8,16 +8,21 @@ const {
   eliminarPromovente
 } = require('../controllers/promovente');
 
+const {
+  existePromovente,
+  existeParticipante
+} = require('../middlewares/promovente');
+
 const router = Router();
 
-router.post('/', crearPromovente);
+router.post('/', [existeParticipante], crearPromovente);
 
 router.get('/', obtenerPromoventes);
 
-router.get('/:id', obtenerPromovente);
+router.get('/:id', [existePromovente], obtenerPromovente);
 
-router.put('/:id', actualizarPromovente);
+router.put('/:id', [existePromovente], actualizarPromovente);
 
-router.delete('/:id', eliminarPromovente);
+router.delete('/:id', [existePromovente], eliminarPromovente);
 
 module.exports = router;
