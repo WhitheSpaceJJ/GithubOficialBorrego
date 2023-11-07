@@ -1,8 +1,14 @@
 const controlTurnos = require('../controles/controlTurno');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
+/**
+ * @abstract Servicio  que permite agregar un turno
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} turno agregado a la base de datos
+ * */
 
 const agregarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.agregarTurno(req.body);
@@ -17,6 +23,15 @@ const agregarTurno = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *   
+ * @abstract Servicio  que permite obtener todos los turnos
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} turnos de la base de datos
+ */
+
 const obtenerTurnos = asyncError(async (req, res, next) => {
   const result = await controlTurnos.obtenerTurnos();
   if (result === null || result === undefined) {
@@ -29,6 +44,15 @@ const obtenerTurnos = asyncError(async (req, res, next) => {
     });
   }
 });
+
+
+/**
+ * @abstract Servicio  que permite eliminar un turno
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de turno
+ */
 
 const eliminarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.eliminarTurno(req.params.id);
@@ -43,6 +67,14 @@ const eliminarTurno = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite actualizar un turno
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ *  
+ * @returns {Object} turno actualizado en la base de datos
+ */
 const actualizarTurno = asyncError(async (req, res, next) => {
   const result = await controlTurnos.actualizarTurno(req.body);
   if ( result === false) {
@@ -55,6 +87,14 @@ const actualizarTurno = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ * @abstract Servicio  que permite obtener un turno por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} turno de la base de datos
+ */
 
 const obtenerTurnoPorId = asyncError(async (req, res, next) => {
   const result = await controlTurnos.obtenerTurnoPorId(req.params.id);
@@ -69,8 +109,7 @@ const obtenerTurnoPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarTurno,
   obtenerTurnos,

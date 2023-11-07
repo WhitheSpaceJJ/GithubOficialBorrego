@@ -3,9 +3,13 @@ const controlEstados = require('../controles/controlEstadoCivil');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
-/** Operaciones Basica */
-
-
+/**
+ * @abstract Servicio  que permite agregar un estado civil
+ * @param {Object} req Request  
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} estado civil agregado a la base de datos
+ * */
 const agregarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.agregarEstadoCivil(req.body);
   if (result === false) {
@@ -20,6 +24,14 @@ const agregarEstadoCivil = asyncError(async (req, res, next) => {
 });
 
 
+/**
+ * @abstract Servicio  que permite obtener todos los estados civiles
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} estados civiles de la base de datos
+ */
+
 const obtenerEstadosCiviles = asyncError(async (req, res, next) => {
   const result = await controlEstados.obtenerEstadosCiviles();
   if (result === null || result === undefined) {
@@ -33,6 +45,13 @@ const obtenerEstadosCiviles = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite eliminar un estado civil
+ *  @param {Object} req Request
+ *  @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de estado civil
+ */
 const eliminarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.eliminarEstadoCivil(req.params.id);
   if ( result === false) {
@@ -46,6 +65,14 @@ const eliminarEstadoCivil = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite actualizar un estado civil
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} estado civil actualizado en la base de datos
+ */
+
 const actualizarEstadoCivil = asyncError(async (req, res, next) => {
   const result = await controlEstados.actualizarEstadoCivil(req.body);
   if ( result === false) {
@@ -57,6 +84,14 @@ const actualizarEstadoCivil = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ * @abstract Servicio  que permite obtener un estado civil por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *  @param {Object} next Next
+ * @returns {Object} estado civil de la base de datos
+ */
 
 const obtenerEstadoCivilPorId = asyncError(async (req, res, next) => {
   const result = await controlEstados.obtenerEstadoCivilPorId(req.params.id);
@@ -71,8 +106,7 @@ const obtenerEstadoCivilPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarEstadoCivil,
   obtenerEstadosCiviles,

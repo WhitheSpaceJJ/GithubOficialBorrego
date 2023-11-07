@@ -1,10 +1,15 @@
 const controlGeneros = require('../controles/controlGenero');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
 
-
+/**
+ * @abstract Servicio  que permite agregar un género
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *  @param {Object} next Next
+ * @returns {Object} género agregado a la base de datos
+ * */
 const agregarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.agregarGenero(req.body);
   if (result === false) {
@@ -18,6 +23,13 @@ const agregarGenero = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener todos los géneros
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} géneros de la base de datos
+ */
 const obtenerGeneros = asyncError(async (req, res, next) => {
   const result = await controlGeneros.obtenerGeneros();
   if (result === null || result === undefined) {
@@ -31,6 +43,13 @@ const obtenerGeneros = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite eliminar un género
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de género
+ */
 const eliminarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.eliminarGenero(req.params.id);
   if (result === false) {
@@ -44,6 +63,13 @@ const eliminarGenero = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite actualizar un género
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} género actualizado en la base de datos
+ */
 const actualizarGenero = asyncError(async (req, res, next) => {
   const result = await controlGeneros.actualizarGenero(req.body);
   if (result === false) {
@@ -56,6 +82,14 @@ const actualizarGenero = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ * @abstract Servicio  que permite obtener un género por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} género de la base de datos
+ */
 
 const obtenerGeneroPorId = asyncError(async (req, res, next) => {
   const result = await controlGeneros.obtenerGeneroPorId(req.params.id);
@@ -71,8 +105,7 @@ const obtenerGeneroPorId = asyncError(async (req, res, next) => {
 });
 
 
-/** Operaciones Requeridas */
-
+//Module exports 
 module.exports = {
   agregarGenero,
   obtenerGeneros,

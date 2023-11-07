@@ -2,7 +2,13 @@ const controlAsesores = require('../controles/controlAsesor');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
-/** Operaciones Basica */
+/**
+ * @abstract Servicio  que permite agregar un asesor
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesor  agregado a la base de datos
+ *  */ 
 
 const agregarAsesor = asyncError(async (req, res, next) => {
   const result = await controlAsesores.agregarAsesor(req.body);
@@ -17,6 +23,13 @@ const agregarAsesor = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener todos los asesores
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesores   de la base de datos
+ */
 const obtenerAsesores = asyncError(async (req, res, next) => {
   const result = await controlAsesores.obtenerAsesores();
   if (result === null || result === undefined) {
@@ -30,6 +43,13 @@ const obtenerAsesores = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite eliminar un asesor
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensajee de confirmación de eliminación de asesor
+ */
 const eliminarAsesor = asyncError(async (req, res, next) => {
   const result = await controlAsesores.eliminarAsesor(req.params.id);
   if ( result === false) {
@@ -43,6 +63,13 @@ const eliminarAsesor = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite actualizar un asesor
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesor  actualizado en la base de datos
+ */
 const actualizarAsesor = asyncError(async (req, res, next) => {
   const result = await controlAsesores.actualizarAsesor(req.body);
   if ( result === false) {
@@ -56,6 +83,13 @@ const actualizarAsesor = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite obtener un asesor por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesor  de la base de datos
+ */
 const obtenerAsesorPorId = asyncError(async (req, res, next) => {
   const result = await controlAsesores.obtenerAsesorPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -69,8 +103,7 @@ const obtenerAsesorPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports  
 module.exports = {
   agregarAsesor,
   obtenerAsesores,

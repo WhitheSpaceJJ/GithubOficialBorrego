@@ -1,10 +1,15 @@
 const controlMotivos = require('../controles/controlMotivo');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
 
-
+/**
+ * @abstract Servicio  que permite agregar un motivo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} motivo agregado a la base de datos
+ * */
 const agregarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.agregarMotivo(req.body);
   if (result === false) {
@@ -17,6 +22,16 @@ const agregarMotivo = asyncError(async (req, res, next) => {
     });
   }
 });
+
+
+/**
+ *  
+ *  @abstract Servicio  que permite obtener todos los motivos
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} motivos de la base de datos
+ */
 
 const obtenerMotivos = asyncError(async (req, res, next) => {
   const result = await controlMotivos.obtenerMotivos();
@@ -31,6 +46,13 @@ const obtenerMotivos = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite eliminar un motivo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *  @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de motivo
+ */
 const eliminarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.eliminarMotivo(req.params.id);
   if (result === false) {
@@ -44,6 +66,13 @@ const eliminarMotivo = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite actualizar un motivo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} motivo actualizado en la base de datos
+ */
 const actualizarMotivo = asyncError(async (req, res, next) => {
   const result = await controlMotivos.actualizarMotivo(req.body);
   if (result === false) {
@@ -56,6 +85,13 @@ const actualizarMotivo = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite obtener un motivo por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} motivo de la base de datos
+ */
 const obtenerMotivoPorId = asyncError(async (req, res, next) => {
   const result = await controlMotivos.obtenerMotivoPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -69,8 +105,7 @@ const obtenerMotivoPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarMotivo,
   obtenerMotivos,

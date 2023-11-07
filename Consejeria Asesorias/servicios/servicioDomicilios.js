@@ -2,8 +2,13 @@ const controlDomicilios = require('../controles/controlDomicilio'); // Asegúrat
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
-/** Operaciones Básicas */
-
+/**
+ * @abstract Servicio  que permite agregar un domicilio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} domicilio agregado a la base de datos
+ * */
 const agregarDomicilio = asyncError(async (req, res, next) => {
   const result = await controlDomicilios.agregarDomicilio(req.body);
   if (result === false) {
@@ -17,6 +22,13 @@ const agregarDomicilio = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener todos los domicilios
+ * @param {Object} req Request
+ *  @param {Object} res Response
+ * @param {Object} next Next  
+ * @returns {Object} domicilios de la base de datos
+ */
 const obtenerDomicilios = asyncError(async (req, res, next) => {
   const result = await controlDomicilios.obtenerDomicilios();
   if (result === null || result === undefined) {
@@ -30,6 +42,13 @@ const obtenerDomicilios = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite eliminar un domicilio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de domicilio
+ */
 const eliminarDomicilio = asyncError(async (req, res, next) => {
   const result = await controlDomicilios.eliminarDomicilio(req.params.id);
   if (result === false) {
@@ -43,6 +62,13 @@ const eliminarDomicilio = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite actualizar un domicilio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} domicilio actualizado en la base de datos
+ */
 const actualizarDomicilio = asyncError(async (req, res, next) => {
   const result = await controlDomicilios.actualizarDomicilio(req.body);
   if (result === false) {
@@ -56,6 +82,13 @@ const actualizarDomicilio = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener un domicilio por id
+ *  @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} domicilio de la base de datos
+ */
 const obtenerDomicilioPorId = asyncError(async (req, res, next) => {
   const result = await controlDomicilios.obtenerDomicilioPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -69,8 +102,7 @@ const obtenerDomicilioPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarDomicilio,
   obtenerDomicilios,

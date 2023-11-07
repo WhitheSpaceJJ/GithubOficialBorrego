@@ -1,8 +1,14 @@
 const controlPersonas = require('../controles/controlPersonas');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
+/**
+ * @abstract Servicio  que permite agregar una persona
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} persona agregada a la base de datos
+ * */
 
 const agregarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.agregarPersona(req.body);
@@ -17,6 +23,14 @@ const agregarPersona = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener todas las personas
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} personas  de la base de datos
+ */
+
 const obtenerPersonas = asyncError(async (req, res, next) => {
   const result = await controlPersonas.obtenerPersonas();
   if (result === null || result === undefined) {
@@ -29,6 +43,17 @@ const obtenerPersonas = asyncError(async (req, res, next) => {
     });
   }
 });
+
+
+
+/**
+ *  
+ * @abstract Servicio  que permite obtener todas las personas
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} personas  de la base de datos
+ */
 
 const obtenerPersonaNombre = asyncError(async (req, res, next) => {
   const { nombre, apellido_materno,apellido_paterno } = req.query;
@@ -44,6 +69,14 @@ const obtenerPersonaNombre = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite eliminar una persona
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de persona
+ */
+
 const eliminarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.eliminarPersona(req.params.id);
   if (result === false) {
@@ -56,6 +89,15 @@ const eliminarPersona = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ *  
+ * @abstract Servicio  que permite actualizar una persona
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} persona actualizada en la base de datos
+ */
 
 const actualizarPersona = asyncError(async (req, res, next) => {
   const result = await controlPersonas.actualizarPersona(req.body);
@@ -70,6 +112,15 @@ const actualizarPersona = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ * @abstract Servicio  que permite obtener una persona por su id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *  
+ * @param {Object} next Next
+ * @returns {Object} persona de la base de datos
+ */
+
 const obtenerPersonaPorId = asyncError(async (req, res, next) => {
   const result = await controlPersonas.obtenerPersonaPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -83,8 +134,7 @@ const obtenerPersonaPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarPersona,
   obtenerPersonas,

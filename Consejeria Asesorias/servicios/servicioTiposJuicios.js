@@ -3,7 +3,14 @@ const controlTiposDeJuicio = require('../controles/controlTipoJuicio');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
-/** Operaciones Basica */
+
+/**
+ * @abstract Servicio  que permite agregar un tipo de juicio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} tipo de juicio agregado a la base de datos
+ * */
 
 const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.agregarTipoDeJuicio(req.body);
@@ -18,6 +25,15 @@ const agregarTipoDeJuicio = asyncError(async (req, res, next) => {
   }
 });
 
+
+/**
+ *  
+ * @abstract Servicio  que permite obtener todos los tipos de juicio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} tipos de juicio de la base de datos
+ */
 
 const obtenerTiposDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.obtenerTiposDeJuicio();
@@ -34,6 +50,14 @@ const obtenerTiposDeJuicio = asyncError(async (req, res, next) => {
 
 
 
+/**
+ * @abstract Servicio  que permite eliminar un tipo de juicio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de tipo de juicio
+ */
+
 const eliminarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.eliminarTipoDeJuicio(req.params.id);
   if (result === false) {
@@ -46,6 +70,15 @@ const eliminarTipoDeJuicio = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ * @abstract Servicio  que permite actualizar un tipo de juicio
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * 
+ *  @param {Object} next Next
+ * @returns {Object} tipo de juicio actualizado
+ */
 
 const actualizarTipoDeJuicio = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.actualizarTipoDeJuicio(req.body);
@@ -60,6 +93,15 @@ const actualizarTipoDeJuicio = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  
+ * @abstract Servicio  que permite obtener un tipo de juicio por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} tipo de juicio de la base de datos
+ */
+
 const obtenerTipoDeJuicioPorId = asyncError(async (req, res, next) => {
   const result = await controlTiposDeJuicio.obtenerTipoDeJuicioPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -73,9 +115,7 @@ const obtenerTipoDeJuicioPorId = asyncError(async (req, res, next) => {
   }
 });
 
-
-/** Operaciones Requeridas */
-
+//Module exports
 module.exports = {
   agregarTipoDeJuicio,
   obtenerTiposDeJuicio,

@@ -1,8 +1,14 @@
 const controlCatalogoRequisitos = require('../controles/controlCatalogoRequisito');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
+/**
+ * @abstract Servicio  que permite agregar un requisito del catálogo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} requisito del catálogo agregado a la base de datos
+ * */
 const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.agregarCatalogoRequisito(req.body);
   if ( result === false) {
@@ -15,6 +21,14 @@ const agregarCatalogoRequisito = asyncError(async (req, res, next) => {
     });
   }
 });
+
+/**
+ * @abstract Servicio  que permite obtener todos los requisitos del catálogo
+ *  @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} requisitos del catálogo de la base de datos
+ */
 
 const obtenerCatalogoRequisitos = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.obtenerCatalogoRequisitos();
@@ -29,6 +43,13 @@ const obtenerCatalogoRequisitos = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite eliminar un requisito del catálogo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} mensaje de confirmación de eliminación de requisito del catálogo
+ */
 const eliminarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.eliminarCatalogoRequisito(req.params.id);
   if ( result === false) {
@@ -37,10 +58,18 @@ const eliminarCatalogoRequisito = asyncError(async (req, res, next) => {
   } else {
 
     res.status(200).json({
-        requisitoCatalogo: result
+      menssage:   'Requisito del catálogo eliminado'
     });
   }
 });
+
+/**
+ *  @abstract Servicio  que permite actualizar un requisito del catálogo
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} requisito del catálogo actualizado en la base de datos
+ */
 
 const actualizarCatalogoRequisito = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.actualizarCatalogoRequisito(req.body);
@@ -55,6 +84,14 @@ const actualizarCatalogoRequisito = asyncError(async (req, res, next) => {
   }
 });
 
+/**
+ *  @abstract Servicio  que permite obtener un requisito del catálogo por id
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} requisito del catálogo de la base de datos
+ */
+
 const obtenerCatalogoRequisitoPorId = asyncError(async (req, res, next) => {
   const result = await controlCatalogoRequisitos.obtenerCatalogoRequisitoPorId(req.params.id);
   if (result === null || result === undefined) {
@@ -68,8 +105,7 @@ const obtenerCatalogoRequisitoPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
-
+  //Module exports   
 module.exports = {
   agregarCatalogoRequisito,
   obtenerCatalogoRequisitos,
