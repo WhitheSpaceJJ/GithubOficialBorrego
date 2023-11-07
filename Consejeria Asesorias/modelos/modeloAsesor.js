@@ -1,3 +1,3 @@
 const {Asesor}=require("../utilidades/modelosBase");
 
-module.exports = {Asesor};
+module.exports = {Asesor}; 

@@ -1,9 +1,10 @@
 
 const modeloMotivo = require('../modelos/modeloMotivo');
 
-/** Operaciones Basica */
-
-
+/**
+ * @abstract Funcion que permite obtener todos los motivos
+ * @returns motivos
+ */
 const obtenerMotivos = async () => {
   try {
     return await modeloMotivo.Motivo.findAll({
@@ -16,6 +17,12 @@ const obtenerMotivos = async () => {
   }
 };
 
+
+/**
+ * @abstract Funcion que permite obtener un motivo por su id
+ * @param {*} id id del motivo
+ * @returns motivo
+ */
 const obtenerMotivoPorId = async (id) => {
   try {
     return await modeloMotivo.Motivo.findByPk(id, {
@@ -28,6 +35,11 @@ const obtenerMotivoPorId = async (id) => {
   }
 };
 
+/**
+ * @abstract Funcion que permite agregar un motivo
+ * @param {*} motivo motivo a agregar
+ * @returns motivo si se agrega correctamente, false si no  agregar
+ */
 const agregarMotivo = async (motivo) => {
   try {
     return (await modeloMotivo.Motivo.create(motivo, { raw: true, nest: true })).dataValues;
@@ -37,6 +49,11 @@ const agregarMotivo = async (motivo) => {
   }
 };
 
+/**
+ * @abstract Funcion que permite eliminar un motivo
+ * @param {*} id id del motivo a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ */
 const eliminarMotivo = async (id) => {
   try {
     await modeloMotivo.Motivo.destroy({ where: { id_motivo: id } });
@@ -46,6 +63,12 @@ const eliminarMotivo = async (id) => {
     return false;
   }
 };
+
+/**
+ * @abstract Funcion que permite actualizar un motivo
+ *  @param {*} motivo motivo a actualizar
+ *  @returns true si se actualiza correctamente, false si no se actualiza
+ */
 
 const actualizarMotivo = async (motivo) => {
   try {
@@ -57,10 +80,7 @@ const actualizarMotivo = async (motivo) => {
   }
 };
 
-/** Operaciones Requeridas */
-
-
-
+//Module exports:
 module.exports = {
   obtenerMotivos,
   obtenerMotivoPorId,

@@ -2,9 +2,6 @@ const controlAsesorados = require('../controles/controlAsesorado');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 
-/** Operaciones Basica */
-
-
 const agregarAsesorado = asyncError(async (req, res, next) => {
   const result = await controlAsesorados.agregarAsesorado(req.body);
   if (result === false) {

@@ -1,9 +1,11 @@
 
 const modeloGenero = require('../modelos/modeloGenero');
-/** Operaciones Basica */
 
 
-
+/**
+ *  @abstract Función que permite obtener todos los generos
+ * @returns generos
+ */
 const obtenerGeneros = async () => {
   try {
     return await modeloGenero.Genero.findAll({
@@ -16,6 +18,13 @@ const obtenerGeneros = async () => {
   }
 };
 
+
+/**
+ *  
+ * @abstract Función que permite obtener un genero por su id
+ * @param {*} id id del genero
+ * @returns genero
+ * */
 const obtenerGeneroPorId = async (id) => {
   try {
     return await modeloGenero.Genero.findByPk(id, {
@@ -28,6 +37,11 @@ const obtenerGeneroPorId = async (id) => {
   }
 };
 
+/**
+ *  @abstract Función que permite agregar un genero
+ * @param {*} genero genero a agregar 
+ * @returns genero si se agrega correctamente, false si no  agregar
+ * */
 const agregarGenero = async (genero) => {
   try {
     return (await modeloGenero.Genero.create(genero, { raw: true, nest: true })).dataValues; 
@@ -36,6 +50,12 @@ const agregarGenero = async (genero) => {
     return false;
   }
 };
+
+/**
+ * @abstract Función que permite eliminar un genero
+ * @param {*} id id del genero a eliminar
+ *  @returns true si se elimina correctamente, false si no se elimina
+ */
 
 const eliminarGenero = async (id) => {
   try {
@@ -47,6 +67,12 @@ const eliminarGenero = async (id) => {
   }
 };
 
+
+/**
+ * @abstract Función que permite actualizar un genero
+ * @param {*} genero genero a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarGenero = async (genero) => {
   try {
     await modeloGenero.Genero.update(genero, { where: { id_genero: genero.id_genero } });

@@ -10,6 +10,11 @@ const controlAsesorados = require('./controlAsesorados');
 const controlTurnos = require('./controlTurno');
 const controlDetalleAsesoria = require('./controlDetalleAsesoria');
 
+
+/**
+ *  @abstract Función que permite obtener todos los asesorias 
+ * @returns asesorias
+ */
 const obtenerAsesorias = async () => {
   try {
     const asesorias_pre = await modeloAsesoria.Asesoria.findAll({
@@ -86,6 +91,12 @@ const obtenerAsesorias = async () => {
   }
 };
 
+/**
+ * @abstract Función que permite obtener un asesoria por su id
+ *  @param {*} id id del asesoria
+ * @returns asesoria
+ *  
+ *  */
 const obtenerAsesoriaPorId = async (id) => {
   try {
     const asesorias_pre = await modeloAsesoria.Asesoria.findByPk(id, {
@@ -158,8 +169,12 @@ const obtenerAsesoriaPorId = async (id) => {
     return null;
   }
 };
-//const agregarAsesoria = async (asesoria) => {
 
+/**
+ * @abstract Función que permite agregar un asesoria
+ * @param {*} asesoria asesoria a agregar
+ * @returns asesoria si se agrega correctamente, false si no  agregar
+ * */
 const agregarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
@@ -223,6 +238,11 @@ const agregarAsesoria = async (asesoria_pre) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un asesoria
+ * @param {*} id id del asesoria a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ * */
 const eliminarAsesoria = async (id) => {
   try {
     await modeloAsesoria.Asesoria.destroy({ where: { id_asesoria: id } });
@@ -233,7 +253,11 @@ const eliminarAsesoria = async (id) => {
   }
 };
 
-
+/**
+ * @abstract Función que permite actualizar un asesoria
+ * @param {*} asesoria asesoria a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ * */
 const actualizarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
@@ -274,8 +298,11 @@ const actualizarAsesoria = async (asesoria_pre) => {
 
 
 
-
-/** Operaciones Requeridas */
+/**
+ * @abstract Función que permite obtener un asesoria por id del asesorado
+ * @param {*} id_asesorado id del asesorado
+ *  @returns asesoria
+ * */
 const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
 
   try {
@@ -351,6 +378,7 @@ const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
 };
 
 
+// Export model functions and routes  
 module.exports = {
   obtenerAsesorias,
   obtenerAsesoriaPorId,

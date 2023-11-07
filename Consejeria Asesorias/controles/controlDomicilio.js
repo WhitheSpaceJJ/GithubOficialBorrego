@@ -1,7 +1,9 @@
 const modeloDomicilio = require('../modelos/modeloDomicilio'); // Asegúrate de tener el modelo de domicilios importado.
 
-/** Operaciones Básicas */
-
+/**
+ * @abstract Función que permite obtener todos los domicilios
+ * @returns domicilios
+ */
 const obtenerDomicilios = async () => {
   try {
     return await modeloDomicilio.Domicilio.findAll({
@@ -14,6 +16,11 @@ const obtenerDomicilios = async () => {
   }
 };
 
+/**
+ * @abstract Función que permite obtener un domicilio por su id
+ * @param {*} id id del domicilio
+ * @returns domicilio
+ *  */
 const obtenerDomicilioPorId = async (id) => {
   try {
     return await modeloDomicilio.Domicilio.findByPk(id, {
@@ -26,6 +33,11 @@ const obtenerDomicilioPorId = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite agregar un domicilio
+ *  @param {*} domicilio domicilio a agregar
+ * @returns domicilio si se agrega correctamente, false si no  agregar
+ * */
 const agregarDomicilio = async (domicilio) => {
   try {
     return (await modeloDomicilio.Domicilio.create(domicilio, { raw: true, nest: true })).dataValues;
@@ -35,6 +47,11 @@ const agregarDomicilio = async (domicilio) => {
   }
 };
 
+/**
+ *  @abstract Función que permite eliminar un domicilio
+ * @param {*} id id del domicilio a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ */
 const eliminarDomicilio = async (id) => {
   try {
     await modeloDomicilio.Domicilio.destroy({ where: { id_domicilio: id } });
@@ -45,6 +62,11 @@ const eliminarDomicilio = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite actualizar un domicilio
+ * @param {*} domicilio domicilio a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarDomicilio = async (domicilio) => {
   try {
     await modeloDomicilio.Domicilio.update(domicilio, { where: { id_domicilio: domicilio.id_domicilio } });
@@ -55,8 +77,9 @@ const actualizarDomicilio = async (domicilio) => {
   }
 };
 
-/** Operaciones Requeridas */
-
+/**
+ *  @module controlDomicilio
+ */
 module.exports = {
   obtenerDomicilios,
   obtenerDomicilioPorId,

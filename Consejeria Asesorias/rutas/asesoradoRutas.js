@@ -3,7 +3,6 @@ const servicioAsesorados = require('../servicios/servicioAsesorados');
 
 const router = express.Router();
 
-/** Operaciones Basica */
 
 router.route('/')
   .get(servicioAsesorados.obtenerAsesorados)
