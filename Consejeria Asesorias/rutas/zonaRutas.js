@@ -1,22 +1,25 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioZonas = require('../servicios/servicioZonas');
 
+// Creamos un nuevo router
 const router = express.Router();
-/** Operaciones Basica */
-
 
 
 router.route('/')
+  // Obtener todas las zonas
   .get(servicioZonas.obtenerZonas)
-  .post(servicioZonas.agregarZona)
-  ;
+  // Agregar una nueva zona
+  .post(servicioZonas.agregarZona);
 
 router.route('/:id')
+  // Obtener una zona por su ID
   .get(servicioZonas.obtenerZonaPorId)
+  // Eliminar una zona por su ID
   .delete(servicioZonas.eliminarZona)
-  .put(servicioZonas.actualizarZona)
-  ;
+  // Actualizar una zona por su ID
+  .put(servicioZonas.actualizarZona);
 
-/** Operaciones Requeridas */
 
+// Exportamos el router
 module.exports = router;

@@ -1,6 +1,9 @@
 const modeloAsesorado = require('../modelos/modeloAsesorado');
-/** Operaciones Basica */
 
+ /**
+  *   @abstract Función que permite obtener todos los asesorados
+  * @returns asesorados
+  */    
 const obtenerAsesorados = async () => {
   try {
     return await modeloAsesorado.Asesorado.findAll({
@@ -19,6 +22,11 @@ const obtenerAsesorados = async () => {
   }
 };
 
+/**
+ * @abstract Función que permite obtener un asesorado por su id
+ * @param {*} id id del asesorado
+ *  @returns asesorado
+ * */
 const obtenerAsesoradoPorId = async (id) => {
   try {
     return await modeloAsesorado.Asesorado.findByPk(id, {
@@ -37,6 +45,11 @@ const obtenerAsesoradoPorId = async (id) => {
   }
 };
 
+/** 
+ * @abstract Función que permite agregar un asesorado
+ * @param {*} asesorado asesorado a agregar
+ * @returns asesoriado si se agrega correctamente, false si no  agregar
+ * */
 const agregarAsesorado = async (asesorado) => {
   try {
     return (  await modeloAsesorado.Asesorado.create(asesorado, { raw: true, nest: true })).dataValues;
@@ -46,6 +59,11 @@ const agregarAsesorado = async (asesorado) => {
   }
 };
 
+/**
+ *  @abstract Función que permite eliminar un asesorado
+ * @param {*} id  id del asesorado a eliminar
+ * @returns   true si se elimina correctamente, false si no se elimina
+ */
 const eliminarAsesorado = async (id) => {
   try {
     await modeloAsesorado.Asesorado.destroy({ where: { id_asesorado: id } });
@@ -55,7 +73,12 @@ const eliminarAsesorado = async (id) => {
     return false;
   }
 };
-
+ 
+/**
+ *   @abstract Función que permite actualizar un asesorado
+ * @param {*} asesorado asesorado a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarAsesorado = async (asesorado) => {
   try {
     await modeloAsesorado.Asesorado.update(asesorado, { where: { id_asesorado: asesorado.id_asesorado } });
@@ -66,8 +89,7 @@ const actualizarAsesorado = async (asesorado) => {
   }
 };
 
-/** Operaciones Requeridas */
-
+// Exportar los módulos
 module.exports = {
   obtenerAsesorados,
   obtenerAsesoradoPorId,

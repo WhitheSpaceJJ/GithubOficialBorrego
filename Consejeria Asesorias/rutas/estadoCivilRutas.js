@@ -1,21 +1,23 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioEstados = require('../servicios/servicioEstadosCiviles');
 
+// Creamos un nuevo router
 const router = express.Router();
-/** Operaciones Basica */
-
 
 router.route('/')
+  // Obtener todos los estados civiles
   .get(servicioEstados.obtenerEstadosCiviles)
-  .post(servicioEstados.agregarEstadoCivil)
-  ;
+  // Agregar un nuevo estado civil
+  .post(servicioEstados.agregarEstadoCivil);
 
 router.route('/:id')
+  // Obtener un estado civil por su ID
   .get(servicioEstados.obtenerEstadoCivilPorId)
+  // Eliminar un estado civil por su ID
   .delete(servicioEstados.eliminarEstadoCivil)
-  .put(servicioEstados.actualizarEstadoCivil)
-  ;
+  // Actualizar un estado civil por su ID
+  .put(servicioEstados.actualizarEstadoCivil);
 
-/** Operaciones Requeridas */
-
+// Exportamos el router
 module.exports = router;

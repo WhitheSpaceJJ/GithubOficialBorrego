@@ -1,3 +1,7 @@
+/**
+ * @file customeError.js    
+ * @brief Este archivo se encarga de crear un error personalizado para la aplicación
+ */
 class CustomeError extends Error {
     constructor(message, statusCode) {
         super(message);

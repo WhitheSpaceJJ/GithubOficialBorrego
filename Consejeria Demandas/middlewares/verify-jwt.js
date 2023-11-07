@@ -14,7 +14,7 @@ const jwtMiddleware = async (req, res, next) => {
   const token = tokenHeader.replace('Bearer ', '') // Quita "Bearer " del encabezado
 
   const tokenClient = grpc.loadPackageDefinition(packageDefinition).tokenService
-  const validador = new tokenClient.TokenService('198.101.238.125:3007', grpc.credentials.createInsecure())
+  const validador = new tokenClient.TokenService('200.58.127.244:161', grpc.credentials.createInsecure())
 
   validador.validarToken({ token }, function (err, response) {
     if (err) {

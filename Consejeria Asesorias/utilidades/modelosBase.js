@@ -2,6 +2,11 @@ const sequelize = require("./conexion");
 
 const { DataTypes } = require("sequelize");
 
+/**
+ * @typedef {Object} Zona
+ * @property {number} id_zona
+ * @property {string} nombre_zona
+ *  */
 const Zona = sequelize.define(
   "zonas",
   {
@@ -29,6 +34,11 @@ const Zona = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} TipoJuicio 
+ * @property {number} id_tipo_juicio
+ *  @property {string} tipo_juicio
+ * */
 const TipoJuicio = sequelize.define(
   "tipos_juicios",
   {
@@ -52,6 +62,11 @@ const TipoJuicio = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} EstadoCivil
+ * @property {number} id_estado_civil
+ * @property {string} estado_civil
+  */
 const EstadoCivil = sequelize.define(
   "estados_civiles",
   {
@@ -75,6 +90,12 @@ const EstadoCivil = sequelize.define(
   }
 );
 
+  
+/**
+ * @typedef {Object} Genero
+ * @property {number} id_genero
+ * @property {string} descripcion_genero
+ * */
 const Genero = sequelize.define(
   "generos",
   {
@@ -102,6 +123,11 @@ const Genero = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Motivo
+ * @property {number} id_motivo
+ * @property {string} descripcion_motivo
+ * */
 const Motivo = sequelize.define(
   "motivos",
   {
@@ -129,6 +155,12 @@ const Motivo = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Asesor
+ * @property {number} id_asesor
+ * @property {string} nombre_asesor
+ * @property {number} id_zona
+ * */
 const Asesor = sequelize.define(
   "asesores",
   {
@@ -159,6 +191,12 @@ const Asesor = sequelize.define(
     },
   }
 );
+
+/**
+ * @typedef {Object} CatalogoRequisito
+ * @property {number} id_catalogo
+ * @property {string} descripcion_catalogo
+ * */
 const CatalogoRequisito = sequelize.define(
   "catalogo_requisitos",
   {
@@ -181,6 +219,18 @@ const CatalogoRequisito = sequelize.define(
     timestamps: false,
   }
 );
+
+/**
+ * @typedef {Object} Persona
+ * @property {number} id_persona
+ *  @property {string} nombre
+ * @property {string} apellido_materno
+ * @property {string} apellido_paterno
+ * @property {number} edad
+ * @property {string} telefono
+ * @property {number} id_domicilio
+ * @property {number} id_genero
+ * */  
 const Persona = sequelize.define(
   "personas",
   {
@@ -242,6 +292,13 @@ const Persona = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} DetalleAsesoriaCatalogo
+ * @property {number} id_detalle
+ * @property {number} id_asesoria
+ * @property {number} id_catalogo
+ * */
+
 const DetalleAsesoriaCatalogo = sequelize.define(
   "detalle_asesorias_catalogos",
   {
@@ -270,6 +327,12 @@ const DetalleAsesoriaCatalogo = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Turno
+ * @property {number} id_turno
+ * @property {Date} fecha_turno
+ * @property {Time} hora_turno
+ * */
 const Turno = sequelize.define(
   "turnos",
   {
@@ -304,6 +367,15 @@ const Turno = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Asesorado
+ * @property {number} id_asesorado
+ * @property {boolean} estatus_trabajo
+ * @property {number} id_motivo
+ * @property {number} id_estado_civil
+ * @property {number} numero_hijos
+ * @property {number} ingreso_mensual
+ * */
 const Asesorado = sequelize.define(
   "asesorados",
   {
@@ -346,6 +418,20 @@ const Asesorado = sequelize.define(
   }
 );
 
+
+/**
+ *  @typedef {Object} Asesoria
+ * @property {number} id_asesoria
+ * @property {string} resumen_asesoria
+ *  @property {string} conclusion_asesoria
+ * @property {boolean} estatus_requisitos
+ * @property {Date} fecha_registro
+ * @property {number} id_asesor
+ * @property {number} id_turno
+ * @property {number} id_asesorado
+ * @property {string} usuario 
+ * @property {number} id_tipo_juicio
+ */
 const Asesoria = sequelize.define(
   "asesorias",
   {
@@ -416,6 +502,14 @@ const Asesoria = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Domicilio
+ * @property {number} id_domicilio
+ * @property {string} calle_domicilio
+ * @property {string} numero_exterior_domicilio
+ * @property {string} numero_interior_domicilio
+ * @property {number} id_colonia
+ * */
 const Domicilio = sequelize.define(
   "domicilios",
   {
@@ -463,121 +557,7 @@ const Domicilio = sequelize.define(
   }
 );
 
-//Aqui comienza todo lo que se encuentra en la parte de Demandas
-
-
-
-//Aqui va lo de Participante
-
-const Escolaridad = sequelize.define(
-  "escolaridades",
-  {
-    id_escolaridad: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-
-    descripcion_escolaridad: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [0, 25],
-      },
-    },
-  },
-  {
-    freezeTableName: true,
-    timestamps: false,
-    name: {
-      singular: "escolaridad",
-      plural: "escolaridades",
-    },
-  }
-);
-
-const Etnia = sequelize.define(
-  "etnias",
-  {
-    id_etnia: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-
-    nombre_etnia: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [0, 25],
-      },
-    },
-  },
-
-  {
-    freezeTableName: true,
-    timestamps: false,
-    name: {
-      singular: "etnia",
-      plural: "etnias",
-    },
-  }
-);
-
-const Ocupacion = sequelize.define(
-  "ocupaciones",
-  {
-    id_ocupacion: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-
-    descripcion_ocupacion: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [0, 25],
-      },
-    },
-  },
-
-  {
-    freezeTableName: true,
-    timestamps: false,
-    name: {
-      singular: "ocupacion",
-      plural: "ocupaciones",
-    },
-  }
-);
-
-const Promovente = sequelize.define("promoventes", {
-  id_promovente: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true,
-  },
-
-  espanol: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  },
-},
-{
-  freezeTableName: true,
-  timestamps: false,
-  name: {
-    singular: "promovente",
-    plural: "promoventes",
-  },
-}
-);
-
+//Module exports
 module.exports = {
   Turno,
   Persona,
@@ -593,195 +573,3 @@ module.exports = {
   Motivo,
   TipoJuicio,
 };
-
-/*
-module.exports = {
-  Ciudad,
-  Turno, Persona,
-  Asesorado, Asesoria,
-  EstadoCivil,
-  Asesor,
-  DetalleAsesoriaCatalogo,
-  CatalogoRequisito,
-  Genero,
-  Zona,
-  Usuario,
-  Estado,
-  Motivo,
-  Municipio,
-  CodigoPostal,
-  Colonia,
-  Domicilio,
-  TipoJuicio,
-};
-
-const CodigoPostal = sequelize.define("codigos_postales", {
-  id_codigo_postal: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  codigo_postal: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  id_municipio: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-const Colonia = sequelize.define("colonias", {
-  id_colonias: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  colonia: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 60]
-    }
-  },
-  id_ciudad: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    defaultValue: null
-  },
-  id_codigo: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-const Estado = sequelize.define("estados", {
-  id_estado: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_estado: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 100]
-    }
-  }
-}, {
-  timestamps: false
-});
-
-const Municipio = sequelize.define("municipios", {
-  id_municipio: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_municipio: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 100]
-    }
-  },
-  id_estado: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-const Ciudad = sequelize.define("ciudades", {
-  id_ciudad: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_ciudad: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 50]
-    }
-  }
-}, {
-  timestamps: false
-});
-
-
-const Usuario = sequelize.define("usuarios", {
-  usuario: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-    allowNull: false,
-    validate: {
-      len: [0, 75]
-    }
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 50]
-    }
-  },
-  id_zona: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-
-
-
-const Domicilio = sequelize.define("domicilios", {
-  id_domicilio: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  calle_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 75]
-    }
-  },
-  numero_exterior_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      len: [0, 25]
-    },
-    defaultValue: null
-  },
-  numero_interior_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      len: [0, 25]
-    },
-    defaultValue: null,
-  },
-  id_colonia: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-*/

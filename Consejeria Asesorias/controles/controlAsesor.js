@@ -1,5 +1,10 @@
 const modeloAsesor = require('../modelos/modeloAsesor');
-/** Operaciones Basica */
+
+
+/** 
+ * @abstract Función que permite obtener todos los asesores
+ * @returns  asesores
+ * */
 const obtenerAsesores = async () => {
   try {
     return await modeloAsesor.Asesor.findAll({
@@ -11,6 +16,13 @@ const obtenerAsesores = async () => {
     return null;
   }
 };
+
+
+/**
+ * @abstract Función que permite obtener un asesor por su id
+ * @param {*} id id del asesor
+ *  @returns asesor
+ * */
 
 const obtenerAsesorPorId = async (id) => {
   try {
@@ -24,6 +36,11 @@ const obtenerAsesorPorId = async (id) => {
   }
 };
 
+/** 
+ * @abstract Función que permite agregar un asesor
+ *  @param {*} asesor  asesor a agregar
+ *  @returns asesor si se agrega correctamente, false si no  agrega     
+ * */
 const agregarAsesor = async (asesor) => {
   try {
     return (await modeloAsesor.Asesor.create(asesor, { raw: true, nest: true })).dataValues;
@@ -33,6 +50,11 @@ const agregarAsesor = async (asesor) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un asesor
+ *  @param {*} id id del asesor a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ * */
 const eliminarAsesor = async (id) => {
   try {
     await modeloAsesor.Asesor.destroy({ where: { id_asesor: id } });
@@ -43,6 +65,11 @@ const eliminarAsesor = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite actualizar un asesor
+ * @param {*} asesor asesor a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ * */
 const actualizarAsesor = async (asesor) => {
   try {
     await modeloAsesor.Asesor.update(asesor, { where: { id_asesor: asesor.id_asesor } });
@@ -53,9 +80,8 @@ const actualizarAsesor = async (asesor) => {
   }
 };
 
-/** Operaciones Requeridas */
 
-
+  //  Exportar los módulos    
 module.exports = {
   obtenerAsesores,
   obtenerAsesorPorId,

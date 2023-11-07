@@ -1,22 +1,26 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioCatalogoRequisitos = require('../servicios/servicioCatalogoRequisitos');
 
+// Creamos un nuevo router
 const router = express.Router();
 
-/** Operaciones Basica */
-
+/** Operaciones Básicas */
 
 router.route('/')
+  // Obtener todos los requisitos del catálogo
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitos)
-  .post(servicioCatalogoRequisitos.agregarCatalogoRequisito)
-  ;
+  // Agregar un nuevo requisito al catálogo
+  .post(servicioCatalogoRequisitos.agregarCatalogoRequisito);
 
 router.route('/:id')
+  // Obtener un requisito del catálogo por su ID
   .get(servicioCatalogoRequisitos.obtenerCatalogoRequisitoPorId)
+  // Eliminar un requisito del catálogo por su ID
   .delete(servicioCatalogoRequisitos.eliminarCatalogoRequisito)
-  .put(servicioCatalogoRequisitos.actualizarCatalogoRequisito)
-  ;
+  // Actualizar un requisito del catálogo por su ID
+  .put(servicioCatalogoRequisitos.actualizarCatalogoRequisito);
 
-/** Operaciones Requeridas */
 
+// Exportamos el router
 module.exports = router;

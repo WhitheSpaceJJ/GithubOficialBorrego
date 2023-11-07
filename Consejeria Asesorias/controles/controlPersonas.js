@@ -1,6 +1,9 @@
 const modeloPersona = require('../modelos/modeloPersona');
-/** Operaciones Basica */
 
+/**
+ * @abstract Función que permite obtener todas las personas
+ * @returns personas
+ */
 const obtenerPersonas = async () => {
   try {
     return await modeloPersona.Persona.findAll({
@@ -18,6 +21,11 @@ const obtenerPersonas = async () => {
   }
 };
 
+/**
+ *  @abstract Función que permite obtener una persona por su id
+ * @param {*} id id de la persona
+ * @returns persona
+ */
 const obtenerPersonaPorId = async (id) => {
   try {
     return await modeloPersona.Persona.findByPk(id, {
@@ -34,6 +42,11 @@ const obtenerPersonaPorId = async (id) => {
   }
 };
 
+/**
+ *  @abstract Función que permite agregar una persona
+ * @param {*} persona persona a agregar
+ *  @returns persona si se agrega correctamente, false si no  agregar
+ */
 const agregarPersona = async (persona) => {
   try {
 
@@ -44,6 +57,11 @@ const agregarPersona = async (persona) => {
   }
 };
 
+/**
+ *  @abstract Función que permite eliminar una persona
+ * @param {*} id id de la persona a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ */
 const eliminarPersona = async (id) => {
   try {
     await modeloPersona.Persona.destroy({ where: { id_persona: id } });
@@ -54,6 +72,11 @@ const eliminarPersona = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite actualizar una persona
+ * @param {*} persona persona a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarPersona = async (persona) => {
   try {
     await modeloPersona.Persona.update(persona, { where: { id_persona: persona.id_persona } });
@@ -63,9 +86,15 @@ const actualizarPersona = async (persona) => {
     return false;
   }
 };
-/** Operaciones Requeridas */
 
 
+  /**
+   *  @abstract Función que permite obtener una persona por su nombre
+   * @param {*} nombre nombre de la persona
+   * @param {*} apellido_paterno apellido paterno de la persona
+   * @param {*} apellido_materno apellido materno de la persona
+   * @returns persona
+   * */
 const obtenerPersonaNombre = async (nombre, apellido_paterno, apellido_materno) => {
   try {
     return await modeloPersona.Persona.findOne({
@@ -89,26 +118,8 @@ const obtenerPersonaNombre = async (nombre, apellido_paterno, apellido_materno) 
   }
 };
 const { Op } = require("sequelize");
-/*
 
-const obtenerPersonaNombre = async (nombre, apellido_paterno, apellido_materno) => {
-  try {
-    return await modeloPersona.Persona.findOne({
-      where: {
-        nombre:nombre,
-        apellido_paterno:apellido_paterno,
-        apellido_materno:apellido_materno
-      },
-      raw: true,
-      nest: true,
-    });
-  } catch (error) {
-    console.error("Error:", error.message);
-    throw error;
-  }
-};
-
-*/
+//Module exports
 module.exports = {
   obtenerPersonas,
   obtenerPersonaPorId,

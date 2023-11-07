@@ -1,23 +1,27 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioPersonas = require('../servicios/servicioPersonas');
 
+// Creamos un nuevo router
 const router = express.Router();
+
 router.route('/buscar')
+  // Obtener una persona por su nombre
   .get(servicioPersonas.obtenerPersonaNombre);
- 
-/** Operaciones Basica */
 
 router.route('/')
+  // Obtener todas las personas
   .get(servicioPersonas.obtenerPersonas)
-  .post(servicioPersonas.agregarPersona)
-  ;
+  // Agregar una nueva persona
+  .post(servicioPersonas.agregarPersona);
 
 router.route('/:id')
+  // Obtener una persona por su ID
   .get(servicioPersonas.obtenerPersonaPorId)
+  // Eliminar una persona por su ID
   .delete(servicioPersonas.eliminarPersona)
-  .put(servicioPersonas.actualizarPersona)
-  ;
+  // Actualizar una persona por su ID
+  .put(servicioPersonas.actualizarPersona);
 
-
-/** Operaciones Requeridas */
+// Exportamos el router
 module.exports = router;

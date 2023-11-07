@@ -1,7 +1,9 @@
 const modeloDetalleAsesoriaCatalogo = require('../modelos/modeloDetalleAsesoria');
 
-/** Operaciones Básicas */
-
+/**
+ *  @abstract Función que permite obtener todos los detalles de asesorias
+ * @returns detalles de asesorias
+ */
 const obtenerDetallesAsesoriaCatalogo = async () => {
   try {
     return await modeloDetalleAsesoriaCatalogo.DetalleAsesoriaCatalogo.findAll({
@@ -14,6 +16,11 @@ const obtenerDetallesAsesoriaCatalogo = async () => {
   }
 };
 
+/**
+ * @abstract Función que permite obtener un detalle de asesoria por su id
+ * @param {*} id id del detalle de asesoria
+ * @returns detalle de asesoria
+ * */
 const obtenerDetalleAsesoriaCatalogoPorId = async (id) => {
   try {
     return await modeloDetalleAsesoriaCatalogo.DetalleAsesoriaCatalogo.findByPk(id, {
@@ -26,6 +33,11 @@ const obtenerDetalleAsesoriaCatalogoPorId = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite agregar un detalle de asesoria
+ * @param {*} detalle detalle de asesoria a agregar
+ * @returns detalle de asesoria si se agrega correctamente, false si no  agregar
+ *  */
 const agregarDetalleAsesoriaCatalogo = async (detalle) => {
   try {
     return (await modeloDetalleAsesoriaCatalogo.DetalleAsesoriaCatalogo.create(detalle, { raw: true, nest: true })).dataValues;
@@ -35,6 +47,11 @@ const agregarDetalleAsesoriaCatalogo = async (detalle) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un detalle de asesoria
+ * @param {*} id id del detalle de asesoria a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ * */
 const eliminarDetalleAsesoriaCatalogo = async (id) => {
   try {
     await modeloDetalleAsesoriaCatalogo.DetalleAsesoriaCatalogo.destroy({ where: { id_detalle: id } });
@@ -45,6 +62,11 @@ const eliminarDetalleAsesoriaCatalogo = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite actualizar un detalle de asesoria
+ * @param {*} detalle detalle de asesoria a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ * */
 const actualizarDetalleAsesoriaCatalogo = async (detalle) => {
   try {
     await modeloDetalleAsesoriaCatalogo.DetalleAsesoriaCatalogo.update(detalle, { where: { id_detalle: detalle.id_detalle } });
@@ -55,8 +77,7 @@ const actualizarDetalleAsesoriaCatalogo = async (detalle) => {
   }
 };
 
-/** Operaciones Requeridas */
-
+// Module exports:
 module.exports = {
   obtenerDetallesAsesoriaCatalogo,
   obtenerDetalleAsesoriaCatalogoPorId,

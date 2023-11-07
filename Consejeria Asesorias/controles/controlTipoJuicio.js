@@ -1,9 +1,12 @@
 
 const modeloTipoJuicio = require('../modelos/modeloTipoJuicio');
-/** Operaciones Basica */
 
 
-
+/**
+ * 
+ * @abstract Función que permite obtener todos los tipos de juicio
+ * @returns tipos de juicio
+ */
 const obtenerTiposDeJuicio = async () => {
   try {
     return await modeloTipoJuicio.TipoJuicio.findAll({
@@ -16,6 +19,12 @@ const obtenerTiposDeJuicio = async () => {
   }
 };
 
+  
+/**
+ * @abstract Función que permite obtener un tipo de juicio por su id
+ * @param {*} id id del tipo de juicio
+ * @returns tipo de juicio  
+ *  */  
 const obtenerTipoDeJuicioPorId = async (id) => {
   try {
     return await modeloTipoJuicio.TipoJuicio.findByPk(id, {
@@ -28,6 +37,11 @@ const obtenerTipoDeJuicioPorId = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite agregar un tipo de juicio
+ * @param {*} tipoDeJuicio tipo de juicio a agregar
+ * @returns tipo de juicio si se agrega correctamente, false si no  agregar
+ * */
 const agregarTipoDeJuicio = async (tipoDeJuicio) => {
   try {
     return (await modeloTipoJuicio.TipoJuicio.create(tipoDeJuicio, { raw: true, nest: true })).dataValues;
@@ -37,6 +51,11 @@ const agregarTipoDeJuicio = async (tipoDeJuicio) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un tipo de juicio
+ * @param {*} id id del tipo de juicio a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ *  */
 const eliminarTipoDeJuicio = async (id) => {
   try {
     await modeloTipoJuicio.TipoJuicio.destroy({ where: { id_tipo_juicio: id } });
@@ -47,6 +66,11 @@ const eliminarTipoDeJuicio = async (id) => {
   }
 };
 
+/**
+ *  @abstract Función que permite actualizar un tipo de juicio
+ * @param {*} tipoDeJuicio tipo de juicio a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarTipoDeJuicio = async (tipoDeJuicio) => {
   try {
     await modeloTipoJuicio.TipoJuicio.update(tipoDeJuicio, { where: { id_tipo_juicio: tipoDeJuicio.id_tipo_juicio } });
@@ -57,8 +81,7 @@ const actualizarTipoDeJuicio = async (tipoDeJuicio) => {
   }
 };
 
-/** Operaciones Requeridas */
-
+// Module exports
 module.exports = {
   obtenerTiposDeJuicio,
   obtenerTipoDeJuicioPorId,

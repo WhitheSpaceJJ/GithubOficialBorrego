@@ -1,7 +1,7 @@
 const config = require('../configuracion/default.json');
 const { Sequelize } = require('sequelize');
 
-// Crear instancia de Sequelize y establecer conexión a la base de datos
+// Conexion a la base de datos
 const sequelize = new Sequelize(
   config.database.databaseName,
   config.database.username,
@@ -14,5 +14,5 @@ const sequelize = new Sequelize(
   }
 );
 
-// Exportar la instancia de Sequelize para su uso en otros archivos
+// Exportar la conexion
 module.exports = sequelize;

@@ -3,46 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
     <title>Recuperar Contraseña</title>
-    <link rel="stylesheet" type="text/css" href="css/recuperacion.css">
-    <script src="js/recuperacions.js">
-    </script>
-
+    <link rel="icon" href="/img/DPS.png">
+    <link rel="stylesheet" href="./tailwind.css" />
+    <script src="/lib/include-html.js" type="module"></script>
+    <script src="./src/recuperacion.js" type="module" defer></script>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Recuperar Contraseña</h1>
-    </div>
-    <main class="contenedor">
-        <div class="contenido">
-            <label for="correo">Correo Electrónico</label>
-            <input id="correoI" name="correoN" type="text" placeholder="Ingresa tu correo electrónico">
-            <input type="submit" onclick="" value="Recuperar Contraseña">
-            <a href="login.html" id="olvideContraseña">Regresar Inicio</a>
-        </div>
+    <div data-include="assets/header.html"></div>
+    <main class="flex items-center justify-center mt-40 mb-auto">
+        <section class="w-full max-w-md max-h-full p-12 text-center bg-white shadow-xl rounded-xl">
+            <h1 class="mb-4 text-3xl font-bold">Recuperar contraseña</h1>
+            <form id="recuperar">
+                <input required type="text" id="correo" name="correo" placeholder="Correo electrónico"
+                    class="w-full p-3 mb-4 border rounded border-grey-light">
+                <button type="submit"
+                    class="w-full text-center py-3 rounded bg-[#a52a2a] text-white hover:bg-[#db2424] my-1 font-semibold transition duration-200">Recuperar
+                    contraseña</button>
+            </form> 
+            <div class="mt-4 text-sm">
+                <a href="login.html" class="hover:text-[#ee4f4f] hover:underline transition duration-200">Volver a
+                    inicio</a>
+            </div>
+        </section>
     </main>
-    <div id="miAlerta" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta" onclick="cerrar()">&times;</span>
-            </div>
-            <h3>Mensaje de Avertencia</h3>
-            <p id="miMensaje">No exise usuario con el correo proporcionado.</p>
-        </div>
-    </div>
-    <div id="miAlerta2" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-cerrar">
-                <span class="cerrar" id="cerrarAlerta2"  onclick="cerrar2()">&times;</span>
-            </div>
-            <h3>Recuperacion Existoso</h3>
-            <p id="miMensaje2">Se ha enviado una contraseña al correo.</p>
-        </div>
-    </div>
+    <!-- MODAL DE ADVERTENCIA -->
+    <modal-warning> El usuario o la contraseña son incorrectos.</modal-warning>
 </body>
-
 </html>

@@ -10,6 +10,92 @@ const controlAsesorados = require('./controlAsesorados');
 const controlTurnos = require('./controlTurno');
 const controlDetalleAsesoria = require('./controlDetalleAsesoria');
 
+
+/**
+ * @abstract Función que permite obtener una asesoria por filtro
+ * @returns asesoria
+ * */
+const obtenerAsesoriasFiltro = async (filtro) => {
+  try {
+    const asesorias_pre = await modeloAsesoria.Asesoria.findAll({
+      raw: false,
+      nest: true,
+      attributes: {
+        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
+      },
+      include: [
+        modeloAsesoria.Asesorado,
+        modeloAsesoria.DetalleAsesoriaCatalogo,
+        modeloAsesoria.Turno,
+        modeloAsesoria.Asesor,
+        modeloAsesoria.TipoJuicio
+      ]
+    });
+
+    const asesorias = [];
+
+    for (const asesoria_pre of asesorias_pre) {
+      const asesoria_obj = JSON.parse(JSON.stringify(asesoria_pre));
+
+      if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
+        const recibidos = [];
+        for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
+          const id_catalogo = detalle.id_catalogo;
+          const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
+          recibidos.push(catalogo);
+        }
+        delete asesoria_obj.detalle_asesorias_catalogos;
+        asesoria_obj.recibidos = recibidos;
+      }
+
+      // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+
+      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
+      delete asesoria_obj.asesor.id_zona;
+      asesoria_obj.asesor.zona = zona;
+
+      const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
+      asesoria_obj.persona = persona;
+
+      if (asesoria_obj.asesorado.id_motivo !== null) {
+        const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
+        delete asesoria_obj.asesorado.id_motivo;
+        asesoria_obj.asesorado.motivo = motivo;
+      }
+
+      const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
+      delete asesoria_obj.asesorado.id_estado_civil;
+      asesoria_obj.asesorado.estado_civil = estado_civil;
+      const datos_asesoria = {};
+      datos_asesoria.id_asesoria = asesoria_obj.id_asesoria;
+      datos_asesoria.resumen_asesoria = asesoria_obj.resumen_asesoria;
+      datos_asesoria.conclusion_asesoria = asesoria_obj.conclusion_asesoria;
+      datos_asesoria.estatus_requisitos = asesoria_obj.estatus_requisitos;
+      datos_asesoria.fecha_registro = asesoria_obj.fecha_registro;
+      datos_asesoria.usuario = asesoria_obj.usuario;
+      delete asesoria_obj.id_asesoria;
+      delete asesoria_obj.resumen_asesoria;
+      delete asesoria_obj.conclusion_asesoria;
+      delete asesoria_obj.estatus_requisitos;
+      delete asesoria_obj.fecha_registro;
+      delete asesoria_obj.usuario;
+      asesoria_obj.datos_asesoria = datos_asesoria;
+
+      asesorias.push(asesoria_obj);
+    }
+
+    return asesorias;
+  } catch (error) {
+    console.log("Error:", error.message);
+    return null;
+  }
+
+};
+
+/**
+ *  @abstract Función que permite obtener todos los asesorias 
+ * @returns asesorias
+ */
 const obtenerAsesorias = async () => {
   try {
     const asesorias_pre = await modeloAsesoria.Asesoria.findAll({
@@ -86,27 +172,90 @@ const obtenerAsesorias = async () => {
   }
 };
 
+/**
+ * @abstract Función que permite obtener un asesoria por su id
+ *  @param {*} id id del asesoria
+ * @returns asesoria
+ *  
+ *  */
 const obtenerAsesoriaPorId = async (id) => {
   try {
-    return await modeloAsesoria.Asesoria.findByPk(id, {
+    const asesorias_pre = await modeloAsesoria.Asesoria.findByPk(id, {
       raw: false,
-      nest: true
-      ,
+      nest: true,
       attributes: {
-        exclude: ['id_asesorado', 'id_turno', "id_asesor", "id_tipo_juicio"]
+        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
       },
-      include: [modeloAsesoria.Asesorado,
-      modeloAsesoria.DetalleAsesoriaCatalogo,
-      modeloAsesoria.Turno, modeloAsesoria.Asesor, modeloAsesoria.TipoJuicio]
-
+      include: [
+        modeloAsesoria.Asesorado,
+        modeloAsesoria.DetalleAsesoriaCatalogo,
+        modeloAsesoria.Turno,
+        modeloAsesoria.Asesor,
+        modeloAsesoria.TipoJuicio
+      ]
     });
+
+
+
+      const asesoria_obj = JSON.parse(JSON.stringify(asesorias_pre));
+
+      if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
+        const recibidos = [];
+        for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
+          const id_catalogo = detalle.id_catalogo;
+          const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
+          recibidos.push(catalogo);
+        }
+        delete asesoria_obj.detalle_asesorias_catalogos;
+        asesoria_obj.recibidos = recibidos;
+      }
+
+      // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+
+      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
+      delete asesoria_obj.asesor.id_zona;
+      asesoria_obj.asesor.zona = zona;
+
+      const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
+      asesoria_obj.persona = persona;
+
+      if (asesoria_obj.asesorado.id_motivo !== null) {
+        const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
+        delete asesoria_obj.asesorado.id_motivo;
+        asesoria_obj.asesorado.motivo = motivo;
+      }
+
+      const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
+      delete asesoria_obj.asesorado.id_estado_civil;
+      asesoria_obj.asesorado.estado_civil = estado_civil;
+      const datos_asesoria = {};
+      datos_asesoria.id_asesoria = asesoria_obj.id_asesoria;
+      datos_asesoria.resumen_asesoria = asesoria_obj.resumen_asesoria;
+      datos_asesoria.conclusion_asesoria = asesoria_obj.conclusion_asesoria;
+      datos_asesoria.estatus_requisitos = asesoria_obj.estatus_requisitos;
+      datos_asesoria.fecha_registro = asesoria_obj.fecha_registro;
+      datos_asesoria.usuario = asesoria_obj.usuario;
+      delete asesoria_obj.id_asesoria;
+      delete asesoria_obj.resumen_asesoria;
+      delete asesoria_obj.conclusion_asesoria;
+      delete asesoria_obj.estatus_requisitos;
+      delete asesoria_obj.fecha_registro;
+      delete asesoria_obj.usuario;
+      asesoria_obj.datos_asesoria = datos_asesoria;
+    
+
+    return    asesoria_obj;
   } catch (error) {
     console.log("Error:", error.message);
     return null;
   }
 };
-//const agregarAsesoria = async (asesoria) => {
 
+/**
+ * @abstract Función que permite agregar un asesoria
+ * @param {*} asesoria asesoria a agregar
+ * @returns asesoria si se agrega correctamente, false si no  agregar
+ * */
 const agregarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
@@ -170,6 +319,11 @@ const agregarAsesoria = async (asesoria_pre) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un asesoria
+ * @param {*} id id del asesoria a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ * */
 const eliminarAsesoria = async (id) => {
   try {
     await modeloAsesoria.Asesoria.destroy({ where: { id_asesoria: id } });
@@ -180,7 +334,11 @@ const eliminarAsesoria = async (id) => {
   }
 };
 
-
+/**
+ * @abstract Función que permite actualizar un asesoria
+ * @param {*} asesoria asesoria a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ * */
 const actualizarAsesoria = async (asesoria_pre) => {
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
@@ -221,8 +379,11 @@ const actualizarAsesoria = async (asesoria_pre) => {
 
 
 
-
-/** Operaciones Requeridas */
+/**
+ * @abstract Función que permite obtener un asesoria por id del asesorado
+ * @param {*} id_asesorado id del asesorado
+ *  @returns asesoria
+ * */
 const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
 
   try {
@@ -298,6 +459,7 @@ const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
 };
 
 
+// Export model functions and routes  
 module.exports = {
   obtenerAsesorias,
   obtenerAsesoriaPorId,
@@ -305,4 +467,5 @@ module.exports = {
   agregarAsesoria,
   eliminarAsesoria,
   actualizarAsesoria,
+  obtenerAsesoriasFiltro
 };

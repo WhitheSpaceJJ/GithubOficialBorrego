@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link rel="icon" href="/img/DPS.png" />
+    <link rel="stylesheet" href="./tailwind.css" />
+    <script src="./lib/include-html.js" type="module"></script>
+    <script src="./src/signup.js" type="module" defer></script>
+</head>
+<body class="h-screen bg-gray-50">
+    <div data-include="assets/header.html"></div>
+    <main class="flex items-center justify-center mt-10 mb-auto 2xl:mt-28">
+        <section class="w-full max-w-lg max-h-full p-6 text-center bg-white shadow-xl rounded-xl md:p-12">
+            <h1 class="mb-4 text-3xl font-bold">Registro de Usuario</h1>
+            <form id="signup">
+                <input 
+                required 
+                type="text" 
+                id="nombre" 
+                name="nombre" 
+                placeholder="Nombre" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+
+                <input 
+                required 
+                type="text" 
+                id="apellido-paterno" 
+                name="apellido-paterno" 
+                placeholder="Apellido Paterno" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+
+                <input 
+                required 
+                type="text" 
+                id="apellido-materno" 
+                name="apellido-materno" 
+                placeholder="Apellido Materno" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+
+                <input 
+                required 
+                type="email" 
+                id="correo" 
+                name="correo" 
+                placeholder="Correo" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+
+                <input 
+                required 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Contraseña" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" />
+
+                <input 
+                required 
+                type="password" 
+                id="password-confirm" 
+                name="password-confirm" 
+                placeholder="Confirmar Contraseña" 
+                class="w-full p-3 mb-4 border border-gray-200 rounded" minlength="8"/>
+
+                <section class="flex flex-col items-center justify-between w-full max-w-lg gap-2 mb-4 sm:flex-row">
+                    <select
+                    name="comboBox-idZona" 
+                    id="zona" 
+                    class="w-full max-w-lg border-gray-200 overflow-ellipsis">
+                        <option 
+                        value="0">Seleccione una zona</option>
+                        <option 
+                        value="1">Norte</option>
+                        <option 
+                        value="2">Centro</option>
+                        <option 
+                        value="3">Sur</option>
+                    </select>
+
+                    <select
+                    name="comboBox-rolUsuario" 
+                    id="rol-usuario" 
+                    class="w-full max-w-lg border-gray-200 overflow-ellipsis">
+                        <option 
+                        value="0">Rol de usuario</option>
+                        <option 
+                        value="1">Admin</option>
+                        <option 
+                        value="2">Normal</option>
+                    </select>
+
+                </section>
+
+                <button 
+                id="btn-registro" 
+                type="submit" 
+                class="w-full text-center py-3 rounded bg-[#a52a2a] text-white hover:bg-[#db2424] my-1 font-semibold transition duration-200">
+                    Registrarse
+                </button>
+                
+            </form>
+        </section>
+    </main>
+    <!-- MODAL ADVERTENCIA -->
+    <modal-warning> Las contraseñas no coinciden.</modal-warning>
+  </body>
+</html>

@@ -1,6 +1,9 @@
 const modeloTurno = require('../modelos/modeloTurno');
-/** Operaciones Basica */
 
+/**
+ * @abstract Función que permite obtener todos los turnos
+ * @returns turnos
+ */
 const obtenerTurnos = async () => {
   try {
     return await modeloTurno.Turno.findAll({
@@ -13,6 +16,11 @@ const obtenerTurnos = async () => {
   }
 };
 
+ /**
+  * @abstract Función que permite obtener un turno por su id
+  * @param {*} id id del turno
+  * @returns turno
+  */  
 const obtenerTurnoPorId = async (id) => {
   try {
     return await modeloTurno.Turno.findByPk(id, {
@@ -25,6 +33,12 @@ const obtenerTurnoPorId = async (id) => {
   }
 };
 
+
+/**
+ * @abstract Función que permite agregar un turno
+ * @param {*} turno turno a agregar
+ * @returns turno si se agrega correctamente, false si no  agregar
+ * */
 const agregarTurno = async (turno) => {
   try {
     return (await modeloTurno.Turno.create(turno, { raw: true, nest: true })).dataValues;
@@ -34,6 +48,11 @@ const agregarTurno = async (turno) => {
   }
 };
 
+/**
+ * @abstract Función que permite eliminar un turno
+ * @param {*} id id del turno a eliminar
+ * @returns true si se elimina correctamente, false si no se elimina
+ */
 const eliminarTurno = async (id) => {
   try {
     await modeloTurno.Turno.destroy({ where: { id_turno: id } });
@@ -44,6 +63,11 @@ const eliminarTurno = async (id) => {
   }
 };
 
+/**
+ * @abstract Función que permite actualizar un turno
+ * @param {*} turno turno a actualizar
+ * @returns true si se actualiza correctamente, false si no se actualiza
+ */
 const actualizarTurno = async (turno) => {
   try {
     await modeloTurno.Turno.update(turno, { where: { id_turno: turno.id_turno } });
@@ -54,8 +78,7 @@ const actualizarTurno = async (turno) => {
   }
 };
 
-/** Operaciones Requeridas */
-
+//    Module exports:
 module.exports = {
   obtenerTurnos,
   obtenerTurnoPorId,

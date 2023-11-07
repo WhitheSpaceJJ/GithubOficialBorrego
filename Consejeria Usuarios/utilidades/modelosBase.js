@@ -2,7 +2,12 @@ const sequelize = require("./conexion");
 
 const { DataTypes } = require("sequelize");
 
-const Zona = sequelize.define("zonas", {
+/**
+ * Modelo de la tabla zona 
+ *  @property {string} id_zona - id de la zona
+ * @property {string} zona - nombre de la zona
+ * */
+ const Zona = sequelize.define("zonas", {
   id_zona: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,6 +31,11 @@ const Zona = sequelize.define("zonas", {
 }
 });
 
+/**
+ * Modelo de la tabla tipo de usuario 
+ * @property {string} id_tipouser - id del tipo de usuario
+ * @property {string} tipo_usuario - nombre del tipo de usuario
+ * */
 const TipoUser = sequelize.define("tipo_user", {
   id_tipouser
             : {
@@ -45,6 +55,19 @@ const TipoUser = sequelize.define("tipo_user", {
   timestamps: false,
   tableName:"tipo_user"
 });
+
+/**
+ * Modelo de la tabla usuario 
+ * y se relaciona con los modelos de tipo de usuario y zona
+ * @property {string} id_usuario - id del usuario
+ * @property {string} nombre - nombre del usuario
+ * @property {string} materno - apellido materno del usuario
+ * @property {string} paterno - apellido paterno del usuario
+ * @property {string} correo - correo del usuario
+ * @property {string} password - contraseña del usuario
+ * @property {string} id_tipouser - id del tipo de usuario
+ * @property {string} id_zona - id de la zona
+ * */
 const Usuario = sequelize.define("usuarios", {
   id_usuario: {
     type: DataTypes.INTEGER,
@@ -107,201 +130,11 @@ const Usuario = sequelize.define("usuarios", {
     plural: 'usuarios'
 }
 });
+
+//Module exports
 module.exports = {
   TipoUser
   ,
   Zona,
 Usuario
 };
-
-/*
-module.exports = {
-  Ciudad,
-  Turno, Persona,
-  Asesorado, Asesoria,
-  EstadoCivil,
-  Asesor,
-  DetalleAsesoriaCatalogo,
-  CatalogoRequisito,
-  Genero,
-  Zona,
-  Usuario,
-  Estado,
-  Motivo,
-  Municipio,
-  CodigoPostal,
-  Colonia,
-  Domicilio,
-  TipoJuicio,
-};
-
-const CodigoPostal = sequelize.define("codigos_postales", {
-  id_codigo_postal: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  codigo_postal: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  id_municipio: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-const Colonia = sequelize.define("colonias", {
-  id_colonias: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  colonia: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 60]
-    }
-  },
-  id_ciudad: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    defaultValue: null
-  },
-  id_codigo: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-const Estado = sequelize.define("estados", {
-  id_estado: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_estado: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 100]
-    }
-  }
-}, {
-  timestamps: false
-});
-
-const Municipio = sequelize.define("municipios", {
-  id_municipio: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_municipio: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 100]
-    }
-  },
-  id_estado: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-const Ciudad = sequelize.define("ciudades", {
-  id_ciudad: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  nombre_ciudad: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 50]
-    }
-  }
-}, {
-  timestamps: false
-});
-
-
-const Usuario = sequelize.define("usuarios", {
-  usuario: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-    allowNull: false,
-    validate: {
-      len: [0, 75]
-    }
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 50]
-    }
-  },
-  id_zona: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-
-
-
-const Domicilio = sequelize.define("domicilios", {
-  id_domicilio: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  calle_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 75]
-    }
-  },
-  numero_exterior_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      len: [0, 25]
-    },
-    defaultValue: null
-  },
-  numero_interior_domicilio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      len: [0, 25]
-    },
-    defaultValue: null,
-  },
-  id_colonia: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  timestamps: false
-});
-
-*/

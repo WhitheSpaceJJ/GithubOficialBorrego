@@ -1,24 +1,23 @@
+// Importamos los módulos necesarios
 const express = require('express');
-
 const servicioTiposDeJuicio = require('../servicios/servicioTiposJuicios');
 
+// Creamos un nuevo router
 const router = express.Router();
 
-/** Operaciones Basica */
-
-
 router.route('/')
+  // Obtener todos los tipos de juicio
   .get(servicioTiposDeJuicio.obtenerTiposDeJuicio)
-  .post(servicioTiposDeJuicio.agregarTipoDeJuicio)
-  ;
+  // Agregar un nuevo tipo de juicio
+  .post(servicioTiposDeJuicio.agregarTipoDeJuicio);
 
 router.route('/:id')
+  // Obtener un tipo de juicio por su ID
   .get(servicioTiposDeJuicio.obtenerTipoDeJuicioPorId)
+  // Eliminar un tipo de juicio por su ID
   .delete(servicioTiposDeJuicio.eliminarTipoDeJuicio)
-  .put(servicioTiposDeJuicio.actualizarTipoDeJuicio)
-  ;
+  // Actualizar un tipo de juicio por su ID
+  .put(servicioTiposDeJuicio.actualizarTipoDeJuicio);
 
-/** Operaciones Requeridas */
-
-
+// Exportamos el router
 module.exports = router;

@@ -5,107 +5,112 @@ const jwtController = require("../utilidades/jwtController");
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
-/** Operaciones Básicas para Usuarios */
+/**
+ * @description Servicio que permite agregar un usuario
+ * @param {Object} req Objeto de petición
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 2002 con el usuario agregado, o error correspondiente
+ * */
 const agregarUsuario = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.agregarUsuario(req.body); // Cambio de controlZonas a controlUsuarios
   if (result === false) {
     const error = new CustomeError('Error al agregar un usuario', 400);
     return next(error);
   } else {
-    /*
-    res.status(201).json({
-      status: 'success',
-      data: {
-        usuario: result // Cambio de zona a usuario
-      }
-    });
-    
-    */
     res.status(201).json({
       usuario: result // Cambio de zona a usuario
     });
   }
 });
 
+/**
+ * @description Servicio que permite obtener todos los usuarios
+ * @param {Object} req Objeto de petición
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 200 con los usuarios, o error correspondiente
+ * */
 const obtenerUsuarios = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.obtenerUsuarios(); // Cambio de controlZonas a controlUsuarios
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron usuarios', 404); // Cambio de zonas a usuarios
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        usuarios: result // Cambio de zonas a usuarios
-      }
-    });
-    */
+ 
     res.status(200).json({
       usuarios: result // Cambio de zonas a usuarios
     });
   }
 });
 
+/**
+ * @description Servicio que permite eliminar un usuario por su id
+ * @param {Object} req Objeto de petición
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 200 con el mensaje de eliminación, o error correspondiente
+ * */
 const eliminarUsuario = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.eliminarUsuario(req.params.id); // Cambio de controlZonas a controlUsuarios
   if (result === false) {
     const error = new CustomeError('Error al eliminar el usuario', 400); // Cambio de zona a usuario
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        message: "El usuario ha sido eliminado" // Cambio de menssage a message
-      }
-    });
-    */
+
     res.status(200).json({
       message: "El usuario ha sido eliminado" // Cambio de menssage a message
     });
   }
 });
 
+/**
+ * @description Servicio que permite actualizar un usuario por su id
+ * @param {Object} req Objeto de petición
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 200 con el usuario actualizado, o error correspondiente
+ * */
 const actualizarUsuario = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.actualizarUsuario(req.body); // Cambio de controlZonas a controlUsuarios
   if (result === false) {
     const error = new CustomeError('Error al actualizar el usuario', 400); // Cambio de zona a usuario
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        usuario: req.body // Cambio de zona a usuario
-      }
-    });
-    */
+ 
     res.status(200).json({
       usuario: req.body // Cambio de zona a usuario
     });
   }
 });
 
+/**
+ * @description Servicio que permite obtener un usuario por su id
+ * @param {Object} req Objeto de petición
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 200 con el usuario encontrado, o error correspondiente
+ * */
 const obtenerUsuarioPorId = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.obtenerUsuarioPorId(req.params.id); // Cambio de controlZonas a controlUsuarios
   if (result === null || result === undefined) {
     const error = new CustomeError('Error al obtener el usuario', 404); // Cambio de zona a usuario
     return next(error);
   } else {
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        usuario: result // Cambio de zona a usuario
-      }
-    });
-    */
+
     res.status(200).json({
       usuario: result // Cambio de zona a usuario
     });
   }
 });
+
+/**
+ * @description Servicio que permite obtener un usuario por su correo y contraseña
+ * @param {Object} req Objeto de petición donde se obtienen los datos de correo y contraseña
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ *  @returns {Object} respuesta con estatus 200 con el usuario encontrado, o error correspondiente
+ * */
 const obtenerUsuarioCorreoPassword = asyncError(async (req, res, next) => {
   const result = await controlUsuarios.obtenerUsuarioCorreoPassword
     (req.query.correo, req.query.password);
@@ -122,17 +127,16 @@ const obtenerUsuarioCorreoPassword = asyncError(async (req, res, next) => {
       role: usuarioObj.tipo_user.tipo_usuario,
       name: usuarioObj.nombre + " " + usuarioObj.materno + " " + usuarioObj.paterno
     });
-    /*
-    res.status(200).json({
-      status: 'success',
-      data: {
-        token: token
-      }
-    });
-    */
+   
   }
 });
 
+
+/**
+ *   
+ * @description Función que permite generar una contraseña aleatoria
+ * @returns {String} Contraseña generada
+ */
 function generarContraseñaAzar() {
   const longitud = 10;
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -146,6 +150,12 @@ function generarContraseñaAzar() {
   return contraseñaGenerada;
 }
 
+/**
+ * @description Función que permite enviar una contraseña por correo
+ * @param {String} destinatario Correo del destinatario
+ * @param {String} contraseñaGenerada Contraseña generada
+ * @returns {Boolean} true si se envió el correo, false si no se envió
+ * */
 async function enviarContraseñaPorCorreo(destinatario, contraseñaGenerada) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -171,6 +181,13 @@ async function enviarContraseñaPorCorreo(destinatario, contraseñaGenerada) {
 
 
 
+/**
+ * @description Servicio que permite recuperar la contraseña de un usuario
+ * @param {Object} req Objeto de petición donde se obtiene el correo del usuario
+ * @param {Object} res Objeto de respuesta
+ * @param {Object} next Objeto de siguiente
+ * @returns {Object} respuesta con estatus 200 con el mensaje de recuperación, o error correspondiente
+ * */
 const recuperarContraseña = asyncError(async (req, res, next) => {
 
 
@@ -202,8 +219,8 @@ const recuperarContraseña = asyncError(async (req, res, next) => {
 
 
 });
-/** Operaciones Requeridas */
 
+// Exportamos las funciones definidas
 module.exports = {
   recuperarContraseña,
   agregarUsuario,
