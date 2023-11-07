@@ -1,21 +1,23 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioDomicilios = require('../servicios/servicioDomicilios');
 
+// Creamos un nuevo router
 const router = express.Router();
 
-/** Operaciones Basica */
-
 router.route('/')
+  // Obtener todos los domicilios
   .get(servicioDomicilios.obtenerDomicilios)
-  .post(servicioDomicilios.agregarDomicilio)
-  ;
+  // Agregar un nuevo domicilio
+  .post(servicioDomicilios.agregarDomicilio);
 
 router.route('/:id')
+  // Obtener un domicilio por su ID
   .get(servicioDomicilios.obtenerDomicilioPorId)
+  // Eliminar un domicilio por su ID
   .delete(servicioDomicilios.eliminarDomicilio)
-  .put(servicioDomicilios.actualizarDomicilio)
-  ;
+  // Actualizar un domicilio por su ID
+  .put(servicioDomicilios.actualizarDomicilio);
 
-/** Operaciones Requeridas */
-
+// Exportamos el router
 module.exports = router;

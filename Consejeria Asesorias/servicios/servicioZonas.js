@@ -1,7 +1,6 @@
 const controlZonas = require('../controles/controlZona');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
-/** Operaciones Basica */
 
 const agregarZona = asyncError(async (req, res, next) => {
   const result = await controlZonas.agregarZona(req.body);
@@ -69,7 +68,6 @@ const obtenerZonaPorId = asyncError(async (req, res, next) => {
   }
 });
 
-/** Operaciones Requeridas */
 
 module.exports = {
   agregarZona,

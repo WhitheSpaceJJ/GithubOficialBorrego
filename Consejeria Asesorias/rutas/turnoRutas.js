@@ -1,21 +1,23 @@
+// Importamos los módulos necesarios
 const express = require('express');
 const servicioTurnos = require('../servicios/servicioTurnos');
 
+// Creamos un nuevo router
 const router = express.Router();
 
-/** Operaciones Basica */
-
 router.route('/')
+  // Obtener todos los turnos
   .get(servicioTurnos.obtenerTurnos)
-  .post(servicioTurnos.agregarTurno)
-  ;
+  // Agregar un nuevo turno
+  .post(servicioTurnos.agregarTurno);
 
 router.route('/:id')
+  // Obtener un turno por su ID
   .get(servicioTurnos.obtenerTurnoPorId)
+  // Eliminar un turno por su ID
   .delete(servicioTurnos.eliminarTurno)
-  .put(servicioTurnos.actualizarTurno)
-  ;
+  // Actualizar un turno por su ID
+  .put(servicioTurnos.actualizarTurno);
 
-/** Operaciones Requeridas */
-
+// Exportamos el router
 module.exports = router;

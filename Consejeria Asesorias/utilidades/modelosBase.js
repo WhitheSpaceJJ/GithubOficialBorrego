@@ -2,6 +2,11 @@ const sequelize = require("./conexion");
 
 const { DataTypes } = require("sequelize");
 
+/**
+ * @typedef {Object} Zona
+ * @property {number} id_zona
+ * @property {string} nombre_zona
+ *  */
 const Zona = sequelize.define(
   "zonas",
   {
@@ -29,6 +34,11 @@ const Zona = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} TipoJuicio 
+ * @property {number} id_tipo_juicio
+ *  @property {string} tipo_juicio
+ * */
 const TipoJuicio = sequelize.define(
   "tipos_juicios",
   {
@@ -52,6 +62,11 @@ const TipoJuicio = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} EstadoCivil
+ * @property {number} id_estado_civil
+ * @property {string} estado_civil
+  */
 const EstadoCivil = sequelize.define(
   "estados_civiles",
   {
@@ -75,6 +90,12 @@ const EstadoCivil = sequelize.define(
   }
 );
 
+  
+/**
+ * @typedef {Object} Genero
+ * @property {number} id_genero
+ * @property {string} descripcion_genero
+ * */
 const Genero = sequelize.define(
   "generos",
   {
@@ -102,6 +123,11 @@ const Genero = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Motivo
+ * @property {number} id_motivo
+ * @property {string} descripcion_motivo
+ * */
 const Motivo = sequelize.define(
   "motivos",
   {
@@ -129,6 +155,12 @@ const Motivo = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Asesor
+ * @property {number} id_asesor
+ * @property {string} nombre_asesor
+ * @property {number} id_zona
+ * */
 const Asesor = sequelize.define(
   "asesores",
   {
@@ -159,6 +191,12 @@ const Asesor = sequelize.define(
     },
   }
 );
+
+/**
+ * @typedef {Object} CatalogoRequisito
+ * @property {number} id_catalogo
+ * @property {string} descripcion_catalogo
+ * */
 const CatalogoRequisito = sequelize.define(
   "catalogo_requisitos",
   {
@@ -181,6 +219,18 @@ const CatalogoRequisito = sequelize.define(
     timestamps: false,
   }
 );
+
+/**
+ * @typedef {Object} Persona
+ * @property {number} id_persona
+ *  @property {string} nombre
+ * @property {string} apellido_materno
+ * @property {string} apellido_paterno
+ * @property {number} edad
+ * @property {string} telefono
+ * @property {number} id_domicilio
+ * @property {number} id_genero
+ * */  
 const Persona = sequelize.define(
   "personas",
   {
@@ -242,6 +292,13 @@ const Persona = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} DetalleAsesoriaCatalogo
+ * @property {number} id_detalle
+ * @property {number} id_asesoria
+ * @property {number} id_catalogo
+ * */
+
 const DetalleAsesoriaCatalogo = sequelize.define(
   "detalle_asesorias_catalogos",
   {
@@ -270,6 +327,12 @@ const DetalleAsesoriaCatalogo = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Turno
+ * @property {number} id_turno
+ * @property {Date} fecha_turno
+ * @property {Time} hora_turno
+ * */
 const Turno = sequelize.define(
   "turnos",
   {
@@ -304,6 +367,15 @@ const Turno = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Asesorado
+ * @property {number} id_asesorado
+ * @property {boolean} estatus_trabajo
+ * @property {number} id_motivo
+ * @property {number} id_estado_civil
+ * @property {number} numero_hijos
+ * @property {number} ingreso_mensual
+ * */
 const Asesorado = sequelize.define(
   "asesorados",
   {
@@ -346,6 +418,20 @@ const Asesorado = sequelize.define(
   }
 );
 
+
+/**
+ *  @typedef {Object} Asesoria
+ * @property {number} id_asesoria
+ * @property {string} resumen_asesoria
+ *  @property {string} conclusion_asesoria
+ * @property {boolean} estatus_requisitos
+ * @property {Date} fecha_registro
+ * @property {number} id_asesor
+ * @property {number} id_turno
+ * @property {number} id_asesorado
+ * @property {string} usuario 
+ * @property {number} id_tipo_juicio
+ */
 const Asesoria = sequelize.define(
   "asesorias",
   {
@@ -416,6 +502,14 @@ const Asesoria = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} Domicilio
+ * @property {number} id_domicilio
+ * @property {string} calle_domicilio
+ * @property {string} numero_exterior_domicilio
+ * @property {string} numero_interior_domicilio
+ * @property {number} id_colonia
+ * */
 const Domicilio = sequelize.define(
   "domicilios",
   {
@@ -463,7 +557,7 @@ const Domicilio = sequelize.define(
   }
 );
 
-
+//Module exports
 module.exports = {
   Turno,
   Persona,
