@@ -1,3 +1,6 @@
+/**
+ * Error personalizado para el manejo de errores
+ * */
 class CustomeError extends Error {
     constructor(message, statusCode) {
         super(message);
@@ -7,5 +10,5 @@ class CustomeError extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 }
-
+//Module exports
 module.exports = CustomeError;

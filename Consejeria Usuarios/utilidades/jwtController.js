@@ -1,5 +1,10 @@
 const secreto = 'osos-carinosos';
 const jwt = require('jsonwebtoken');
+/**
+ *  @description Función que genera un token
+ * @param {Object} payload Objeto con la información del usuario
+ * @returns {String} token
+ */
 const generateToken = async (payload) => {
   return new Promise((resolve, reject) => {
     jwt.sign(payload, secreto, (err, token) => {
@@ -12,6 +17,11 @@ const generateToken = async (payload) => {
   });
 };
 
+/**
+ * @description Función que verifica un token
+ * @param {String} token Token a verificar
+ * @returns {Object} payload
+ */
 const verifyToken = async (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secreto, (err, decoded) => {
@@ -24,6 +34,7 @@ const verifyToken = async (token) => {
   });
 };
 
+//Module exports
 module.exports = {
   generateToken,
   verifyToken

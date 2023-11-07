@@ -1,8 +1,10 @@
 const modelUsuario = require("../modelos/modeloUsuario");
 const bcrypt = require('bcrypt');
 
-/** Operaciones Básicas para Usuario con relaciones */
-
+/**
+ * @description Función que permite obtener todos los usuarios
+ * @returns {Array} Array con todos los usuarios registrados en la base de datos, si no hay usuarios retorna un null
+ * */
 const obtenerUsuarios = async () => {
   try {
     return await modelUsuario.Usuario.findAll({
@@ -22,6 +24,11 @@ const obtenerUsuarios = async () => {
   }
 };
 
+/**
+ * @description Función que permite obtener un usuario por su id
+ * @param {Number} id Id del usuario a buscar
+ * @returns {Object} Objeto con el usuario encontrado, si no hay usuarios retorna un null
+ * */
 const obtenerUsuarioPorId = async (id) => {
   try {
     return await modelUsuario.Usuario.findByPk(id, {
@@ -41,6 +48,12 @@ const obtenerUsuarioPorId = async (id) => {
   }
 };
 
+/**
+ * @description Función que permite obtener un usuario por su correo y contraseña
+ * @param {String} correo Correo del usuario a buscar
+ * @param {String} password Contraseña del usuario a buscar
+ * @returns {Object} Objeto con el usuario encontrado, o null si la constraseña no es válida o no se encuentra el usuario 
+ *  */
 const obtenerUsuarioCorreoPassword = async (correo, password) => {
   try {
     const usuario = await modelUsuario.Usuario.findOne({
@@ -73,6 +86,11 @@ const obtenerUsuarioCorreoPassword = async (correo, password) => {
   }
 };
 
+/**
+ * @description Función que permite obtener un usuario por su correo
+ * @param {String} correo Correo del usuario a buscar
+ * @returns {Object} Objeto con el usuario encontrado, o null si no se encuentra el usuario
+ * */
 const obtenerUsuarioCorreo = async (correo, password) => {
   try {
     const usuario = await modelUsuario.Usuario.findOne({
@@ -102,7 +120,12 @@ const obtenerUsuarioCorreo = async (correo, password) => {
 };
 
 
-
+/**
+ * 
+ *  @description Función que permite agregar un usuario
+ * @param {Object} usuario Objeto con la información del usuario a agregar
+ * @returns {Boolean} el usuario si este se agrega correctamente, false si no se agrega
+ */
 const agregarUsuario = async (usuario) => {
   try {
     const hashedPassword = await bcrypt.hash(usuario.password, 10);
@@ -115,6 +138,11 @@ const agregarUsuario = async (usuario) => {
   }
 };
 
+/**
+ * @description Función que permite eliminar un usuario
+ * @param {Number} id Id del usuario a eliminar
+ * @returns {Boolean} true si el usuario se elimina correctamente, false si no se elimina
+ */
 const eliminarUsuario = async (id) => {
   try {
     await modelUsuario.Usuario.destroy({ where: { id_usuario: id } });
@@ -124,6 +152,12 @@ const eliminarUsuario = async (id) => {
     return false;
   }
 };
+
+/**
+ * @description Función que permite actualizar un usuario
+ * @param {Object} usuario Objeto con la información del usuario a actualizar
+ * @returns {Boolean} true si el usuario se actualiza correctamente, false si no se actualiza
+ */
 
 const actualizarUsuario = async (usuario) => {
   try {

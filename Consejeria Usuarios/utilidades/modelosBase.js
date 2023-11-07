@@ -2,7 +2,12 @@ const sequelize = require("./conexion");
 
 const { DataTypes } = require("sequelize");
 
-const Zona = sequelize.define("zonas", {
+/**
+ * Modelo de la tabla zona 
+ *  @property {string} id_zona - id de la zona
+ * @property {string} zona - nombre de la zona
+ * */
+ const Zona = sequelize.define("zonas", {
   id_zona: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,6 +31,11 @@ const Zona = sequelize.define("zonas", {
 }
 });
 
+/**
+ * Modelo de la tabla tipo de usuario 
+ * @property {string} id_tipouser - id del tipo de usuario
+ * @property {string} tipo_usuario - nombre del tipo de usuario
+ * */
 const TipoUser = sequelize.define("tipo_user", {
   id_tipouser
             : {
@@ -45,6 +55,19 @@ const TipoUser = sequelize.define("tipo_user", {
   timestamps: false,
   tableName:"tipo_user"
 });
+
+/**
+ * Modelo de la tabla usuario 
+ * y se relaciona con los modelos de tipo de usuario y zona
+ * @property {string} id_usuario - id del usuario
+ * @property {string} nombre - nombre del usuario
+ * @property {string} materno - apellido materno del usuario
+ * @property {string} paterno - apellido paterno del usuario
+ * @property {string} correo - correo del usuario
+ * @property {string} password - contraseña del usuario
+ * @property {string} id_tipouser - id del tipo de usuario
+ * @property {string} id_zona - id de la zona
+ * */
 const Usuario = sequelize.define("usuarios", {
   id_usuario: {
     type: DataTypes.INTEGER,
@@ -107,6 +130,8 @@ const Usuario = sequelize.define("usuarios", {
     plural: 'usuarios'
 }
 });
+
+//Module exports
 module.exports = {
   TipoUser
   ,
