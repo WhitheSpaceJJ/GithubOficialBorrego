@@ -7,6 +7,12 @@ const router = express.Router();
 router.route('/buscar')
   .get(servicioAsesorias.obtenerAsesoriaNombre);
 
+  router.route('/filtro')
+  .get(servicioAsesorias.obtenerAsesoriaFiltro);
+
+  router.route('/filtro-excel')
+  .get(servicioAsesorias.obtenerAsesoriaFiltroExcel);
+
 
 router.route('/')
   .get(servicioAsesorias.obtenerAsesorias)

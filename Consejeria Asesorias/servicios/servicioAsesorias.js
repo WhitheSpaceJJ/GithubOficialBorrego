@@ -4,6 +4,46 @@ const CustomeError = require("../utilidades/customeError");
 const controlPersonas = require('../controles/controlPersonas');
 
 /**
+ * @abstract Servicio  que permite obtener una asesoría por filtro
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesoria de la base de datos
+ *  */
+const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
+  const result = await controlAsesorias.obtenerAsesoriasFiltro();
+  if (result === null || result === undefined) {
+    const error = new CustomeError('No se encontraron asesorías', 404);
+    return next(error);
+  } else {
+    res.status(200).json({
+      asesorias: result
+    });
+  }
+}
+);
+
+/**
+ * @abstract Servicio  que permite obtener una asesoría por filtro para excel el cual el usuario puede descargar
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesoria de la base de datos
+ * */
+const obtenerAsesoriaFiltroExcel = asyncError(async (req, res, next) => {
+  const result = await controlAsesorias.obtenerAsesoriasFiltro();
+  if (result === null || result === undefined) {
+    const error = new CustomeError('No se encontraron asesorías', 404);
+    return next(error);
+  } else {
+   //Respuesta de la API donde la consula anterior de nombre result creara un archivo excel con los datos de la consulta y lo eliminara al completar la descarga
+    res.xls('asesorias.xlsx', result, { remove_empty_lines: true });
+    
+  }
+
+});
+
+/**
  * @abstract Servicio  que permite agregar una asesoría
  * @param {Object} req Request
  * @param {Object} res Response
@@ -19,7 +59,7 @@ const agregarAsesoria = asyncError(async (req, res, next) => {
   } else {
 
     res.status(201).json({
-        asesoria: result
+      asesoria: result
     });
   }
 });
@@ -40,7 +80,7 @@ const obtenerAsesorias = asyncError(async (req, res, next) => {
   } else {
 
     res.status(200).json({
-        asesorias: result
+      asesorias: result
     });
   }
 });
@@ -61,7 +101,7 @@ const eliminarAsesoria = asyncError(async (req, res, next) => {
   } else {
 
     res.status(200).json({
-        menssage: "La asesoria ha sido eliminada"
+      menssage: "La asesoria ha sido eliminada"
     });
   }
 });
@@ -83,7 +123,7 @@ const actualizarAsesoria = asyncError(async (req, res, next) => {
   } else {
 
     res.status(200).json({
-        asesoria: req.body
+      asesoria: req.body
     });
   }
 });
@@ -104,7 +144,7 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
   } else {
 
     res.status(200).json({
-        asesoria: result
+      asesoria: result
     });
   }
 
@@ -120,29 +160,29 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
  */
 
 const obtenerAsesoriaNombre = asyncError(async (req, res, next) => {
-  const { nombre, apellido_materno,apellido_paterno } = req.query;
-  const result2 = await controlPersonas.obtenerPersonaNombre(nombre,apellido_paterno,apellido_materno);
+  const { nombre, apellido_materno, apellido_paterno } = req.query;
+  const result2 = await controlPersonas.obtenerPersonaNombre(nombre, apellido_paterno, apellido_materno);
   if (result2 === null) {
     const error = new CustomeError('Error al obtener la persona', 404);
     return next(error);
   } else {
-    const  personaJSON=JSON.stringify(result2);
-    const persona=JSON.parse(personaJSON);
+    const personaJSON = JSON.stringify(result2);
+    const persona = JSON.parse(personaJSON);
     const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorado(result2.id_persona);
     if (result === null || result === undefined) {
       const error = new CustomeError('Error al obtener la asesoría', 404);
       return next(error);
     } else {
- 
+
       res.status(200).json({
-          asesoria: result
+        asesoria: result
       });
     }
-  
+
   }
 });
 
-  
+
 //Module exports
 module.exports = {
   agregarAsesoria,
@@ -150,5 +190,7 @@ module.exports = {
   eliminarAsesoria,
   actualizarAsesoria,
   obtenerAsesoriaPorId,
-  obtenerAsesoriaNombre
+  obtenerAsesoriaNombre,
+  obtenerAsesoriaFiltro,
+  obtenerAsesoriaFiltroExcel
 };

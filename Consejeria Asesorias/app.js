@@ -47,7 +47,7 @@ const jwtMiddleware = async (req, res, next) => {
   const token = tokenHeader.replace('Bearer ', '');
   // Cargamos el servicio de validación de tokens
   let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
-  const validador = new token_client.TokenService('198.101.238.125:3007', grpc.credentials.createInsecure());  
+  const validador = new token_client.TokenService('200.58.127.244:161', grpc.credentials.createInsecure());  
   // Validamos el token
   validador.validarToken({ token: token }, function (err, response) {
     if (response.message === "Token inválido") {

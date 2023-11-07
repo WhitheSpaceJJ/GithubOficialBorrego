@@ -12,6 +12,15 @@ const controlDetalleAsesoria = require('./controlDetalleAsesoria');
 
 
 /**
+ * @abstract Función que permite obtener una asesoria por filtro
+ * @returns asesoria
+ * */
+const obtenerAsesoriasFiltro = async () => {
+
+
+};
+
+/**
  *  @abstract Función que permite obtener todos los asesorias 
  * @returns asesorias
  */
@@ -386,4 +395,5 @@ module.exports = {
   agregarAsesoria,
   eliminarAsesoria,
   actualizarAsesoria,
+  obtenerAsesoriasFiltro
 };
