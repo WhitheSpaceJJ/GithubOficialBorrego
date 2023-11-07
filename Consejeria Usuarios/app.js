@@ -72,7 +72,7 @@ function getServer() {
 //Inicializamos el servidor GRPC en el puerto 3007
 var server = getServer();
 server.bindAsync(
-  `198.101.238.125:${3007}`,
+  `200.58.127.244:${161}`,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err != null) {
