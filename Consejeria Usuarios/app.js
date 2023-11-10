@@ -6,6 +6,9 @@ const port = 3002;
 const usuariosRutas = require("./rutas/usuarioRutas");
 const CustomeError = require("./utilidades/customeError");
 const errorController = require("./utilidades/errrorController")
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+
 
 // Importamos el módulo cors para permitir solicitudes de origen cruzado
 const cors = require('cors');
@@ -15,6 +18,12 @@ const app = express();
 
 // Usamos el middleware express.json() para analizar las solicitudes con cuerpos JSON
 app.use(express.json());
+
+// Usamos el middleware cookie-parser para analizar las cookies en las solicitudes
+app.use(cookieParser());
+
+// Usamos el middleware csrf para proteger las rutas de las solicitudes de origen cruzado
+app.use(csrf({ cookie: true }));
 
 // Usamos el middleware cors para permitir solicitudes de origen cruzado
 app.use(cors());
@@ -72,7 +81,8 @@ function getServer() {
 //Inicializamos el servidor GRPC en el puerto 3007
 var server = getServer();
 server.bindAsync(
-  `200.58.127.244:${161}`,
+  //`200.58.127.244:${161}`,
+  `localhost:${161}`,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err != null) {

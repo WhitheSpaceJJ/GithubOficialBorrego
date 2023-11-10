@@ -8,7 +8,13 @@ const jwt = require('jsonwebtoken');
 //Establece una duracion de 8 horas para el token  
 const generateToken = async (payload) => {
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, secreto, { expiresIn: '8h' }, (err, token) => {
+    /*
+      "id_usuario": 3,
+  "nombre": "Jose Jesus",
+  "materno": "Hernandez",
+  "paterno": "Orozco",
+    */
+    jwt.sign({id_usuario : payload.id_usuario, nombre : payload.nombre,materno : payload.materno, paterno: payload.paterno }, secreto, { expiresIn: '8h' }, (err, token) => {
       if (err) {
         reject();
       } else {

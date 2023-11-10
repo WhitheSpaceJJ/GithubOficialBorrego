@@ -122,11 +122,18 @@ const obtenerUsuarioCorreoPassword = asyncError(async (req, res, next) => {
   } else {
     const payload = usuarioObj;
     const token = await jwtController.generateToken(payload);
+
+    res.cookie("_token", token, {
+      httpOnly: true,
+      //secure:true,  //se usa cuando se tiene un certificado SSL
+      //sameSite:true  //se usa cuando se tiene un certificado SSL
+    });
     res.status(200).json({
       token: token,
       role: usuarioObj.tipo_user.tipo_usuario,
       name: usuarioObj.nombre + " " + usuarioObj.materno + " " + usuarioObj.paterno
     });
+
    
   }
 });

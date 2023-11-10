@@ -1,5 +1,5 @@
 class APIModel {
-  USERS_API_URL = 'http://200.58.127.244:3002'
+  USERS_API_URL = 'http://localhost:3002'
   ASESORIAS_API_URL = 'http://200.58.127.244:3009'
   CP_API_URL = 'http://200.58.127.244:3012'
   user = JSON.parse(sessionStorage.getItem('user'))
