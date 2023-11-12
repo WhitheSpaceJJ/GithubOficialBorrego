@@ -6,7 +6,10 @@ const port = 3002;
 const usuariosRutas = require("./rutas/usuarioRutas");
 const CustomeError = require("./utilidades/customeError");
 const errorController = require("./utilidades/errrorController")
+const zonasRutas = require("./rutas/zonaRutas");
+const tipoRutas = require("./rutas/tipoUsuarioRutas");
 
+const jwtController = require("./utilidades/jwtController");
 // Importamos el módulo cors para permitir solicitudes de origen cruzado
 const cors = require('cors');
 
@@ -19,8 +22,31 @@ app.use(express.json());
 // Usamos el middleware cors para permitir solicitudes de origen cruzado
 app.use(cors());
 
+const jwtMiddleware = async (req, res, next) => {
+  // Obtenemos el token del encabezado de la solicitud
+  const tokenHeader = req.headers.authorization; 
+  if (!tokenHeader) {
+    // Si no hay token, creamos un error personalizado y lo pasamos al siguiente middleware
+    const customeError = new CustomeError('Token no proporcionado.', 401);
+    next(customeError);
+    return;
+  }
+  // Eliminamos el prefijo 'Bearer ' del token
+  const token = tokenHeader.replace('Bearer ', '');
+  
+    try {
+  await  jwtController.verifyToken(token);
+    next();
+  } catch (error) {
+    const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401);
+    next(customeError);
+  }
+};
+
 // Usamos el middleware de rutas de usuarios
 app.use('/usuarios', usuariosRutas);
+app.use('/zonas', jwtMiddleware, zonasRutas);
+app.use('/tipos', jwtMiddleware, tipoRutas);
 
 // Si ninguna ruta coincide, creamos un error personalizado y lo pasamos al siguiente middleware
 app.all("*", (req, res, next) => {
@@ -46,7 +72,7 @@ const grpc = require('@grpc/grpc-js');
 /**
  * Importamos el controlador de jwt,roteguide y constantes de respuesta
  */
-const jwtController = require("./utilidades/jwtController");
+//const jwtController = require("./utilidades/jwtController");
 const routeguide = grpc.loadPackageDefinition(packageDefinition).tokenService;
 const responseValido = { message: 'Token válido' };
 const responseInvalido = { message: 'Token inválido' };
@@ -57,7 +83,7 @@ const responseInvalido = { message: 'Token inválido' };
 function getServer() {
   var server = new grpc.Server();
   server.addService(routeguide.TokenService.service, {
-    validarToken:(call, callback) => {
+    validarToken: (call, callback) => {
       jwtController.verifyToken(call.request.token).
         then((response) => {
           callback(null, responseValido);
@@ -72,7 +98,7 @@ function getServer() {
 //Inicializamos el servidor GRPC en el puerto 3007
 var server = getServer();
 server.bindAsync(
-  `200.58.127.244:${161}`,
+  `localhost:${161}`,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err != null) {
