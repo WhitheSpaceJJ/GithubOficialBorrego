@@ -11,7 +11,8 @@ const controlPersonas = require('../controles/controlPersonas');
  * @returns {Object} asesoria de la base de datos
  *  */
 const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
-  const result = await controlAsesorias.obtenerAsesoriasFiltro();
+  const filtro = [];
+  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtro);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
@@ -31,14 +32,13 @@ const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
  * @returns {Object} asesoria de la base de datos
  * */
 const obtenerAsesoriaFiltroExcel = asyncError(async (req, res, next) => {
-  const result = await controlAsesorias.obtenerAsesoriasFiltro();
+  const filtro = [];
+  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtro);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
   } else {
-   //Respuesta de la API donde la consula anterior de nombre result creara un archivo excel con los datos de la consulta y lo eliminara al completar la descarga
-    res.xls('asesorias.xlsx', result, { remove_empty_lines: true });
-    
+  
   }
 
 });

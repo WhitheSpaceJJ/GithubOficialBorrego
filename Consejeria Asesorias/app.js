@@ -16,6 +16,13 @@ const catalogoRequisitosRutas = require("./rutas/catalogoRequisitoRuta");
 const personasRutas = require("./rutas/personaRuta");
 const asesoradoRutas = require("./rutas/asesorRutas");
 const detalleAsesoriaRutas = require("./rutas/detalleAsesoriaRuta");
+
+
+const defensorRuta = require("./rutas/defensorRuta.js");
+const distritoJudicialRuta = require("./rutas/distritoJudicialRuta.js");
+const empleadoRuta = require("./rutas/empleadoRuta.js");
+const municipioDistro = require("./rutas/municipioDistroRuta.js");
+
 // Variable para cargar el módulo de gRPC
 const grpc = require('@grpc/grpc-js');
 // Variable para cargar el módulo de proto-loader
@@ -74,6 +81,12 @@ app.use('/turnos',jwtMiddleware,turnoRutas);
 app.use('/personas',jwtMiddleware,personasRutas);
 app.use('/asesorados',jwtMiddleware,asesoradoRutas);
 app.use('/catalogo-requisitos',jwtMiddleware,catalogoRequisitosRutas);
+app.use('/defensores',jwtMiddleware,defensorRuta);
+app.use('/distritos-judiciales',jwtMiddleware,distritoJudicialRuta);
+app.use('/empleados',jwtMiddleware,empleadoRuta);
+app.use('/municipios-distritos',jwtMiddleware,municipioDistro);
+
+
 // Middleware para manejar las rutas no encontradas
 app.all("*", (req, res, next) => {
   const err = new CustomeError("Cannot find " + req.originalUrl + " on the server", 404);
