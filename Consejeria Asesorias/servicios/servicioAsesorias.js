@@ -11,8 +11,8 @@ const controlPersonas = require('../controles/controlPersonas');
  * @returns {Object} asesoria de la base de datos
  *  */
 const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
-  const filtro = [];
-  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtro);
+  const filtros = [];
+  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtros);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);

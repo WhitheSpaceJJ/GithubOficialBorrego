@@ -20,7 +20,7 @@
     "grpc-tools": "^1.12.4",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.3.4",
+    "mysql2": "^3.6.3",
     "readline-sync": "^1.4.10",
     "sequelize": "^6.32.0"
   },

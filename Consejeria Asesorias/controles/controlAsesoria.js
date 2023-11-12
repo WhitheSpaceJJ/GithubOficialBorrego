@@ -9,87 +9,47 @@ const controlDomicilios = require('./controlDomicilio');
 const controlAsesorados = require('./controlAsesorados');
 const controlTurnos = require('./controlTurno');
 const controlDetalleAsesoria = require('./controlDetalleAsesoria');
+const controlAsesor = require('./controlAsesor');
+const controlDefensor = require('./controlDefensor');
 
-
+const { Op } = require("sequelize");
 /**
  * @abstract Función que permite obtener una asesoria por filtro
  * @returns asesoria
  * */
-const obtenerAsesoriasFiltro = async (filtro) => {
+const obtenerAsesoriasFiltro = async (filtros) => {
   try {
-    const asesorias_pre = await modeloAsesoria.Asesoria.findAll({
+    const asesorias = await modeloAsesoria.Asesoria.findAll({
       raw: false,
-      nest: true,
+      nest: false,
       attributes: {
-        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
+        exclude: ['id_asesorado', 'id_turno', 'id_empleado', 'id_tipo_juicio']
       },
+    /*
       include: [
-        modeloAsesoria.Asesorado,
-        modeloAsesoria.DetalleAsesoriaCatalogo,
-        modeloAsesoria.Turno,
-        modeloAsesoria.Asesor,
-        modeloAsesoria.TipoJuicio
-      ]
+        { model: Asesor },
+        { model: Turno },
+        { model: DistritoJudicial, include: [{ model: Zona }, { model: MunicipioDistro }] },
+        { model: Empleado },
+      ],
+      */
+      where: {
+        [Op.and]: [
+          filtros.fecha && { fecha_registro: filtros.fecha },
+          filtros.id_empleado && { id_empleado: filtros.id_empleado },
+        //  filtros.zona && { "$distritoJudicial.zona.nombre_zona$": filtros.zona },
+        //  filtros.municipio && { "$distritoJudicial.municipioDistro.nombre_municipio$": filtros.municipio },
+        //  filtros.defensor && { "$turno.defensores.nombre_defensor$": filtros.defensor },
+       //   filtros.asesor && { "$asesor.nombre_asesor$": filtros.asesor },
+        ],
+      },
     });
-
-    const asesorias = [];
-
-    for (const asesoria_pre of asesorias_pre) {
-      const asesoria_obj = JSON.parse(JSON.stringify(asesoria_pre));
-
-      if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
-        const recibidos = [];
-        for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
-          const id_catalogo = detalle.id_catalogo;
-          const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
-          recibidos.push(catalogo);
-        }
-        delete asesoria_obj.detalle_asesorias_catalogos;
-        asesoria_obj.recibidos = recibidos;
-      }
-
-      // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
-
-      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
-      delete asesoria_obj.asesor.id_zona;
-      asesoria_obj.asesor.zona = zona;
-
-      const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
-      asesoria_obj.persona = persona;
-
-      if (asesoria_obj.asesorado.id_motivo !== null) {
-        const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
-        delete asesoria_obj.asesorado.id_motivo;
-        asesoria_obj.asesorado.motivo = motivo;
-      }
-
-      const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
-      delete asesoria_obj.asesorado.id_estado_civil;
-      asesoria_obj.asesorado.estado_civil = estado_civil;
-      const datos_asesoria = {};
-      datos_asesoria.id_asesoria = asesoria_obj.id_asesoria;
-      datos_asesoria.resumen_asesoria = asesoria_obj.resumen_asesoria;
-      datos_asesoria.conclusion_asesoria = asesoria_obj.conclusion_asesoria;
-      datos_asesoria.estatus_requisitos = asesoria_obj.estatus_requisitos;
-      datos_asesoria.fecha_registro = asesoria_obj.fecha_registro;
-      datos_asesoria.usuario = asesoria_obj.usuario;
-      delete asesoria_obj.id_asesoria;
-      delete asesoria_obj.resumen_asesoria;
-      delete asesoria_obj.conclusion_asesoria;
-      delete asesoria_obj.estatus_requisitos;
-      delete asesoria_obj.fecha_registro;
-      delete asesoria_obj.usuario;
-      asesoria_obj.datos_asesoria = datos_asesoria;
-
-      asesorias.push(asesoria_obj);
-    }
-
-    return asesorias;
+    const asesoria_str = JSON.stringify(asesorias);
+    const asesoria_obj = JSON.parse(asesoria_str)
+    return asesoria_obj;
   } catch (error) {
-    console.log("Error:", error.message);
-    return null;
+    throw new Error(`Error al consultar las asesorías: ${error.message}`);
   }
-
 };
 
 /**
@@ -102,13 +62,13 @@ const obtenerAsesorias = async () => {
       raw: false,
       nest: true,
       attributes: {
-        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
+        exclude: ['id_asesorado', 'id_turno', 'id_empleado', 'id_tipo_juicio']
       },
       include: [
         modeloAsesoria.Asesorado,
         modeloAsesoria.DetalleAsesoriaCatalogo,
         modeloAsesoria.Turno,
-        modeloAsesoria.Asesor,
+        modeloAsesoria.Empleado,
         modeloAsesoria.TipoJuicio
       ]
     });
@@ -130,10 +90,21 @@ const obtenerAsesorias = async () => {
       }
 
       // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+      const tipo_empleado=asesoria_obj.empleado.tipo_empleado;
+      if(tipo_empleado==="asesor"){
+        const id_empleado=asesoria_obj.empleado.id_empleado;
+        const asesor=await controlAsesor.obtenerAsesorPorId(id_empleado);
+        asesoria_obj.asesor=asesor;
+      }else if(tipo_empleado==="defensor"){
+        const id_empleado=asesoria_obj.empleado.id_empleado;
+        const defensor=await controlDefensor.obtenerDefensorPorId(id_empleado);
+        asesoria_obj.defensor=defensor;
+      }
+      delete asesoria_obj.empleado;
 
-      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
-      delete asesoria_obj.asesor.id_zona;
-      asesoria_obj.asesor.zona = zona;
+      //const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
+    //  delete asesoria_obj.asesor.id_zona;
+//      asesoria_obj.asesor.zona = zona;
 
       const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
       asesoria_obj.persona = persona;
@@ -190,61 +161,69 @@ const obtenerAsesoriaPorId = async (id) => {
         modeloAsesoria.Asesorado,
         modeloAsesoria.DetalleAsesoriaCatalogo,
         modeloAsesoria.Turno,
-        modeloAsesoria.Asesor,
+        modeloAsesoria.Empleado,
         modeloAsesoria.TipoJuicio
       ]
     });
 
 
 
-      const asesoria_obj = JSON.parse(JSON.stringify(asesorias_pre));
+    const asesoria_obj = JSON.parse(JSON.stringify(asesorias_pre));
 
-      if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
-        const recibidos = [];
-        for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
-          const id_catalogo = detalle.id_catalogo;
-          const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
-          recibidos.push(catalogo);
-        }
-        delete asesoria_obj.detalle_asesorias_catalogos;
-        asesoria_obj.recibidos = recibidos;
+    if (asesoria_obj.detalle_asesorias_catalogos.length > 0) {
+      const recibidos = [];
+      for (const detalle of asesoria_obj.detalle_asesorias_catalogos) {
+        const id_catalogo = detalle.id_catalogo;
+        const catalogo = await controlCatalogoRequisito.obtenerCatalogoRequisitoPorId(id_catalogo);
+        recibidos.push(catalogo);
       }
+      delete asesoria_obj.detalle_asesorias_catalogos;
+      asesoria_obj.recibidos = recibidos;
+    }
 
-      // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+    // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+    const tipo_empleado=asesoria_obj.empleado.tipo_empleado;
+    if(tipo_empleado==="asesor"){
+      const id_empleado=asesoria_obj.empleado.id_empleado;
+      const asesor=await controlAsesor.obtenerAsesorPorId(id_empleado);
+      asesoria_obj.asesor=asesor;
+    }else if(tipo_empleado==="defensor"){
+      const id_empleado=asesoria_obj.empleado.id_empleado;
+      const defensor=await controlDefensor.obtenerDefensorPorId(id_empleado);
+      asesoria_obj.defensor=defensor;
+    }
+    delete asesoria_obj.empleado;
 
-      const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
-      delete asesoria_obj.asesor.id_zona;
-      asesoria_obj.asesor.zona = zona;
 
-      const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
-      asesoria_obj.persona = persona;
+    const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
+    asesoria_obj.persona = persona;
 
-      if (asesoria_obj.asesorado.id_motivo !== null) {
-        const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
-        delete asesoria_obj.asesorado.id_motivo;
-        asesoria_obj.asesorado.motivo = motivo;
-      }
+    if (asesoria_obj.asesorado.id_motivo !== null) {
+      const motivo = await controlMotivo.obtenerMotivoPorId(asesoria_obj.asesorado.id_motivo);
+      delete asesoria_obj.asesorado.id_motivo;
+      asesoria_obj.asesorado.motivo = motivo;
+    }
 
-      const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
-      delete asesoria_obj.asesorado.id_estado_civil;
-      asesoria_obj.asesorado.estado_civil = estado_civil;
-      const datos_asesoria = {};
-      datos_asesoria.id_asesoria = asesoria_obj.id_asesoria;
-      datos_asesoria.resumen_asesoria = asesoria_obj.resumen_asesoria;
-      datos_asesoria.conclusion_asesoria = asesoria_obj.conclusion_asesoria;
-      datos_asesoria.estatus_requisitos = asesoria_obj.estatus_requisitos;
-      datos_asesoria.fecha_registro = asesoria_obj.fecha_registro;
-      datos_asesoria.usuario = asesoria_obj.usuario;
-      delete asesoria_obj.id_asesoria;
-      delete asesoria_obj.resumen_asesoria;
-      delete asesoria_obj.conclusion_asesoria;
-      delete asesoria_obj.estatus_requisitos;
-      delete asesoria_obj.fecha_registro;
-      delete asesoria_obj.usuario;
-      asesoria_obj.datos_asesoria = datos_asesoria;
-    
+    const estado_civil = await controlEstadoCivil.obtenerEstadoCivilPorId(asesoria_obj.asesorado.id_estado_civil);
+    delete asesoria_obj.asesorado.id_estado_civil;
+    asesoria_obj.asesorado.estado_civil = estado_civil;
+    const datos_asesoria = {};
+    datos_asesoria.id_asesoria = asesoria_obj.id_asesoria;
+    datos_asesoria.resumen_asesoria = asesoria_obj.resumen_asesoria;
+    datos_asesoria.conclusion_asesoria = asesoria_obj.conclusion_asesoria;
+    datos_asesoria.estatus_requisitos = asesoria_obj.estatus_requisitos;
+    datos_asesoria.fecha_registro = asesoria_obj.fecha_registro;
+    datos_asesoria.usuario = asesoria_obj.usuario;
+    delete asesoria_obj.id_asesoria;
+    delete asesoria_obj.resumen_asesoria;
+    delete asesoria_obj.conclusion_asesoria;
+    delete asesoria_obj.estatus_requisitos;
+    delete asesoria_obj.fecha_registro;
+    delete asesoria_obj.usuario;
+    asesoria_obj.datos_asesoria = datos_asesoria;
 
-    return    asesoria_obj;
+
+    return asesoria_obj;
   } catch (error) {
     console.log("Error:", error.message);
     return null;
@@ -287,10 +266,10 @@ const agregarAsesoria = async (asesoria_pre) => {
     const asesorado_pre = await controlAsesorados.agregarAsesorado(asesorado)
 
 
-    const asesor = asesoria_obj.asesor;
+    const empleado = asesoria_obj.empleado;
     const datos_asesoria = asesoria_obj.datos_asesoria;
     datos_asesoria.id_asesorado = asesorado_pre.id_asesorado;
-    datos_asesoria.id_asesor = asesor.id_asesor;
+    datos_asesoria.id_empleado = empleado.id_empleado;
 
     const turno = asesoria_obj.turno;
     if (turno !== null) {
@@ -340,6 +319,7 @@ const eliminarAsesoria = async (id) => {
  * @returns true si se actualiza correctamente, false si no se actualiza
  * */
 const actualizarAsesoria = async (asesoria_pre) => {
+  //Falta verificar
   try {
     const asesoria_str = JSON.stringify(asesoria_pre);
     const asesoria_obj = JSON.parse(asesoria_str);
@@ -359,7 +339,7 @@ const actualizarAsesoria = async (asesoria_pre) => {
 
     const datos_asesoria = asesoria_obj.datos_asesoria;
     datos_asesoria.id_asesorado = asesorado_pre.id_asesorado;
-    datos_asesoria.id_asesor = asesoria_obj.asesor.id_asesor;
+    datos_asesoria.id_empleado = asesoria_obj.empleado.id_empleado;
     datos_asesoria.id_tipo_juicio = asesoria_obj.tipos_juicio.id_tipo_juicio;
 
     if (asesoria_obj.hasOwnProperty("turno")) {
@@ -370,7 +350,7 @@ const actualizarAsesoria = async (asesoria_pre) => {
     }
 
     const asesoria_cre = (await modeloAsesoria.Asesoria.update(datos_asesoria, { where: { id_asesoria: datos_asesoria.id_asesoria } }));
-    return  await  obtenerAsesoriaPorIdAsesorado (datos_asesoria.id_asesorado);
+    return await obtenerAsesoriaPorIdAsesorado(datos_asesoria.id_asesorado);
   } catch (error) {
     console.log("Error:", error.message);
     return false;
@@ -392,11 +372,11 @@ const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
       raw: true,
       nest: true,
       attributes: {
-        exclude: ['id_asesorado', 'id_turno', 'id_asesor', 'id_tipo_juicio']
+        exclude: ['id_asesorado', 'id_turno', 'id_empleado', 'id_tipo_juicio']
       },
       include: [
         modeloAsesoria.Asesorado,
-        modeloAsesoria.Asesor,
+        modeloAsesoria.Empleado,
         modeloAsesoria.DetalleAsesoriaCatalogo,
         modeloAsesoria.Turno,
         modeloAsesoria.TipoJuicio
@@ -435,9 +415,19 @@ const obtenerAsesoriaPorIdAsesorado = async (id_asesorado) => {
     delete asesoria_obj.usuario;
     asesoria_obj.datos_asesoria = datos_asesoria;
     //Asesor
-    const zona = await controlZonas.obtenerZonaPorId(asesoria_obj.asesor.id_zona);
-    delete asesoria_obj.asesor.id_zona;
-    asesoria_obj.asesor.zona = zona;
+       // Add other data processing steps similar to obtenerAsesoriaPorIdAsesorado here
+       const tipo_empleado=asesoria_obj.empleado.tipo_empleado;
+       if(tipo_empleado==="asesor"){
+         const id_empleado=asesoria_obj.empleado.id_empleado;
+         const asesor=await controlAsesor.obtenerAsesorPorId(id_empleado);
+         asesoria_obj.asesor=asesor;
+       }else if(tipo_empleado==="defensor"){
+         const id_empleado=asesoria_obj.empleado.id_empleado;
+         const defensor=await controlDefensor.obtenerDefensorPorId(id_empleado);
+         asesoria_obj.defensor=defensor;
+       }
+       delete asesoria_obj.empleado;
+ 
     //Persona
     const persona = await controlPersonas.obtenerPersonaPorId(asesoria_obj.asesorado.id_asesorado);
     asesoria_obj.persona = persona;
