@@ -6,7 +6,7 @@ const {
   actualizarEscolaridad,
   eliminarEscolaridad
 } = require('../controllers/escolaridad')
-const{
+const {
   existeEscolaridad
 } = require('../middlewares/escolaridad')
 
@@ -16,7 +16,7 @@ router.get('/', obtenerEscolaridades)
 
 router.get('/:id', [existeEscolaridad], obtenerEscolaridad)
 
-router.post('/', [existeEscolaridad], crearEscolaridad)
+router.post('/', crearEscolaridad)
 
 router.put('/:id', [existeEscolaridad], actualizarEscolaridad)
 
