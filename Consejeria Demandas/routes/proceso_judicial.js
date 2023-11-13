@@ -7,7 +7,7 @@ const {
   actualizarProcesoJudicial,
   eliminarProcesoJudicial
 } = require('../controllers/proceso_judicial');
-const{
+const {
   existeJuzgado,
   existeProcesoJudicial
 } = require('../middlewares/proceso_judicial')

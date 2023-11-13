@@ -1,7 +1,7 @@
 const proceso_judicial = require('../models/proceso_judicial')
 
 class ProcesoJudicialDAO {
-  async crearProcesoJudicial ({ fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado }) {
+  async crearProcesoJudicial({ fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado }) {
     try {
       const procesoJudicial = await proceso_judicial.create({ fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado })
       return procesoJudicial
@@ -10,7 +10,7 @@ class ProcesoJudicialDAO {
     }
   }
 
-  async obtenerProcesosJudiciales () {
+  async obtenerProcesosJudiciales() {
     try {
       const procesosJudiciales = await proceso_judicial.findAll()
       return procesosJudiciales
@@ -19,7 +19,7 @@ class ProcesoJudicialDAO {
     }
   }
 
-  async obtenerProcesoJudicial (id) {
+  async obtenerProcesoJudicial(id) {
     try {
       const procesoJudicial = await proceso_judicial.findByPk(id)
       return procesoJudicial
@@ -28,7 +28,7 @@ class ProcesoJudicialDAO {
     }
   }
 
-  async actualizarProcesoJudicial (id, { fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado }) {
+  async actualizarProcesoJudicial(id, { fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado }) {
     try {
       const procesoJudicial = await proceso_judicial.update({ fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado }, { where: { id_proceso_judicial: id } })
       return procesoJudicial
@@ -37,7 +37,7 @@ class ProcesoJudicialDAO {
     }
   }
 
-  async eliminarProcesoJudicial (id) {
+  async eliminarProcesoJudicial(id) {
     try {
       const procesoJudicial = await proceso_judicial.findByPk(id)
       if (!procesoJudicial) {
