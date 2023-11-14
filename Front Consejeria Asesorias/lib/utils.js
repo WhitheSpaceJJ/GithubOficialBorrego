@@ -10,3 +10,12 @@ export function validateNonEmptyFields(arrayToValidate) {
 
   return true
 }
+
+export function getDate() {
+  return new Date().toLocaleString('en-US', {
+    timeZone: 'America/hermosillo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+}

@@ -1,5 +1,5 @@
 import { ValidationError } from '../../lib/errors'
-import { validateNonEmptyFields } from '../../lib/utils'
+import { getDate, validateNonEmptyFields } from '../../lib/utils'
 import { APIModel } from '../../models/api.model'
 
 const template = document.createElement('template')
@@ -132,12 +132,7 @@ export class TurnoTab extends HTMLElement {
           usuario: this.#usuario.name,
         }
         this.#asesoria.turno = {
-          fecha_turno: new Date().toLocaleString('en-US', {
-            timeZone: 'America/hermosillo',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }),
+          fecha_turno: getDate(),
           hora_turno: `${data.horaTurno}:${data.minutoTurno}`,
         }
 
