@@ -33,7 +33,8 @@
           "asyncArrow": "always"
         }
       ],
-      "comma-dangle": "off"
+      "comma-dangle": "off",
+      "camelcase": "off"
     },
     "env": {
       "browser": true,
