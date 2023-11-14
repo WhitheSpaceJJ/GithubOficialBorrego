@@ -44,6 +44,23 @@ class APIModel {
     }
   }
 
+  async recover(correo) {
+    const url = `${this.USERS_API_URL}/usuarios/recuperacion?correo=${correo}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: ` ${this.user.token}`,
+      },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
   async getAsesorias() {
     const url = `${this.ASESORIAS_API_URL}/asesorias`
     const response = await fetch(url, {
@@ -85,11 +102,12 @@ class APIModel {
   }
 
   async getAsesoriaById(id) {
-    const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
+    const url = `${this.ASESORIAS_API_URL}/asesorias/${id}`
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
       },
     })
     if (response.ok) {

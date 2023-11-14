@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña</title>
     <link rel="icon" href="/img/DPS.png">
-
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./tailwind.css" />
     <script src="/lib/include-html.js" type="module"></script>
-
+    <script src="./src/recuperacion.js" type="module" defer></script>
 </head>
 
 <body>
@@ -31,46 +30,6 @@
         </section>
     </main>
     <!-- MODAL DE ADVERTENCIA -->
-    <div class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50" id="alerta">
-        <div class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full">
-            <button
-                class="absolute top-0 right-0 z-50 flex items-center justify-center w-10 h-10 mt-4 mr-4 text-2xl font-bold rounded-full" 
-                id="cerrar" onclick="cerrar()">
-                <svg class="w-6 h-6 text-black fill-current hover:text-red-700" viewBox="0 0 24 24">
-                    <path
-                        d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
-                </svg>
-            </button>
-
-            <h1 class="pt-4 text-3xl font-bold text-center text-black">
-                Advertencia
-            </h1>
-
-            <div class="flex flex-col items-center justify-center p-4">
-                <p class="mb-2 text-lg text-center text-black ">
-                    No existe usuario con el correo proporcionado.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE RECUPERACION EXITOSA -->
-    <div class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50" id="alerta-recuperada">
-        <div class="relative w-auto max-w-xl p-6 mx-auto bg-white shadow-lg rounded-3xl sm:w-full">
-            <h1 class="pt-4 mb-4 text-3xl font-bold text-center text-black">
-                Recuperación exitosa
-            </h1>
-
-            <div class="flex flex-col items-center justify-center px-4">
-                <p class="mb-4 text-lg text-center text-black ">
-                    Se ha enviado una contraseña nueva al correo ingresado.
-                </p>
-                <button
-                    class="w-full text-center py-3 rounded bg-[#24ce49] text-white hover:bg-[#2af155] font-semibold transition duration-200"
-                    id="aceptar" onclick="aceptar()">Aceptar</button>
-            </div>
-        </div>
+    <modal-warning> El usuario o la contraseña son incorrectos.</modal-warning>
 </body>
-<script src="./js/recuperacion.js"></script>
-
 </html>
