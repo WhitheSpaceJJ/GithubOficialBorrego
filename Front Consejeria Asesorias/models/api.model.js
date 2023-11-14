@@ -1,7 +1,8 @@
 class APIModel {
-  USERS_API_URL = 'http://198.101.238.125:3002'
-  ASESORIAS_API_URL = 'http://198.101.238.125:3009'
-  CP_API_URL = 'http://198.101.238.125:3012'
+  API_URL = 'http://200.58.127.244'
+  USERS_API_URL = `${this.API_URL}:3002`
+  ASESORIAS_API_URL = `${this.API_URL}:3009`
+  CP_API_URL = `${this.API_URL}:3012`
   user = JSON.parse(sessionStorage.getItem('user'))
 
   // eslint-disable-next-line no-useless-constructor
@@ -145,6 +146,77 @@ class APIModel {
 
     if (response.ok) {
       const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getDomicilioByCP(cp) {
+    const url = `${this.CP_API_URL}/codigospostales/cp/${cp}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getMotivos() {
+    const url = `${this.ASESORIAS_API_URL}/motivos`
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getEstadosCiviles() {
+    const url = `${this.ASESORIAS_API_URL}/estados-civiles`
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getTiposJuicio() {
+    const url = `${this.ASESORIAS_API_URL}/tipos-de-juicio`
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      console.log(data)
       return data
     } else {
       throw new Error('Error en la petición')
