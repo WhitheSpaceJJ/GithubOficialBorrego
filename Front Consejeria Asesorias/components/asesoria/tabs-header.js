@@ -1,6 +1,9 @@
 const template = document.createElement('template')
 
 class AsesoriaTabs extends HTMLElement {
+  #activeTab
+  #tabs = ['asesorado', 'asesoria', 'detalles']
+
   constructor() {
     super()
     this.attachShadow({ mode: 'open' }).appendChild(
@@ -10,6 +13,8 @@ class AsesoriaTabs extends HTMLElement {
     this.btnAsesorado = this.shadowRoot.getElementById('btn-asesorado')
     this.btnAsesoria = this.shadowRoot.getElementById('btn-asesoria')
     this.btnDetalles = this.shadowRoot.getElementById('btn-detalles')
+
+    this.#activeTab = 'asesorado'
 
     this.addClickEventListeners()
   }
@@ -34,9 +39,11 @@ class AsesoriaTabs extends HTMLElement {
   }
 
   handleTabClick(tabId) {
-    this.showTabSection(tabId)
-    this.dispatchEventTabChangeEvent(tabId)
-    this.updateAriaAttributes(tabId)
+    try {
+      this.dispatchEventTabChangeEvent(tabId)
+      this.showTabSection(tabId)
+      this.updateAriaAttributes(tabId)
+    } catch (error) {}
   }
 
   showTabSection(tabId) {
@@ -52,13 +59,27 @@ class AsesoriaTabs extends HTMLElement {
       return section.id === tabId && (tabToDisplay = section)
     })
     tabToDisplay.style.display = 'block'
+    this.#activeTab = tabId
+  }
+
+  verifyChange = tabId => {
+    if (tabId === this.#activeTab) {
+      return 'No se puede cambiar a la misma pestaña'
+    }
+    if (!this.#tabs.includes(tabId)) return 'La pestaña no existe'
   }
 
   dispatchEventTabChangeEvent(tabId) {
+    const msg = this.verifyChange(tabId)
+    if (msg) throw new Error(msg)
+
+    const indexCurrentTab = this.#tabs.indexOf(this.#activeTab)
+    const indexTab = this.#tabs.indexOf(tabId)
+
     const event = new CustomEvent('tab-change', {
       bubbles: true,
       composed: true,
-      detail: { tabId },
+      detail: { indexCurrentTab, indexTab },
     })
     this.dispatchEvent(event)
   }
