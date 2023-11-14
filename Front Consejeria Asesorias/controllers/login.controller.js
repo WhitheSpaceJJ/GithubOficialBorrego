@@ -27,7 +27,7 @@ class LoginController {
         modal.open = true
       } else {
         const modal = document.querySelector('modal-warning')
-        modal.message = 'Error al iniciar sesión, por favor intenta de nuevo.'
+        modal.message = 'Las credenciales no son válidas, intente de nuevo.'
         modal.open = true
       }
     }
