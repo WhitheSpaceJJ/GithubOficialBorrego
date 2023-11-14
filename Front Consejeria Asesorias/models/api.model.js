@@ -101,11 +101,12 @@ class APIModel {
   }
 
   async getAsesoriaById(id) {
-    const url = `${this.ASESORIAS_API_URL}/asesorias/asesoria?id=${id}`
+    const url = `${this.ASESORIAS_API_URL}/asesorias/${id}`
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
       },
     })
     if (response.ok) {
