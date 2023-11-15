@@ -7,19 +7,21 @@ const {
   eliminarJuez
 } = require('../controllers/juez')
 const{
-  existeJuez
+  existeJuez,
+  validateActualizarJuez,
+  validateFormatoCrearJson
 } = require('../middlewares/juez')
 
 const router = Router()
 
 router.get('/', obtenerJueces)
 
-router.get('/:id', [existeJuez], obtenerJuez)
+router.get('/:id', existeJuez, obtenerJuez)
 
-router.post('/', crearJuez)
+router.post('/', validateFormatoCrearJson, crearJuez)
 
-router.put('/:id', [existeJuez], actualizarJuez)
+router.put('/:id', [existeJuez, validateActualizarJuez], actualizarJuez)
 
-router.delete('/:id', [existeJuez], eliminarJuez)
+router.delete('/:id', existeJuez, eliminarJuez)
 
 module.exports = router

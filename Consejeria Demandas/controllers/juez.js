@@ -61,7 +61,7 @@ const eliminarJuez = async (req, res) => {
     res.json(juez)
   } catch (error) {
     res.status(500).json({
-      message: 'Error al realizar la consulta con bd'
+      message: error
     })
   }
 }
