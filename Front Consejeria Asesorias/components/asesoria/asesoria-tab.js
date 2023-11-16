@@ -84,7 +84,12 @@ export class AsesoriaTab extends HTMLElement {
     const checkboxesMarcados = Array.from(this.#recibido).filter(
       checkbox => checkbox.checked
     )
-    this.#recibidoValue = checkboxesMarcados.map(checkbox => checkbox.value)
+    this.#recibidoValue = checkboxesMarcados.map(checkbox => {
+      return {
+        id_catalogo: Number(checkbox.value),
+        descripcion_catalogo: checkbox.dataset.name,
+      }
+    })
 
     const radioSeleccionado = Array.from(this.#requisitos).find(
       radio => radio.checked
@@ -134,11 +139,10 @@ export class AsesoriaTab extends HTMLElement {
 
     this.btnNext.addEventListener('click', () => {
       if (!this.validateInputs()) return
-      console.log(this.data)
       const event = new CustomEvent('next', {
         bubbles: true,
         composed: true,
-        detail: { tabId: 'asesoria' },
+        detail: { tabId: 'detalles' },
       })
       this.dispatchEvent(event)
     })
@@ -154,7 +158,13 @@ export class AsesoriaTab extends HTMLElement {
     modal.setOnCloseCallback(onCloseCallback)
   }
 
+  get isComplete() {
+    return this.validateInputs()
+  }
+
   get data() {
+    this.getValues()
+
     const datos_asesoria = {
       resumen_asesoria: this.#resumen.value,
       conclusion_asesoria: this.#conclusion.value,
@@ -162,11 +172,23 @@ export class AsesoriaTab extends HTMLElement {
       fecha_registro: getDate(),
       usuario: this.#api.user.name,
     }
-    const recibidos = this.#recibidoValue.map(value => {
-      return { id_catalogo: Number(value) }
-    })
-    const tipos_juicio = { id_tipo_juicio: Number(this.#tipoJuicio.value) }
-    const asesor = { id_asesor: Number(this.#asesor.value) }
+    const recibidos = this.#recibidoValue.map(
+      ({ id_catalogo, descripcion_catalogo }) => {
+        return {
+          id_catalogo: Number(id_catalogo),
+          descripcion_catalogo,
+        }
+      }
+    )
+    const tipos_juicio = {
+      id_tipo_juicio: Number(this.#tipoJuicio.value),
+      tipo_juicio:
+        this.#tipoJuicio.options[this.#tipoJuicio.selectedIndex].text,
+    }
+    const asesor = {
+      id_asesor: Number(this.#asesor.value),
+      nombre_asesor: this.#asesor.options[this.#asesor.selectedIndex].text,
+    }
 
     return {
       datos_asesoria,

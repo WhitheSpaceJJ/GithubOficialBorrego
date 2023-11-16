@@ -171,7 +171,6 @@ export class AsesoradoTab extends HTMLElement {
 
     this.btnNext.addEventListener('click', () => {
       if (!this.validateInputs()) return
-      console.log(this.data)
       const event = new CustomEvent('next', {
         bubbles: true,
         composed: true,
@@ -197,9 +196,13 @@ export class AsesoradoTab extends HTMLElement {
     this.setAttribute('id', value)
   }
 
+  get isComplete() {
+    return this.validateInputs()
+  }
+
   get data() {
     const asesorado = {
-      estatus_trabajo: this.#estatusTrabajo === 'no',
+      estatus_trabajo: this.#estatusTrabajo === 'yes',
       numero_hijos: Number(this.#numeroHijos.value),
       ingreso_mensual: Number(this.#ingreso) || null,
       motivo: {
@@ -207,6 +210,8 @@ export class AsesoradoTab extends HTMLElement {
       },
       estado_civil: {
         id_estado_civil: Number(this.#estadoCivil.value),
+        estado_civil:
+          this.#estadoCivil.options[this.#estadoCivil.selectedIndex].text,
       },
     }
     const persona = {
@@ -223,6 +228,7 @@ export class AsesoradoTab extends HTMLElement {
       },
       genero: {
         id_genero: Number(this.#sexo.value),
+        descripcion_genero: this.#sexo.options[this.#sexo.selectedIndex].text,
       },
     }
 
