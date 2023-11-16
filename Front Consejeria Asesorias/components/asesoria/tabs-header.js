@@ -71,7 +71,10 @@ class AsesoriaTabs extends HTMLElement {
     const asesoradoTab = document.querySelector('asesorado-full-tab')
     const asesoriaTab = document.querySelector('asesoria-tab')
 
-    if (!asesoradoTab.isComplete || !asesoriaTab.isComplete) {
+    if (
+      tabId === this.#tabs[2] &&
+      (!asesoradoTab.isComplete || !asesoriaTab.isComplete)
+    ) {
       return 'No se puede cambiar de pestaña si no se han completado los datos'
     }
   }
