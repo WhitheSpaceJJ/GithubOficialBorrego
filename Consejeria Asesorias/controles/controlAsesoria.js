@@ -25,6 +25,13 @@ const obtenerAsesoriasFiltro = async (filtros) => {
       attributes: {
         exclude: ['id_asesorado', 'id_turno', 'id_empleado', 'id_tipo_juicio']
       },
+      include: [
+        modeloAsesoria.Asesorado,
+        modeloAsesoria.DetalleAsesoriaCatalogo,
+        modeloAsesoria.Turno,
+        modeloAsesoria.Empleado,
+        modeloAsesoria.TipoJuicio
+      ],
     /*
       include: [
         { model: Asesor },
@@ -290,7 +297,8 @@ const agregarAsesoria = async (asesoria_pre) => {
         await controlDetalleAsesoria.agregarDetalleAsesoriaCatalogo(elemento);
       }
     }
-    return asesoria_obj2;
+    return  await  obtenerAsesoriaPorIdAsesorado (asesoria_obj2.id_asesorado);
+    //return asesoria_obj2;
     //    return (await modeloAsesoria.Asesoria.create(asesoria, { raw: true, nest: true })).dataValues;
   } catch (error) {
     console.log("Error:", error.message);

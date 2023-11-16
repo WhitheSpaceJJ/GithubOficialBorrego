@@ -14,7 +14,7 @@ router.route('/')
 
 router.route('/:id')
     // Obtener un distrito judicial por su ID
-    .get(servicioDistritosJudiciales.obtenerDistritoJudicialPorId)
+    .get(servicioDistritosJudiciales.obtenerDistritoJudicial)
     // Eliminar un distrito judicial por su ID
     .delete(servicioDistritosJudiciales.eliminarDistritoJudicial)
     // Actualizar un distrito judicial por su ID

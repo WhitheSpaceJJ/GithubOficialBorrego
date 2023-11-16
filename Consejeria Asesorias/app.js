@@ -26,7 +26,7 @@ const municipioDistro = require("./rutas/municipioDistroRuta.js");
 // Variable para cargar el módulo de gRPC
 const grpc = require('@grpc/grpc-js');
 // Variable para cargar el módulo de proto-loader
-const {packageDefinition}=require("./cliente/cliente.js")
+const { packageDefinition } = require("./cliente/cliente.js")
 // Variable para cargar el módulo de errores personalizados
 const CustomeError = require("./utilidades/customeError");
 // Variable para cargar el módulo de control de errores
@@ -40,51 +40,86 @@ app.use(express.json());
 // Uso de cors
 app.use(cors());
 
-// Middleware para validar el token JWT
+
+//Aqui se utilizara el servicio GRPC de usuarios ya que ahi estara el token.
 const jwtMiddleware = async (req, res, next) => {
-  // Obtenemos el token del encabezado de la solicitud
-  const tokenHeader = req.headers.authorization; 
+  const tokenHeader = req.headers.authorization; // Obtener el valor del encabezado "Authorization"
+
+  // Verificar si el token existe en el encabezado
   if (!tokenHeader) {
-    // Si no hay token, creamos un error personalizado y lo pasamos al siguiente middleware
     const customeError = new CustomeError('Token no proporcionado.', 401);
     next(customeError);
     return;
   }
-  // Eliminamos el prefijo 'Bearer ' del token
-  const token = tokenHeader.replace('Bearer ', '');
-  // Cargamos el servicio de validación de tokens
+
+  // Extraer el token del encabezado "Authorization"
+  const token = tokenHeader.replace('Bearer ', ''); // Quita "Bearer " del encabezado
+
   let token_client = grpc.loadPackageDefinition(packageDefinition).tokenService;
-  const validador = new token_client.TokenService('200.58.127.244:161', grpc.credentials.createInsecure());  
-  // Validamos el token
+  const validador = new token_client.TokenService('200.58.127.244:161', grpc.credentials.createInsecure());
+  
   validador.validarToken({ token: token }, function (err, response) {
     if (response.message === "Token inválido") {
-      // Si el token es inválido, creamos un error personalizado y lo pasamos al siguiente middleware
       const customeError = new CustomeError('Token inválido, no ha iniciado sesión.', 401);
       next(customeError);
     } else if (response.message === "Token válido") {
-      // Si el token es válido, pasamos al siguiente middleware
       next();
     }
   });
 };
+
 // Usamos el middleware de validación de tokens en nuestras rutas
-app.use('/asesorias',jwtMiddleware, asesoriasRutas);
-app.use('/tipos-de-juicio',jwtMiddleware, tipoDeJuiciosRutas);
-app.use('/asesores',jwtMiddleware,asesoresRutas);
-app.use('/generos',jwtMiddleware, generosRutas);
-app.use('/estados-civiles',jwtMiddleware, estadosCivilesRutas);
-app.use('/motivos',jwtMiddleware, motivosRutas);
-app.use('/zonas',jwtMiddleware, zonasRutas);
-app.use('/detalle-asesoria',jwtMiddleware, detalleAsesoriaRutas);
-app.use('/domicilios',jwtMiddleware, domiciliosRutas);
-app.use('/turnos',jwtMiddleware,turnoRutas);
-app.use('/personas',jwtMiddleware,personasRutas);
-app.use('/asesorados',jwtMiddleware,asesoradoRutas);
-app.use('/catalogo-requisitos',jwtMiddleware,catalogoRequisitosRutas);
-app.use('/defensores',jwtMiddleware,defensorRuta);
-app.use('/distritos-judiciales',jwtMiddleware,distritoJudicialRuta);
-app.use('/empleados',jwtMiddleware,empleadoRuta);
-app.use('/municipios-distritos',jwtMiddleware,municipioDistro);
+app.use('/asesorias', 
+//jwtMiddleware, 
+asesoriasRutas);
+app.use('/tipos-de-juicio', 
+//jwtMiddleware, 
+tipoDeJuiciosRutas);
+app.use('/asesores',
+// jwtMiddleware,
+  asesoresRutas);
+app.use('/generos', 
+//jwtMiddleware,
+ generosRutas);
+app.use('/estados-civiles',
+// jwtMiddleware, 
+ estadosCivilesRutas);
+app.use('/motivos',
+// jwtMiddleware, 
+ motivosRutas);
+app.use('/zonas',
+ //jwtMiddleware, 
+ zonasRutas);
+app.use('/detalle-asesoria',
+ //jwtMiddleware, 
+ detalleAsesoriaRutas);
+app.use('/domicilios', 
+//jwtMiddleware, 
+domiciliosRutas);
+app.use('/turnos', 
+//jwtMiddleware, 
+turnoRutas);
+app.use('/personas',
+ //jwtMiddleware, 
+ personasRutas);
+app.use('/asesorados', 
+//jwtMiddleware, 
+asesoradoRutas);
+app.use('/catalogo-requisitos', 
+//jwtMiddleware, 
+catalogoRequisitosRutas);
+app.use('/defensores',
+ //jwtMiddleware,
+  defensorRuta);
+app.use('/distritos-judiciales', 
+//jwtMiddleware,
+ distritoJudicialRuta);
+app.use('/empleados',
+ //jwtMiddleware,
+  empleadoRuta);
+app.use('/municipios-distritos', 
+//jwtMiddleware,
+ municipioDistro);
 
 
 // Middleware para manejar las rutas no encontradas

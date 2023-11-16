@@ -490,7 +490,10 @@ const Empleado = sequelize.define(
     tipo_empleado: {
       type: DataTypes.STRING(100),
       allowNull: false, // Don't allow null
-    },
+    },id_distrito_judicial:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     freezeTableName: true,
