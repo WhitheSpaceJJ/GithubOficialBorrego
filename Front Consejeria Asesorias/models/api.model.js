@@ -257,6 +257,24 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
+
+  async postAsesoria(data) {
+    const url = `${this.ASESORIAS_API_URL}/asesorias`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+      body: JSON.stringify(data),
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
 }
 
 export { APIModel }
