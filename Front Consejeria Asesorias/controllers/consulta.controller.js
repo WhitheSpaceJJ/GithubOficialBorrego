@@ -31,13 +31,27 @@ class ConsultaController {
 
   handleConsultarAsesoriasById = async id => {
     try {
+      const button = document.querySelector('.consulta-button')
+      button.disabled = true
       const asesoria = await this.model.getAsesoriaById(id)
       const persona = asesoria.asesoria.persona
-      const domicilio = await this.model.getColoniaById(persona.domicilio.id_colonia)
+      const domicilio = await this.model.getColoniaById(
+        persona.domicilio.id_colonia
+      )
       const modal = document.querySelector('modal-asesoria')
       const dataAsesoria = new DataAsesoria(asesoria, domicilio)
+
+      const handleModalClose = () => {
+        const modalContent = modal.shadowRoot.getElementById('modal-content')
+        modalContent.innerHTML = ''
+        button.disabled = false
+      }
+
+      modal.addEventListener('onClose', handleModalClose)
+
       const modalContent = modal.shadowRoot.getElementById('modal-content')
       modalContent.appendChild(dataAsesoria)
+
       modal.title = 'Datos Asesoría'
       modal.open = true
     } catch (error) {
@@ -65,7 +79,7 @@ class ConsultaController {
                 ${asesoria.datos_asesoria.usuario}
             </td>
             <td class="px-6 py-4 text-right">
-                <button href="#" class="font-medium text-[#db2424] hover:underline" onclick="handleConsultarAsesoriasById(this.value)" value="${asesoria.datos_asesoria.id_asesoria}">Consultar</button>
+                <button href="#" class="consulta-button font-medium text-[#db2424] hover:underline" onclick="handleConsultarAsesoriasById(this.value)" value="${asesoria.datos_asesoria.id_asesoria}">Consultar</button>
             </td>`
 
     return row
