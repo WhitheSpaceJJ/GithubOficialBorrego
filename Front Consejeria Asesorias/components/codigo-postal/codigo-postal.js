@@ -68,7 +68,6 @@ export class CodigoPostal extends HTMLElement {
         this.#showModal('No se encontró el código postal', 'Advertencia')
         return
       }
-      console.log(data)
 
       this.#estado.value = data.estado.nombre_estado
       this.#municipio.value = data.municipio.nombre_municipio
@@ -80,7 +79,6 @@ export class CodigoPostal extends HTMLElement {
         option.textContent = colonia.nombre_colonia
         this.#colonia.appendChild(option)
       })
-      console.log(this.data)
     } catch (error) {
       console.error(error)
       this.#showModal('Error al buscar el código postal', 'Error')
