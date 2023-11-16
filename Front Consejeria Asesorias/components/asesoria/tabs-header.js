@@ -67,6 +67,13 @@ class AsesoriaTabs extends HTMLElement {
       return 'No se puede cambiar a la misma pestaña'
     }
     if (!this.#tabs.includes(tabId)) return 'La pestaña no existe'
+
+    const asesoradoTab = document.querySelector('asesorado-full-tab')
+    const asesoriaTab = document.querySelector('asesoria-tab')
+
+    if (!asesoradoTab.isComplete || !asesoriaTab.isComplete) {
+      return 'No se puede cambiar de pestaña si no se han completado los datos'
+    }
   }
 
   dispatchEventTabChangeEvent(tabId) {
@@ -79,7 +86,7 @@ class AsesoriaTabs extends HTMLElement {
     const event = new CustomEvent('tab-change', {
       bubbles: true,
       composed: true,
-      detail: { indexCurrentTab, indexTab },
+      detail: { indexCurrentTab, indexTab, tabId },
     })
     this.dispatchEvent(event)
   }
