@@ -50,7 +50,6 @@ class APIModel {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: ` ${this.user.token}`,
       },
     })
     if (response.ok) {
