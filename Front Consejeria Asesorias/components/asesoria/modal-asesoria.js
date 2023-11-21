@@ -16,6 +16,13 @@ export class ModalAsesoria extends HTMLElement {
       const modal = this.shadowRoot.getElementById('modal')
       modal.style.display = 'none'
       this.setAttribute('open', 'false')
+      const onCloseEvent = new CustomEvent('onClose')
+      this.dispatchEvent(onCloseEvent)
+
+      // También puedes llamar a la función de cierre proporcionada desde fuera de la clase, si está configurada
+      if (typeof this._onCloseCallback === 'function') {
+        this._onCloseCallback()
+      }
     }
   }
 
