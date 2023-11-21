@@ -44,11 +44,21 @@ const jwtMiddleware = async (req, res, next) => {
 };
 
 
-app.use('/colonias',jwtMiddleware, coloniasRoutes);
-app.use('/codigospostales',jwtMiddleware, codigosPostalesRoutes);
-app.use('/estados',jwtMiddleware,estadosRoutes);
-app.use('/municipios',jwtMiddleware, municipiosRoutes);
-app.use('/ciudades',jwtMiddleware, ciudadesRoutes);
+app.use('/colonias',
+//jwtMiddleware, 
+coloniasRoutes);
+app.use('/codigospostales',
+//jwtMiddleware,
+ codigosPostalesRoutes);
+app.use('/estados',
+//jwtMiddleware,
+estadosRoutes);
+app.use('/municipios',
+//jwtMiddleware,
+ municipiosRoutes);
+app.use('/ciudades',
+//jwtMiddleware, 
+ciudadesRoutes);
 
 
 
