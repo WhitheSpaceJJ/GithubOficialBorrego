@@ -1,5 +1,5 @@
 const {Asesoria,Empleado,Turno,Asesorado,
-   DetalleAsesoriaCatalogo,TipoJuicio}=require("../utilidades/modelosBase");
+   DetalleAsesoriaCatalogo,TipoJuicio,DistritoJudicial}=require("../utilidades/modelosBase");
 
 /*
 * Modelo de asesoria el cual contiene los atributos de una asesoria y establece
@@ -11,7 +11,12 @@ Asesoria.belongsTo(Asesorado, { foreignKey: "id_asesorado"})
 Asesoria.hasMany(DetalleAsesoriaCatalogo,{foreignKey:"id_asesoria"});
 Asesoria.belongsTo(TipoJuicio, { foreignKey: "id_tipo_juicio" })
 
+Empleado.belongsTo(DistritoJudicial, { foreignKey: "id_distrito_judicial" });
+
+
+
 module.exports = {Asesoria
   ,Turno,Asesorado,Empleado,
-  DetalleAsesoriaCatalogo,TipoJuicio
+  DetalleAsesoriaCatalogo,TipoJuicio,
+  DistritoJudicial
 };

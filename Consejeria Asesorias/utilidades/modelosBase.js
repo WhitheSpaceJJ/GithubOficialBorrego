@@ -467,8 +467,12 @@ const MunicipioDistro = sequelize.define(
   {
     timestamps: false, // Don't include timestamps
     freezeTableName: true, // Use the same table name
-    tableName: "municipios_distros", // Use the same table name
+    tableName: "municipios_distritos", // Use the same table name
     underscored: true, // Use snake_case not camelCase
+    name: {
+      singular: "municipio_distrito",
+      plural: "municipios_distritos",
+    },
   }
 );
 
@@ -517,7 +521,6 @@ const Asesor = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      autoIncrement: true,
     },
     nombre_asesor: {
       type: DataTypes.STRING,
@@ -550,7 +553,6 @@ const Defensor = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      autoIncrement: true,
     },
     nombre_defensor: {
       type: DataTypes.STRING,
@@ -657,7 +659,7 @@ const Asesoria = sequelize.define(
       defaultValue: null,
     },
     fecha_registro: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: true,
       defaultValue: null,
     },

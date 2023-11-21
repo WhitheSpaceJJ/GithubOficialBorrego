@@ -3,9 +3,13 @@ const express = require('express');
 const servicioAsesorias = require('../servicios/servicioAsesorias');
 
 const router = express.Router();
+router.route('/paginacion')
+.get(servicioAsesorias.obtenerAsesoriasPagina);
 
 router.route('/buscar')
   .get(servicioAsesorias.obtenerAsesoriaNombre);
+
+
 
   router.route('/filtro')
   .get(servicioAsesorias.obtenerAsesoriaFiltro);

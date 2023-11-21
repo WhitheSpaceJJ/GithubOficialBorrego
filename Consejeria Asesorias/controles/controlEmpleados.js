@@ -8,9 +8,19 @@ const modeloEmpleado = require('../modelos/modeloEmpleado.js');
 const obtenerEmpleados = async () => {
     try {
         return await modeloEmpleado.Empleado.findAll({
-            raw: true,
+            raw: false,
             nest: true,
+            attributes: {
+                exclude: ["id_distrito_judicial"]
+              },
+              include: [{
+                model: modeloEmpleado.DistritoJudicial
+              }
+               
+              ]
         });
+       
+
     } catch (error) {
         console.log("Error:", error.message);
         return null;
