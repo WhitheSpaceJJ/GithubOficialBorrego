@@ -70,7 +70,7 @@ const jwtMiddleware = async (req, res, next) => {
 
 // Usamos el middleware de validación de tokens en nuestras rutas
 app.use('/asesorias', 
-jwtMiddleware, 
+//jwtMiddleware, 
 asesoriasRutas);
 app.use('/tipos-de-juicio', 
 jwtMiddleware, 

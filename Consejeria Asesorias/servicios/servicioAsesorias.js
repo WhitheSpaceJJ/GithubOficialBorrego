@@ -12,7 +12,6 @@ const ExcelJS = require('exceljs');
  *  */
 const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
   const filtros = JSON.parse(req.query.filtros);
-  console.log("Filtros", filtros);
   const result = await controlAsesorias.obtenerAsesoriasFiltro(filtros);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);

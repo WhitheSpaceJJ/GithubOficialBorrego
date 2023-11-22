@@ -49,13 +49,13 @@ if (clavesInvalidas.length > 0) {
     if (filtros.id_municipio) {
       // Asegúrate de que la relación entre Empleado y Municipio esté definida
       // y ajusta el nombre del modelo y la clave foránea según sea necesario
-      whereClause['$Empleado.distrito_judicial.id_municipio_distrito$'] = filtros.id_municipio;
+      whereClause['$empleado.distrito_judicial.id_municipio_distrito$'] = filtros.id_municipio;
     }
 
     if (filtros.id_zona) {
       // Asegúrate de que la relación entre Empleado y Zona esté definida
       // y ajusta el nombre del modelo y la clave foránea según sea necesario
-      whereClause['$Empleado.distrito_judicial.id_zona$'] = filtros.id_zona;
+      whereClause['$empleado.distrito_judicial.id_zona$'] = filtros.id_zona;
     }
     // Resto del código...
 
@@ -90,6 +90,8 @@ if (clavesInvalidas.length > 0) {
     const asesorias = [];
 
     for (const asesoria_pre of asesorias_pre) {
+      console.log(JSON.stringify(asesoria_pre));
+      console.log("--------------------------------------------------");
       const asesoria_obj = JSON.parse(JSON.stringify(asesoria_pre));
       delete asesoria_obj.id_empleado;
 
