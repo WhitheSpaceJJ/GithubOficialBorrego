@@ -45,19 +45,19 @@ const jwtMiddleware = async (req, res, next) => {
 
 
 app.use('/colonias',
-//jwtMiddleware, 
+jwtMiddleware, 
 coloniasRoutes);
 app.use('/codigospostales',
-//jwtMiddleware,
+jwtMiddleware,
  codigosPostalesRoutes);
 app.use('/estados',
-//jwtMiddleware,
+jwtMiddleware,
 estadosRoutes);
 app.use('/municipios',
-//jwtMiddleware,
+jwtMiddleware,
  municipiosRoutes);
 app.use('/ciudades',
-//jwtMiddleware, 
+jwtMiddleware, 
 ciudadesRoutes);
 
 
