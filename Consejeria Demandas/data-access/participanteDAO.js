@@ -1,9 +1,9 @@
 const Participante = require('../models/participante')
 
 class ParticipanteDAO {
-  async crearParticipante ({ nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona }) {
+  async crearParticipante ({ nombre, edad, id_escolaridad, id_etnia, id_ocupacion, id_persona }) {
     try {
-      const participante = await Participante.create({ nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona })
+      const participante = await Participante.create({ nombre, edad, id_escolaridad, id_etnia, id_ocupacion, id_persona })
       return participante
     } catch (err) {
       throw err
@@ -28,9 +28,9 @@ class ParticipanteDAO {
     }
   }
 
-  async actualizarParticipante (id_participante, { nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona }) {
+  async actualizarParticipante (id_participante, { nombre, edad, id_escolaridad, id_etnia, id_ocupacion, id_persona }) {
     try {
-      const participante = await Participante.update({ nombre, edad, DTYPE, id_escolaridad, id_etnia, id_ocupacion, id_persona }, { where: { id_participante } })
+      const participante = await Participante.update({ nombre, edad, id_escolaridad, id_etnia, id_ocupacion, id_persona }, { where: { id_participante } })
       return participante
     } catch (err) {
       throw err

@@ -155,42 +155,7 @@ const Motivo = sequelize.define(
   }
 );
 
-/**
- * @typedef {Object} Asesor
- * @property {number} id_asesor
- * @property {string} nombre_asesor
- * @property {number} id_zona
- * */
-const Asesor = sequelize.define(
-  "asesores",
-  {
-    id_asesor: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-    nombre_asesor: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [0, 100],
-      },
-    },
-    id_zona: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  },
-  {
-    freezeTableName: true,
-    timestamps: false,
-    name: {
-      singular: "asesor",
-      plural: "asesores",
-    },
-  }
-);
+
 
 /**
  * @typedef {Object} CatalogoRequisito
@@ -419,88 +384,7 @@ const Asesorado = sequelize.define(
 );
 
 
-/**
- *  @typedef {Object} Asesoria
- * @property {number} id_asesoria
- * @property {string} resumen_asesoria
- *  @property {string} conclusion_asesoria
- * @property {boolean} estatus_requisitos
- * @property {Date} fecha_registro
- * @property {number} id_asesor
- * @property {number} id_turno
- * @property {number} id_asesorado
- * @property {string} usuario 
- * @property {number} id_tipo_juicio
- */
-const Asesoria = sequelize.define(
-  "asesorias",
-  {
-    id_asesoria: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-    resumen_asesoria: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [0, 250],
-      },
-      defaultValue: null,
-    },
-    conclusion_asesoria: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [0, 250],
-      },
-      defaultValue: null,
-    },
-    estatus_requisitos: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-      defaultValue: null,
-    },
-    fecha_registro: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: null,
-    },
-    id_asesor: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    id_turno: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: null,
-    },
-    id_asesorado: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    usuario: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [0, 75],
-      },
-    },
-    id_tipo_juicio: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  },
-  {
-    freezeTableName: true,
-    timestamps: false,
-    name: {
-      singular: "asesoria",
-      plural: "asesorias",
-    },
-  }
-);
+
 
 /**
  * @typedef {Object} Domicilio
@@ -557,10 +441,267 @@ const Domicilio = sequelize.define(
   }
 );
 
+/**
+ * @typedef {Object} MunicipioDistro
+ * @property {number} id_municipio_distrito
+ * @property {string} nombre_municipio
+ * @property {number} id_distrito_judicial
+ * */
+const MunicipioDistro = sequelize.define(
+  "municipios_distritos",
+  {
+    // Define the "municipios" table
+    id_municipio_distrito: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    nombre_municipio: {
+      type: DataTypes.STRING(100),
+      allowNull: false, // Don't allow null
+    },
+    id_distrito_judicial: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: false, // Don't include timestamps
+    freezeTableName: true, // Use the same table name
+    tableName: "municipios_distritos", // Use the same table name
+    underscored: true, // Use snake_case not camelCase
+    name: {
+      singular: "municipio_distrito",
+      plural: "municipios_distritos",
+    },
+  }
+);
+
+/**
+ * @typedef {Object} Empleado
+ * @property {number} id_empleado
+ * @property {string} tipo_empleado
+ * */
+
+const Empleado = sequelize.define(
+  "empleados",
+  {
+    id_empleado: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    tipo_empleado: {
+      type: DataTypes.STRING(100),
+      allowNull: false, // Don't allow null
+    },id_distrito_judicial:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+    name: {
+      singular: "empleado",
+      plural: "empleados",
+    },
+  }
+);
+/**
+ * @typedef {Object} Asesor
+ * @property {number} id_asesor
+ * @property {string} nombre_asesor
+ * @property {number} id_zona
+ * */
+const Asesor = sequelize.define(
+  "asesores",
+  {
+    id_asesor: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
+    nombre_asesor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 100],
+      },
+    }
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+    name: {
+      singular: "asesor",
+      plural: "asesores",
+    },
+  }
+);
+
+/**
+ * @typedef {Object} Defensor
+ * @property {number} id_defensor
+ * @property {string} nombre_defensor
+ * */
+
+const Defensor = sequelize.define(
+  "defensores",
+  {
+    id_defensor: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
+    nombre_defensor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 100],
+      },
+    }
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+    name: {
+      singular: "defensor",
+      plural: "defensores",
+    },
+  }
+);
+
+/**
+ *  @typedef {Object} DistritoJudicial
+ * @property {number} id_distrito_judicial
+ * @property {string} nombre_distrito_judicial
+ * @property {number} id_zona
+ * @property {number} id_municipio_distrito
+ * */
+const DistritoJudicial = sequelize.define(
+  "distritos_judiciales",
+  {
+    id_distrito_judicial: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    nombre_distrito_judicial: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 100],
+      },
+    },
+    id_zona: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_municipio_distrito: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+    name: {
+      singular: "distrito_judicial",
+      plural: "distritos_judiciales",
+    },
+  }
+);
+
+
+/**
+ *  @typedef {Object} Asesoria
+ * @property {number} id_asesoria
+ * @property {string} resumen_asesoria
+ *  @property {string} conclusion_asesoria
+ * @property {boolean} estatus_requisitos
+ * @property {Date} fecha_registro
+ * @property {number} id_empleado
+ * @property {number} id_turno
+ * @property {number} id_asesorado
+ * @property {string} usuario 
+ * @property {number} id_tipo_juicio
+ */
+const Asesoria = sequelize.define(
+  "asesorias",
+  {
+    id_asesoria: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    resumen_asesoria: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [0, 250],
+      },
+      defaultValue: null,
+    },
+    conclusion_asesoria: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [0, 250],
+      },
+      defaultValue: null,
+    },
+    estatus_requisitos: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: null,
+    },
+    fecha_registro: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      defaultValue: null,
+    },
+    id_empleado: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_turno: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+    },
+    id_asesorado: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    usuario: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 75],
+      },
+    },
+    id_tipo_juicio: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+    name: {
+      singular: "asesoria",
+      plural: "asesorias",
+    },
+  }
+);
 //Module exports
 module.exports = {
   Turno,
-  Persona,
+  Persona,Empleado,DistritoJudicial,
+  MunicipioDistro,Defensor,
   Asesorado,
   Asesoria,
   EstadoCivil,

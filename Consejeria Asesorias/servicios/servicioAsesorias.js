@@ -2,7 +2,7 @@ const controlAsesorias = require('../controles/controlAsesoria');
 const asyncError = require("../utilidades/asyncError");
 const CustomeError = require("../utilidades/customeError");
 const controlPersonas = require('../controles/controlPersonas');
-
+const ExcelJS = require('exceljs');
 /**
  * @abstract Servicio  que permite obtener una asesoría por filtro
  * @param {Object} req Request
@@ -11,8 +11,30 @@ const controlPersonas = require('../controles/controlPersonas');
  * @returns {Object} asesoria de la base de datos
  *  */
 const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
-  const filtro = [];
-  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtro);
+  const filtros = JSON.parse(req.query.filtros);
+  console.log("Filtros", filtros);
+  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtros);
+  if (result === null || result === undefined) {
+    const error = new CustomeError('No se encontraron asesorías', 404);
+    return next(error);
+  } else {
+    res.status(200).json({
+      asesorias: result
+    });
+  }
+}
+);
+
+/**
+ * @abstract Servicio  que permite obtener una asesoría por filtro para paginación
+ * @param {Object} req Request
+ * @param {Object} res Response
+ * @param {Object} next Next
+ * @returns {Object} asesoria de la base de datos
+ * */
+const obtenerAsesoriasPagina = asyncError(async (req, res, next) => {
+  const pagina = req.query.pagina;
+  const result = await controlAsesorias.obtenerAsesoriasPorPagina(pagina);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
@@ -32,13 +54,58 @@ const obtenerAsesoriaFiltro = asyncError(async (req, res, next) => {
  * @returns {Object} asesoria de la base de datos
  * */
 const obtenerAsesoriaFiltroExcel = asyncError(async (req, res, next) => {
-  const filtro = [];
-  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtro);
+  const filtros = JSON.parse(req.query.filtros);
+  console.log("Filtros", filtros);
+  const result = await controlAsesorias.obtenerAsesoriasFiltro(filtros);
   if (result === null || result === undefined) {
     const error = new CustomeError('No se encontraron asesorías', 404);
     return next(error);
   } else {
-  
+    //Crear archivo excel con todos los datos de la asesoria uno por uno , luego que se descargue el archivo y cuando finalice se borre
+    // Datos de ejemplo
+    const asesoriasFiltradas = result;
+    // Crear un nuevo libro de Excel
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Asesorías');
+
+    // Agregar encabezados
+    sheet.addRow(['Nombre', 'Apellido Paterno', 'Apellido Materno', 'Edad', 'Teléfono', 'Estatus Trabajo', 'Número Hijos', 'Ingreso Mensual', 'Motivo', 'Estado Civil', 'Tipo Juicio', 'Recibidos', 'Defensor', 'Resumen Asesoría', 'Conclusión Asesoría', 'Estatus Requisitos', 'Fecha Registro', 'Usuario']);
+
+    // Agregar datos al libro de Excel
+    asesoriasFiltradas.forEach((asesoria) => {
+      const persona = asesoria.persona;
+      const asesorado = asesoria.asesorado;
+      const datosAsesoria = asesoria.datos_asesoria;
+
+      sheet.addRow([
+        persona.nombre,
+        persona.apellido_paterno,
+        persona.apellido_materno,
+        persona.edad,
+        persona.telefono,
+        asesorado.estatus_trabajo,
+        asesorado.numero_hijos,
+        asesorado.ingreso_mensual,
+        asesorado.motivo.descripcion_motivo,  // Ajusta según la estructura real de tus datos
+        asesorado.estado_civil.estado_civil,   // Ajusta según la estructura real de tus datos
+        asesoria.tipos_juicio.tipo_juicio,     // Ajusta según la estructura real de tus datos
+        asesoria.recibidos.map((recibido) => recibido.descripcion_catalogo).join(', '),  // Ajusta según la estructura real de tus datos
+        asesoria.defensor.nombre_defensor,     // Ajusta según la estructura real de tus datos
+        datosAsesoria.resumen_asesoria,
+        datosAsesoria.conclusion_asesoria,
+        datosAsesoria.estatus_requisitos,
+        datosAsesoria.fecha_registro,
+        datosAsesoria.usuario,
+      ]);
+    });
+
+    // Configurar encabezados para la descarga
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=asesorias.xlsx');
+
+    // Enviar el libro de Excel como respuesta
+    await workbook.xlsx.write(res);
+    res.end();
   }
 
 });
@@ -161,16 +228,14 @@ const obtenerAsesoriaPorId = asyncError(async (req, res, next) => {
 
 const obtenerAsesoriaNombre = asyncError(async (req, res, next) => {
   const { nombre, apellido_materno, apellido_paterno } = req.query;
-  const result2 = await controlPersonas.obtenerPersonaNombre(nombre, apellido_paterno, apellido_materno);
+  const result2 = await controlPersonas.obtenerPersonasNombre(nombre, apellido_paterno, apellido_materno);
   if (result2 === null) {
-    const error = new CustomeError('Error al obtener la persona', 404);
+    const error = new CustomeError('Error al obtener las personas', 404);
     return next(error);
   } else {
-    const personaJSON = JSON.stringify(result2);
-    const persona = JSON.parse(personaJSON);
-    const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorado(result2.id_persona);
+    const result = await controlAsesorias.obtenerAsesoriaPorIdAsesorados(result2);
     if (result === null || result === undefined) {
-      const error = new CustomeError('Error al obtener la asesoría', 404);
+      const error = new CustomeError('Error al obtener las asesorías', 404);
       return next(error);
     } else {
 
@@ -193,4 +258,5 @@ module.exports = {
   obtenerAsesoriaNombre,
   obtenerAsesoriaFiltro,
   obtenerAsesoriaFiltroExcel
+  , obtenerAsesoriasPagina
 };

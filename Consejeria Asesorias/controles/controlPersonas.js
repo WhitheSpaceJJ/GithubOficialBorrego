@@ -13,7 +13,7 @@ const obtenerPersonas = async () => {
       attributes: {
         exclude: ['id_domicilio', 'id_genero']
       },
-      include:[modeloPersona.Domicilio,modeloPersona.Genero]
+      include: [modeloPersona.Domicilio, modeloPersona.Genero]
     });
   } catch (error) {
     console.log("Error:", error.message);
@@ -31,10 +31,10 @@ const obtenerPersonaPorId = async (id) => {
     return await modeloPersona.Persona.findByPk(id, {
       raw: true,
       nest: true
-      ,   attributes: {
+      , attributes: {
         exclude: ['id_domicilio', 'id_genero']
       },
-      include:[modeloPersona.Domicilio,modeloPersona.Genero]
+      include: [modeloPersona.Domicilio, modeloPersona.Genero]
     });
   } catch (error) {
     console.log("Error:", error.message);
@@ -88,35 +88,56 @@ const actualizarPersona = async (persona) => {
 };
 
 
-  /**
-   *  @abstract Función que permite obtener una persona por su nombre
-   * @param {*} nombre nombre de la persona
-   * @param {*} apellido_paterno apellido paterno de la persona
-   * @param {*} apellido_materno apellido materno de la persona
-   * @returns persona
-   * */
-const obtenerPersonaNombre = async (nombre, apellido_paterno, apellido_materno) => {
+/**
+ *  @abstract Función que permite obtener una persona por su nombre
+ * @param {*} nombre nombre de la persona
+ * @param {*} apellido_paterno apellido paterno de la persona
+ * @param {*} apellido_materno apellido materno de la persona
+ * @returns persona
+ * */
+const obtenerPersonasNombre = async (nombre, apellido_paterno, apellido_materno) => {
   try {
-    return await modeloPersona.Persona.findOne({
+    //Cambia el codigo de abajo para que encuente todas las personas coincidentes las coloque en un arreglo y que se recorra el arreglo para que este sea añadido a otro arreglos  donde se colocaran los id_asesorado
+
+    const personas_pre = await modeloPersona.Persona.findAll({
       where: {
-        nombre:  nombre
+        nombre: nombre
         ,
-        apellido_paterno: 
+        apellido_paterno:
           apellido_paterno
-        
+
         ,
-        apellido_materno: 
+        apellido_materno:
           apellido_materno
       }
       ,
       raw: true,
       nest: true,
+      attributes: {
+        exclude: ['id_domicilio', 'id_genero']
+      },
+      include: [modeloPersona.Domicilio, modeloPersona.Genero]
     });
+
+    const personas = [];
+
+    for (const persona_pre of personas_pre) {
+      personas.push(persona_pre.id_persona);
+    }
+    if (personas.length == 0) {
+      return null;
+    }
+    else {
+      return personas
+    }
+
   } catch (error) {
     console.log("Error:", error.message);
     return null;
   }
 };
+
+
 const { Op } = require("sequelize");
 
 //Module exports
@@ -126,5 +147,5 @@ module.exports = {
   agregarPersona,
   eliminarPersona,
   actualizarPersona,
-  obtenerPersonaNombre
+  obtenerPersonasNombre
 };

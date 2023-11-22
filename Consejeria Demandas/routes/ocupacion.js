@@ -8,7 +8,9 @@ const {
   eliminarOcupacion
 } = require('../controllers/ocupacion')
 const{
-  existeOcupacion
+  existeOcupacion,
+  validateActualizarOcupacion,
+  validateFormatoCrearJson
 } = require('../middlewares/ocupacion')
 
 const router = Router()
@@ -17,9 +19,9 @@ router.get('/', obtenerOcupaciones)
 
 router.get('/:id', [existeOcupacion], obtenerOcupacion)
 
-router.post('/', crearOcupacion)
+router.post('/', validateFormatoCrearJson, crearOcupacion)
 
-router.put('/:id', [existeOcupacion], actualizarOcupacion)
+router.put('/:id', [existeOcupacion, validateActualizarOcupacion], actualizarOcupacion)
 
 router.delete('/:id', [existeOcupacion], eliminarOcupacion)
 

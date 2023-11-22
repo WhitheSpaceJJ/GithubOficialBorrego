@@ -2,14 +2,13 @@ const procesoJudicialDAO = require('../data-access/proceso_judicialDAO')
 
 const crearProcesoJudicial = async (req, res) => {
   try {
-    const { fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, DTYPE, id_juzgado } = req.body
+    const { fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado } = req.body
     const procesoJudicial = await procesoJudicialDAO.crearProcesoJudicial({
       fecha_inicio,
       fecha_proceso,
       fecha_conclusion,
       area_seguimiento,
       numero_expediente,
-      DTYPE,
       id_juzgado
     })
     res.json(procesoJudicial)
@@ -23,7 +22,7 @@ const crearProcesoJudicial = async (req, res) => {
 const obtenerProcesosJudiciales = async (req, res) => {
   try {
     const procesosJudiciales = await procesoJudicialDAO.obtenerProcesosJudiciales()
-    if(procesosJudiciales.length === 0){
+    if (procesosJudiciales.length === 0) {
       return res.status(204).json(procesosJudiciales)
     }
     res.json(procesosJudiciales)

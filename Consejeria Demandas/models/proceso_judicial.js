@@ -28,10 +28,6 @@ const procesoJudicial = sequelize.define('proceso_judicial', {
     type: DataTypes.STRING(25),
     allowNull: true
   },
-  DTYPE: {
-    type: DataTypes.STRING(20),
-    allowNull: true
-  },
   id_juzgado: {
     type: DataTypes.INTEGER,
     allowNull: true,

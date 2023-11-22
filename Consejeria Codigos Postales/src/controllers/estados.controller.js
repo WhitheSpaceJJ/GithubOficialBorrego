@@ -49,7 +49,8 @@ const getEstado = async (id) => {
     });
     const municipios = [];
     for (const municipio of estado.municipios) {
-      municipios.push(municipio.nombre_municipio);
+      municipios.push(municipio);
+//      municipios.push(municipio.nombre_municipio);
     }
     const result = {
       id_estado: estado.id_estado,
