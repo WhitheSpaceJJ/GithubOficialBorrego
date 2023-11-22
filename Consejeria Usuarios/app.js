@@ -45,6 +45,7 @@ const jwtMiddleware = async (req, res, next) => {
 
 // Usamos el middleware de rutas de usuarios
 app.use('/usuarios', usuariosRutas);
+//Eliminar
 app.use('/zonas', jwtMiddleware, zonasRutas);
 app.use('/tipos', jwtMiddleware, tipoRutas);
 
