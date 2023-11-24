@@ -12,8 +12,8 @@ async function existeJuez(req, res, next) {
 }
 
 function validateFormatoCrearJson(req, res, next) {
-  const { nombre } = req.body
-  if (!nombre) {
+  const { nombre_juez } = req.body
+  if (!nombre_juez) {
     return res.status(400).json({ message: "El campo nombre es obligatorio" })
   }
   next()
@@ -30,8 +30,8 @@ async function validateActualizarJuez(req, res, next) {
   } catch (error) {
     return res.status(400).json({ message: "El id no es valido" })
   }
-  const { nombre } = req.body
-  if (!nombre) {
+  const { nombre_juez } = req.body
+  if (!nombre_juez) {
     return res.status(400).json({ message: "El campo nombre es obligatorio" })
   }
   next()
