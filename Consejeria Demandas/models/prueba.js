@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+
+
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('prueba', {
     id_prueba: {
       autoIncrement: true,

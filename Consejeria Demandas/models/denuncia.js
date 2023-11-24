@@ -1,6 +1,10 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de denuncia el cual contiene los atributos de una denuncia 
+* y establece las relaciones con los modelos de proceso judicial y juez
+*/
 const denuncia = sequelize.define('denuncia', {
   id_denuncia: {
     autoIncrement: true,

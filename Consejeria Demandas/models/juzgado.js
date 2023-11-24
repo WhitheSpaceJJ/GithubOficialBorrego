@@ -1,6 +1,9 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de juzgado el cual contiene los atributos de un juzgado
+*/
 const juzgado = sequelize.define('juzgado', {
   id_juzgado: {
     autoIncrement: true,

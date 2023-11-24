@@ -1,6 +1,10 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de demanda el cual contiene los atributos de una demanda 
+* y establece las relaciones con el modelo de proceso judicial
+*/
 const demanda = sequelize.define('demanda', {
   id_demanda: {
     autoIncrement: true,

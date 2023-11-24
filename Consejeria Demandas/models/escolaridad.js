@@ -1,6 +1,9 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de escolaridad el cual contiene los atributos de una escolaridad
+*/
 const escolaridad = sequelize.define('escolaridad', {
   id_escolaridad: {
     autoIncrement: true,

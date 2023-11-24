@@ -1,6 +1,10 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de participante el cual contiene los atributos de un participante
+* y establece las relaciones con los modelos de escolaridad, etnia, ocupacion y persona
+*/
 const participante = sequelize.define('participante', {
   id_participante: {
     autoIncrement: true,

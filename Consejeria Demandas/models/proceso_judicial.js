@@ -1,6 +1,10 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de proceso judicial el cual contiene los atributos de un proceso judicial
+* y establece las relaciones con el modelo de juzgado
+*/
 const procesoJudicial = sequelize.define('proceso_judicial', {
   id_proceso_judicial: {
     autoIncrement: true,

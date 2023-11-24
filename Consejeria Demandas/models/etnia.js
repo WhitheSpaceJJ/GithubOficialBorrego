@@ -1,6 +1,10 @@
 const sequelize = require('../config/db')
 const { DataTypes } = require('sequelize')
 
+/*
+* Modelo de etnia el cual contiene los atributos de una etnia
+* y establece las relaciones con el modelo de persona
+*/
 const etnia = sequelize.define('etnia', {
   id_etnia: {
     autoIncrement: true,
