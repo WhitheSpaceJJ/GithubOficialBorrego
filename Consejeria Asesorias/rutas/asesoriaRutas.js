@@ -9,7 +9,11 @@ router.route('/paginacion')
 router.route('/buscar')
   .get(servicioAsesorias.obtenerAsesoriaNombre);
 
-
+  router.route('/total-asesorias')
+  .get(servicioAsesorias.obtenerAsesoriaTotal);
+  
+  router.route('/total-asesorias-filtro').
+  get(servicioAsesorias.obtenerAsesoriaFiltroTotal);
 
   router.route('/filtro')
   .get(servicioAsesorias.obtenerAsesoriaFiltro);

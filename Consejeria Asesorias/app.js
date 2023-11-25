@@ -73,52 +73,52 @@ app.use('/asesorias',
 //jwtMiddleware, 
 asesoriasRutas);
 app.use('/tipos-de-juicio', 
-jwtMiddleware, 
+//jwtMiddleware, 
 tipoDeJuiciosRutas);
 app.use('/asesores',
- jwtMiddleware,
+ //jwtMiddleware,
   asesoresRutas);
 app.use('/generos', 
 //jwtMiddleware,
  generosRutas);
 app.use('/estados-civiles',
- jwtMiddleware, 
+ //jwtMiddleware, 
  estadosCivilesRutas);
 app.use('/motivos',
-jwtMiddleware, 
+//jwtMiddleware, 
  motivosRutas);
 app.use('/zonas',
- jwtMiddleware, 
+ //jwtMiddleware, 
  zonasRutas);
 app.use('/detalle-asesoria',
- jwtMiddleware, 
+ //jwtMiddleware, 
  detalleAsesoriaRutas);
 app.use('/domicilios', 
-jwtMiddleware, 
+//jwtMiddleware, 
 domiciliosRutas);
 app.use('/turnos', 
-jwtMiddleware, 
+//jwtMiddleware, 
 turnoRutas);
 app.use('/personas',
- jwtMiddleware, 
+ //jwtMiddleware, 
  personasRutas);
 app.use('/asesorados', 
-jwtMiddleware, 
+//jwtMiddleware, 
 asesoradoRutas);
 app.use('/catalogo-requisitos', 
-jwtMiddleware, 
+//jwtMiddleware, 
 catalogoRequisitosRutas);
 app.use('/defensores',
- jwtMiddleware,
+ //jwtMiddleware,
   defensorRuta);
 app.use('/distritos-judiciales', 
-jwtMiddleware,
+//jwtMiddleware,
  distritoJudicialRuta);
 app.use('/empleados',
- jwtMiddleware,
+ //jwtMiddleware,
   empleadoRuta);
 app.use('/municipios-distritos', 
-jwtMiddleware,
+//jwtMiddleware,
  municipioDistro);
 
 

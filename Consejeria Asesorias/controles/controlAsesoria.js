@@ -20,27 +20,33 @@ const { Op, literal } = require("sequelize");
  */
 const obtenerAsesoriasFiltro = async (filtros) => {
   try {
- // Verificar si el arreglo de filtros tiene al menos una clave
-const filtroKeys = Object.keys(filtros);
-if (filtroKeys.length === 0) {
-    throw new Error("El arreglo de filtros debe contener al menos una clave.");
-}
-if (filtroKeys.length > 4) {
-    throw new Error("El arreglo de filtros no debe contener más de cuatro claves.");
-}
+    // Verificar si el arreglo de filtros tiene al menos una clave
+    const filtroKeys = Object.keys(filtros);
+    if (filtroKeys.length === 0) {
+      throw new Error("El arreglo de filtros debe contener al menos una clave.");
+    }
+    if (filtroKeys.length > 5) {
+      throw new Error("El arreglo de filtros no debe contener más de cinco claves.");
+    }
 
-// Verificar que las claves sean las esperadas
-const clavesEsperadas = ['fecha_registro', 'id_empleado', 'id_municipio', 'id_zona'];
-const clavesInvalidas = filtroKeys.filter(key => !clavesEsperadas.includes(key));
-if (clavesInvalidas.length > 0) {
-    throw new Error(`Claves inválidas en el arreglo de filtros: ${clavesInvalidas.join(', ')}`);
-}
+    // Verificar que las claves sean las esperadas
+    const clavesEsperadas = ['fecha-inicio', 'fecha-final','id_empleado', 'id_municipio', 'id_zona'];
+    const clavesInvalidas = filtroKeys.filter(key => !clavesEsperadas.includes(key));
+    if (clavesInvalidas.length > 0) {
+      throw new Error(`Claves inválidas en el arreglo de filtros: ${clavesInvalidas.join(', ')}`);
+    }
 
 
     const whereClause = {};
 
-    if (filtros.fecha_registro) {
-      whereClause.fecha_registro = filtros.fecha_registro;
+    //if (filtros.fecha_registro) {
+    //  whereClause.fecha_registro = filtros.fecha_registro;
+    //} else 
+    
+    if (filtros.fecha-inicio && filtros.fecha-final) {
+      whereClause.fecha_registro = {
+        [Op.between]: [filtros.fecha-inicio, filtros.fecha-final],
+      };
     }
 
     if (filtros.id_empleado) {
@@ -710,6 +716,73 @@ const obtenerAsesoriaPorIdAsesorados = async (ids_asesorados) => {
 const Sequelize = require('sequelize');
 
 
+/**
+ * @abstract Función que permite obtener el total de asesorías por filtro
+ * @returns total de asesorías
+ */
+const obtenerTotalAsesorias = async (filtros) => {
+  try {
+    // Verificar si el arreglo de filtros tiene al menos una clave
+    const filtroKeys = Object.keys(filtros);
+    if (filtroKeys.length === 0) {
+      throw new Error("El arreglo de filtros debe contener al menos una clave.");
+    }
+    if (filtroKeys.length > 5) {
+      throw new Error("El arreglo de filtros no debe contener más de cinco claves.");
+    }
+
+    // Verificar que las claves sean las esperadas
+    const clavesEsperadas = ['fecha-inicio', 'fecha-final', 'id_empleado', 'id_municipio', 'id_zona'];
+    const clavesInvalidas = filtroKeys.filter(key => !clavesEsperadas.includes(key));
+    if (clavesInvalidas.length > 0) {
+      throw new Error(`Claves inválidas en el arreglo de filtros: ${clavesInvalidas.join(', ')}`);
+    }
+
+    const whereClause = {};
+
+    if (filtros['fecha-inicio'] && filtros['fecha-final']) {
+      whereClause.fecha_registro = {
+        [Op.between]: [filtros['fecha-inicio'], filtros['fecha-final']],
+      };
+    }
+
+    if (filtros.id_empleado) {
+      whereClause.id_empleado = filtros.id_empleado;
+    }
+    if (filtros.id_municipio) {
+      whereClause['$empleado.distrito_judicial.id_municipio_distrito$'] = filtros.id_municipio;
+    }
+
+    if (filtros.id_zona) {
+      whereClause['$empleado.distrito_judicial.id_zona$'] = filtros.id_zona;
+    }
+
+    const totalAsesorias = await modeloAsesoria.Asesoria.count({
+      where: whereClause,
+    });
+
+    return totalAsesorias;
+  } catch (error) {
+    console.log("Error:", error.message);
+    return null;
+    }
+};
+
+/**
+ *  @abstract Función que permite obtener el total de asesorías en el sistema
+ * @returns total de asesorías
+ */
+const obtenerTotalAsesoriasSistema = async () => {
+  try {
+    const totalAsesorias = await modeloAsesoria.Asesoria.count();
+    return totalAsesorias;
+  } catch (error) {
+    console.log("Error:", error.message);
+    return null;
+  }
+};
+
+
 
 // Export model functions and routes  
 module.exports = {
@@ -722,4 +795,8 @@ module.exports = {
   actualizarAsesoria,
   obtenerAsesoriasFiltro,
   obtenerAsesoriasPorPagina
+  ,
+  obtenerTotalAsesoriasSistema,
+  obtenerTotalAsesorias
+
 };
