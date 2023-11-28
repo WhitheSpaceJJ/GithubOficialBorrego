@@ -71,7 +71,7 @@ const eliminarEmpleado = asyncError(async (req, res, next) => {
  * */
 
 const obtenerEmpleado = asyncError(async (req, res, next) => {
-    const result = await controlEmpleado.obtenerEmpleado(req.params.id);
+    const result = await controlEmpleado.obtenerEmpleadoPorId(req.params.id);
     if (result === null || result === undefined) {
         const error = new CustomeError('No se encontró el empleado', 404);
         return next(error);

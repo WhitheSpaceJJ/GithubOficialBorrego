@@ -98,11 +98,25 @@ const actualizarDefensor = asyncError(async (req, res, next) => {
 }
 );
 
+const obtenerDefensoresZona  = asyncError(async (req, res, next) => {
+    const result = await controlDefensores.obtenerDefensoresZona(req.params.id);
+    if (result === null || result === undefined) {
+        const error = new CustomeError('Error al obtener el defensor', 404);
+        return next(error);
+    } else {
+        res.status(200).json({
+            defensor: result
+        });
+    }
+}
+);
+
 //Module exports
 module.exports = {
     agregarDefensor,
     obtenerDefensores,
     eliminarDefensor,
     obtenerDefensorPorId,
-    actualizarDefensor
+    actualizarDefensor,
+    obtenerDefensoresZona
 };

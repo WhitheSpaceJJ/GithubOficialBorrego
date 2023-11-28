@@ -1,4 +1,5 @@
 const modeloDefensor = require('../modelos/modeloDefensor.js');
+const controlEmpleado= require('./controlEmpleados.js');
 
 /**	
  * @abstract Función que permite obtener todos los defensores
@@ -80,11 +81,21 @@ const actualizarDefensor = async (id, defensor) => {
     }
 };
 
+const obtenerDefensoresZona = async (id) => {
+    try {
+        return await controlEmpleado.obtenerEmpleadosDefensoresPorZona(id);
+    } catch (error) {
+        console.log("Error:", error.message);
+        return null;
+    }
+};
+
 // Exportar los módulos
 module.exports = {
     obtenerDefensores,
     obtenerDefensorPorId,
     agregarDefensor,
     eliminarDefensor,
-    actualizarDefensor
+    actualizarDefensor,
+    obtenerDefensoresZona
 };

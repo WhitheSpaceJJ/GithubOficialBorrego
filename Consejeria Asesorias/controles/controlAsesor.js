@@ -1,5 +1,5 @@
 const modeloAsesor = require('../modelos/modeloAsesor');
-
+const controlEmpleado= require('./controlEmpleados.js');
 
 /** 
  * @abstract Función que permite obtener todos los asesores
@@ -80,6 +80,14 @@ const actualizarAsesor = async (asesor) => {
   }
 };
 
+const obtenerAsesoresZona = async (id) => {
+  try {
+    return await controlEmpleado.obtenerEmpleadosAsesoresPorZona(id);
+  } catch (error) {
+    console.log("Error:", error.message);
+    return null;
+  } 
+}
 
   //  Exportar los módulos    
 module.exports = {
@@ -87,5 +95,5 @@ module.exports = {
   obtenerAsesorPorId,
   agregarAsesor,
   eliminarAsesor,
-  actualizarAsesor,
+  actualizarAsesor,obtenerAsesoresZona
 };

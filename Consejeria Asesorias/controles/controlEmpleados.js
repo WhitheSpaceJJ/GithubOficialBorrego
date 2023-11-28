@@ -12,14 +12,14 @@ const obtenerEmpleados = async () => {
             nest: true,
             attributes: {
                 exclude: ["id_distrito_judicial"]
-              },
-              include: [{
+            },
+            include: [{
                 model: modeloEmpleado.DistritoJudicial
-              }
-               
-              ]
+            }
+
+            ]
         });
-       
+
 
     } catch (error) {
         console.log("Error:", error.message);
@@ -35,14 +35,21 @@ const obtenerEmpleados = async () => {
 const obtenerEmpleadoPorId = async (id) => {
     try {
         return await modeloEmpleado.Empleado.findByPk(id, {
-            raw: true,
+            raw: false,
             nest: true,
+            attributes: {
+                exclude: ["id_distrito_judicial"]
+            },
+            include: [{
+                model: modeloEmpleado.DistritoJudicial
+            }
+            ]
         });
     } catch (error) {
         console.log("Error:", error.message);
         return null;
     }
-} ;
+};
 
 /**
  * @abstract Función que permite agregar un empleado
@@ -73,6 +80,8 @@ const eliminarEmpleado = async (id) => {
     }
 };
 
+
+
 /**
  * @abstract Función que permite actualizar un empleado
  * @param {*} id id del empleado a actualizar
@@ -89,10 +98,50 @@ const actualizarEmpleado = async (id, empleado) => {
     }
 };
 
+const obtenerEmpleadosAsesoresPorZona = async (id) => {
+    try {
+        return await modeloEmpleado.Empleado.findAll({
+            raw: false,
+            nest: true,
+            attributes: {
+                exclude: ["id_distrito_judicial"]
+            },
+            include: [{
+                model: modeloEmpleado.DistritoJudicial,
+                where: { id_zona: id }
+            }
+            ], where: { tipo_empleado: "asesor" }
+        });
+    } catch (error) {
+        console.log("Error:", error.message);
+        return null;
+    }
+}
+const obtenerEmpleadosDefensoresPorZona = async (id) => {
+    try {
+        return await modeloEmpleado.Empleado.findAll({
+            raw: false,
+            nest: true,
+            attributes: {
+                exclude: ["id_distrito_judicial"]
+            },
+            include: [{
+                model: modeloEmpleado.DistritoJudicial,
+                where: { id_zona: id }
+            }
+            ], where: { tipo_empleado: "defensor" }
+        });
+    } catch (error) {
+        console.log("Error:", error.message);
+        return null;
+    }
+}
 module.exports = {
     obtenerEmpleados,
     obtenerEmpleadoPorId,
     agregarEmpleado,
     eliminarEmpleado,
-    actualizarEmpleado
+    actualizarEmpleado,
+    obtenerEmpleadosAsesoresPorZona,obtenerEmpleadosDefensoresPorZona
+
 };
