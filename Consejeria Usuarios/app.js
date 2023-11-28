@@ -6,7 +6,7 @@ const port = 3002;
 const usuariosRutas = require("./rutas/usuarioRutas");
 const CustomeError = require("./utilidades/customeError");
 const errorController = require("./utilidades/errrorController")
-const zonasRutas = require("./rutas/zonaRutas");
+//const zonasRutas = require("./rutas/zonaRutas");
 const tipoRutas = require("./rutas/tipoUsuarioRutas");
 
 const jwtController = require("./utilidades/jwtController");
@@ -46,7 +46,7 @@ const jwtMiddleware = async (req, res, next) => {
 // Usamos el middleware de rutas de usuarios
 app.use('/usuarios', usuariosRutas);
 //Eliminar
-app.use('/zonas', jwtMiddleware, zonasRutas);
+//app.use('/zonas', jwtMiddleware, zonasRutas);
 app.use('/tipos', jwtMiddleware, tipoRutas);
 
 // Si ninguna ruta coincide, creamos un error personalizado y lo pasamos al siguiente middleware

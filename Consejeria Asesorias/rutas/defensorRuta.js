@@ -12,6 +12,7 @@ router.route('/')
     // Agregar un nuevo defensor
     .post(servicioDefensor.agregarDefensor);    
 
+    router.route('/zona/:id').get(servicioDefensor.obtenerDefensoresZona);
 
 router.route('/:id')
     // Obtener un defensor por su ID

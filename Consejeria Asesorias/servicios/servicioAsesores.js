@@ -103,11 +103,25 @@ const obtenerAsesorPorId = asyncError(async (req, res, next) => {
   }
 });
 
+const obtenerAsesoresZona = asyncError(async (req, res, next) => {
+  const result = await controlAsesores.obtenerAsesoresZona(req.params.id);
+  if (result === null || result === undefined) {
+    const error = new CustomeError('Error al obtener el asesor', 404);
+    return next(error);
+  } else {
+ 
+    res.status(200).json({
+        asesores: result
+    });
+  }
+}
+);
 //Module exports  
 module.exports = {
   agregarAsesor,
   obtenerAsesores,
   eliminarAsesor,
   actualizarAsesor,
-  obtenerAsesorPorId
+  obtenerAsesorPorId,
+  obtenerAsesoresZona
 };

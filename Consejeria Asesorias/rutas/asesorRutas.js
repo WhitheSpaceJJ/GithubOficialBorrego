@@ -15,6 +15,8 @@ router.route('/')
   // Agregar un nuevo asesor
   .post(servicioAsesor.agregarAsesor);
 
+  router.route('/zona/:id')
+  .get(servicioAsesor.obtenerAsesoresZona);
 router.route('/:id')
   // Obtener un asesor por su ID
   .get(servicioAsesor.obtenerAsesorPorId)

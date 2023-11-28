@@ -3,8 +3,8 @@
     "database": {
       "host": "localhost",
       "port": 3306,
-      "username": "root",
-      "password": "1234",
+      "username": "consejeria",
+      "password": "B0rr3g0!750n",
       "databaseName": "consejeria_asesorias"
     }
   }

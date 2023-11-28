@@ -2,34 +2,6 @@ const sequelize = require("./conexion");
 
 const { DataTypes } = require("sequelize");
 
-/**
- * Modelo de la tabla zona 
- *  @property {string} id_zona - id de la zona
- * @property {string} zona - nombre de la zona
- * */
- const Zona = sequelize.define("zonas", {
-  id_zona: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  zona: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [0, 45]
-    }
-  }
-}, {
-  freezeTableName: true, 
-  timestamps: false 
-  ,
-  name: {
-    singular: 'zona',
-    plural: 'zonas'
-}
-});
 
 /**
  * Modelo de la tabla tipo de usuario 
@@ -116,11 +88,7 @@ const Usuario = sequelize.define("usuarios", {
     type: DataTypes.INTEGER,
     allowNull: false
   }
-  ,
-  id_zona: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
+  
 }, {
   freezeTableName: true, 
   timestamps: false 
@@ -135,6 +103,5 @@ const Usuario = sequelize.define("usuarios", {
 module.exports = {
   TipoUser
   ,
-  Zona,
 Usuario
 };
