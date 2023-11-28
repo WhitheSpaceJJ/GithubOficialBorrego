@@ -6,7 +6,7 @@ const port = 3002;
 const usuariosRutas = require("./rutas/usuarioRutas");
 const CustomeError = require("./utilidades/customeError");
 const errorController = require("./utilidades/errrorController")
-const zonasRutas = require("./rutas/zonaRutas");
+//const zonasRutas = require("./rutas/zonaRutas");
 const tipoRutas = require("./rutas/tipoUsuarioRutas");
 
 const jwtController = require("./utilidades/jwtController");
