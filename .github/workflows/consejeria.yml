@@ -13,7 +13,6 @@ jobs:
       matrix:
         folder:
           - 'Consejeria Asesorias'
-          - 'Consejeria Codigos Postales'
           - 'Consejeria Asesorias'
           - 'Consejeria Usuarios'
 
