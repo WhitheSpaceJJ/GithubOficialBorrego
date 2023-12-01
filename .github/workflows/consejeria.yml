@@ -28,15 +28,18 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        cd ${{ matrix.folder }}
+        cd "${{ matrix.folder }}"
         npm install
 
     - name: Build
       run: |
-        cd ${{ matrix.folder }}
+        cd "${{ matrix.folder }}"
         npm run build
 
     - name: Deploy
       run: |
-        cd ${{ matrix.folder }}
+        cd "${{ matrix.folder }}"
         npm run deploy
+        
+
+
