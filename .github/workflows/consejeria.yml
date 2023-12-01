@@ -1,34 +1,50 @@
-
-name: Test Continue Integration and Publish to GitHub Packages
+name: Node.js CI/CD
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
 
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    strategy:
+      matrix:
+        folder:
+          - 'ConsejeriaAsesorias'
+          - 'Consejeria Codigos Postales'
+          - 'Consejeria Asesorias'
+          - 'Consejeria Usuarios'
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 17
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: |
+        cd ${{ matrix.folder }}
+        npm install
+
+    - name: Build
+      run: |
+        cd ${{ matrix.folder }}
+        npm run build
+
+    - name: Deploy
+      run: |
+        cd ${{ matrix.folder }}
+        npm run deploy
+
+    - name: Update Jira
+      run: |
+        # Puedes realizar acciones relacionadas con Jira aquí
+        # Ejemplo: Actualizar el estado de un problema en Jira
+        echo "Updating Jira..."
+
+  # Agregar más trabajos si es necesario para otras acciones o etapas
