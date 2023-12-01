@@ -24,23 +24,10 @@ jobs:
     - name: Set Up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '17'
 
     - name: Install Dependencies
       run: |
         cd "${{ matrix.folder }}"
         npm install
-
-    - name: Deploy
-      run: |
-        cd "${{ matrix.folder }}"
-        # Revisa si el archivo es app.js o index.js y ejecuta el script correspondiente
-        if [ -f "app.js" ]; then
-          npm run deploy
-        elif [ -f "index.js" ]; then
-          npm run deploy -- --file=index.js
-        else
-          echo "No se encontró app.js ni index.js en la carpeta ${{ matrix.folder }}"
-          exit 1
-        fi
 
