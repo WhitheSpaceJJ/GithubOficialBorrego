@@ -1,4 +1,4 @@
-name: Node.js CI/CD
+name: Consejeria Continue Integration
 
 on:
   push:
@@ -13,7 +13,8 @@ jobs:
       matrix:
         folder:
           - 'Consejeria Asesorias'
-          - 'Consejeria Asesorias'
+          - 'Consejeria Codigos Postales'
+          - 'Consejeria Demandas'
           - 'Consejeria Usuarios'
 
     steps:
@@ -32,13 +33,32 @@ jobs:
 
     - name: Build
       run: |
-        cd ${{ matrix.folder }}
-        npm run build
+        cd "${{ matrix.folder }}"
+        # Revisa si el archivo es app.js o index.js y ejecuta el script correspondiente
+        if [ -f "app.js" ]; then
+          npm run build
+        elif [ -f "index.js" ]; then
+          npm run build -- --file=index.js
+        else
+          echo "No se encontró app.js ni index.js en la carpeta ${{ matrix.folder }}"
+          exit 1
+        fi
 
     - name: Deploy
       run: |
-        cd ${{ matrix.folder }}
-        npm run deploy
-        
+        cd "${{ matrix.folder }}"
+        # Revisa si el archivo es app.js o index.js y ejecuta el script correspondiente
+        if [ -f "app.js" ]; then
+          npm run deploy
+        elif [ -f "index.js" ]; then
+          npm run deploy -- --file=index.js
+        else
+          echo "No se encontró app.js ni index.js en la carpeta ${{ matrix.folder }}"
+          exit 1
+        fi
 
-
+    - name: Update Jira
+      run: |
+        # Puedes realizar acciones relacionadas con Jira aquí
+        # Ejemplo: Actualizar el estado de un problema en Jira
+        echo "Updating Jira..."
