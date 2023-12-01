@@ -40,11 +40,3 @@ jobs:
       run: |
         cd ${{ matrix.folder }}
         npm run deploy
-
-    - name: Update Jira
-      run: |
-        # Puedes realizar acciones relacionadas con Jira aquí
-        # Ejemplo: Actualizar el estado de un problema en Jira
-        echo "Updating Jira..."
-
-  # Agregar más trabajos si es necesario para otras acciones o etapas
