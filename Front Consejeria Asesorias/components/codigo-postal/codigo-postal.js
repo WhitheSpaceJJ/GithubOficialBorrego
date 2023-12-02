@@ -63,7 +63,9 @@ export class CodigoPostal extends HTMLElement {
 
   async searchCP() {
     try {
-      const { data } = await this.#API.getDomicilioByCP(this.#cp.value)
+      const { colonias: data } = await this.#API.getDomicilioByCP(
+        this.#cp.value
+      )
       if (!data || typeof data === 'string') {
         this.#showModal('No se encontró el código postal', 'Advertencia')
         return
