@@ -12,9 +12,11 @@ template.innerHTML = html
 export class AsesoriaTab extends HTMLElement {
   #api
   #asesores
+  #defensores
   #tiposJuicio
 
   #asesor
+  #defensor
   #tipoJuicio
   #resumen
   #conclusion
@@ -22,6 +24,8 @@ export class AsesoriaTab extends HTMLElement {
   #recibidoValue
   #requisitos
   #requisitosValue
+  #tipoEmpleado
+  #tipoEmpleadoValue
 
   static get observedAttributes() {
     return ['id', 'data']
@@ -44,6 +48,9 @@ export class AsesoriaTab extends HTMLElement {
     const { asesores } = await this.#api.getAsesores()
     this.#asesores = asesores
 
+    const { defensores } = await this.#api.getDefensores()
+    this.#defensores = defensores
+
     const { tiposDeJuicio } = await this.#api.getTiposJuicio()
     this.#tiposJuicio = tiposDeJuicio
 
@@ -53,6 +60,7 @@ export class AsesoriaTab extends HTMLElement {
 
   manageFormFields() {
     this.#asesor = this.shadowRoot.getElementById('asesor')
+    this.#defensor = this.shadowRoot.getElementById('defensor')
     this.#tipoJuicio = this.shadowRoot.getElementById('tipo-juicio')
     this.#resumen = this.shadowRoot.getElementById('resumen')
     this.#conclusion = this.shadowRoot.getElementById('conclusion')
@@ -62,6 +70,9 @@ export class AsesoriaTab extends HTMLElement {
     this.#requisitos = this.shadowRoot.querySelectorAll(
       'input[type="radio"][name="rb-requisitos"]'
     )
+    this.#tipoEmpleado = this.shadowRoot.querySelectorAll(
+      'input[type="radio"][name="rb-empleado"]'
+    )
   }
 
   fillInputs() {
@@ -70,6 +81,13 @@ export class AsesoriaTab extends HTMLElement {
       option.value = asesor.id_asesor
       option.textContent = asesor.nombre_asesor
       this.#asesor.appendChild(option)
+    })
+
+    this.#defensores.forEach(defensor => {
+      const option = document.createElement('option')
+      option.value = defensor.id_defensor
+      option.textContent = defensor.nombre_defensor
+      this.#defensor.appendChild(option)
     })
 
     this.#tiposJuicio.forEach(tipoJuicio => {
@@ -97,13 +115,16 @@ export class AsesoriaTab extends HTMLElement {
     this.#requisitosValue = radioSeleccionado
       ? radioSeleccionado.value
       : undefined
+
+    this.#tipoEmpleadoValue = Array.from(this.#tipoEmpleado).find(
+      radio => radio.checked
+    )?.value
   }
 
   validateInputs() {
     this.getValues()
 
     const inputs = [
-      this.#asesor.value,
       this.#tipoJuicio.value,
       this.#resumen.value,
       this.#conclusion.value,
@@ -115,6 +136,14 @@ export class AsesoriaTab extends HTMLElement {
       if (!validateNonEmptyFields(inputs)) {
         throw new ValidationError(
           'Campos obligatorios en blanco, por favor revise.'
+        )
+      }
+      if (
+        (this.#tipoEmpleadoValue === 'asesor' && !this.#asesor.value) ||
+        (this.#tipoEmpleadoValue === 'defensor' && !this.#defensor.value)
+      ) {
+        throw new ValidationError(
+          'Campos obligatorios en blanco, por favor revise.aaaaaaaaaa'
         )
       }
 
@@ -136,6 +165,26 @@ export class AsesoriaTab extends HTMLElement {
 
   connectedCallback() {
     this.btnNext = this.shadowRoot.getElementById('btn-asesoria-next')
+    const radioButtons = this.shadowRoot.querySelectorAll(
+      'input[name="rb-empleado"]'
+    )
+    const asesorContainer = this.shadowRoot.getElementById('select-asesor')
+    const defensorContainer = this.shadowRoot.getElementById('select-defensor')
+
+    radioButtons.forEach(radioButton => {
+      radioButton.addEventListener('change', event => {
+        if (event.target.value === 'asesor') {
+          asesorContainer.classList.remove('hidden')
+          asesorContainer.classList.add('flex')
+          defensorContainer.classList.add('hidden')
+        } else {
+          asesorContainer.classList.add('hidden')
+          asesorContainer.classList.remove('flex')
+          defensorContainer.classList.remove('hidden')
+          defensorContainer.classList.add('flex')
+        }
+      })
+    })
 
     this.btnNext.addEventListener('click', () => {
       if (!this.validateInputs()) return
@@ -185,16 +234,24 @@ export class AsesoriaTab extends HTMLElement {
       tipo_juicio:
         this.#tipoJuicio.options[this.#tipoJuicio.selectedIndex].text,
     }
-    const asesor = {
-      id_asesor: Number(this.#asesor.value),
-      nombre_asesor: this.#asesor.options[this.#asesor.selectedIndex].text,
+    const idEmpleado =
+      this.#tipoEmpleadoValue === 'asesor'
+        ? this.#asesor.value
+        : this.#defensor.value
+    const nombreEmpleado =
+      this.#tipoEmpleadoValue === 'asesor'
+        ? this.#asesor.options[this.#asesor.selectedIndex].text
+        : this.#defensor.options[this.#defensor.selectedIndex].text
+    const empleado = {
+      id_empleado: Number(idEmpleado),
+      nombre_asesor: nombreEmpleado,
     }
 
     return {
       datos_asesoria,
       recibidos,
       tipos_juicio,
-      asesor,
+      empleado,
     }
   }
 

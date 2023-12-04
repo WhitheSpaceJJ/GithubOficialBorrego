@@ -5,8 +5,38 @@
   aria-labelledby="asesorado-tab"
   class="flex flex-col gap-6"
 >
+  <div class="flex flex-col gap-3">
+    <label class="font-medium text-black text-md"
+      >Seleccione el tipo de empleado:</label
+    >
+    <div class="flex items-center">
+      <input
+        id="asesor-option"
+        type="radio"
+        value="asesor"
+        name="rb-empleado"
+        checked
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
+      />
+      <label for="asesor-option" class="ml-2 text-sm font-medium text-black"
+        >Asesor</label
+      >
+    </div>
+    <div class="flex items-center">
+      <input
+        id="defensor-option"
+        type="radio"
+        value="defensor"
+        name="rb-empleado"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
+      />
+      <label for="defensor-option" class="ml-2 text-sm font-medium text-black"
+        >Defensor</label
+      >
+    </div>
+  </div>
   <div class="grid md:grid-cols-2 md:gap-6">
-    <div class="relative z-0 w-full mt-5 group">
+    <div class="relative z-0 w-full mt-3 group" id="select-asesor">
       <label
         for="asesor"
         class="font-medium absolute text-md text-black duration-300 transform -translate-y-6 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6"
@@ -20,7 +50,22 @@
         <option selected disabled value="">Selecciona un asesor</option>
       </select>
     </div>
-    <div class="relative z-0 w-full mt-5 group">
+    <div class="relative z-0 hidden w-full mt-3 group" id="select-defensor">
+      <label
+        for="defensor"
+        class="font-medium absolute text-md text-black duration-300 transform -translate-y-6 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6"
+        >Nombre del defensor</label
+      >
+      <select
+        id="defensor"
+        name="defensor"
+        class="block w-full p-1 px-2.5 mt-4 text-black border border-gray-300 rounded-lg bg-gray-50 text-md focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option selected disabled value="">Selecciona un defensor</option>
+      </select>
+    </div>
+
+    <div class="relative z-0 w-full mt-3 group">
       <label
         for="tipo-juicio"
         class="font-medium absolute text-md text-black duration-300 transform -translate-y-6 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6"

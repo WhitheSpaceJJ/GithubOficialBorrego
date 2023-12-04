@@ -151,6 +151,24 @@ class APIModel {
     }
   }
 
+  async getDefensores() {
+    const url = `${this.ASESORIAS_API_URL}/defensores`
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
   async getGeneros() {
     const url = `${this.ASESORIAS_API_URL}/generos`
 
