@@ -1,9 +1,13 @@
 const juzgadoDAO = require('../data-access/juzgadoDAO')
 
+/**
+ * @abstract Método que permite obtener todos los juzgados
+ * @returns {array} Retorna un arreglo de objetos de juzgados si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerJuzgados = async (_, res) => {
   try {
     const juzgados = await juzgadoDAO.obtenerJuzgados()
-    if(juzgados.length === 0){
+    if (juzgados.length === 0) {
       return res.status(204).json(juzgados)
     }
     res.json(juzgados)
@@ -14,6 +18,11 @@ const obtenerJuzgados = async (_, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener un juzgado por su id
+ * @param {number} id - ID del juzgado a obtener
+ * @returns {object} Retorna el objeto del juzgado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerJuzgado = async (req, res) => {
   try {
     const { id } = req.params
@@ -26,6 +35,11 @@ const obtenerJuzgado = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite crear un juzgado
+ * @param {object} juzgado - Objeto que contiene los datos del juzgado
+ * @returns {object} Retorna el objeto del juzgado creado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearJuzgado = async (req, res) => {
   try {
     const { nombre_juzgado } = req.body
@@ -38,6 +52,11 @@ const crearJuzgado = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar un juzgado
+ * @param {object} juzgado - Objeto que contiene los datos del juzgado
+ * @returns {object} Retorna el objeto del juzgado actualizado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarJuzgado = async (req, res) => {
   try {
     const { id } = req.params
@@ -54,6 +73,11 @@ const actualizarJuzgado = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite eliminar un juzgado
+ * @param {number} id - ID del juzgado a eliminar
+ * @returns {object} Retorna el objeto del juzgado eliminado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarJuzgado = async (req, res) => {
   try {
     const { id } = req.params

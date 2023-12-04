@@ -1,9 +1,13 @@
 const escolaridadDAO = require('../data-access/escolaridadDAO')
 
+/**
+ * @abstract Método que permite obtener todas las escolaridades
+ * @returns {array} Retorna un arreglo de objetos de escolaridades si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerEscolaridades = async (_, res) => {
   try {
     const escolaridades = await escolaridadDAO.obtenerEscolaridades()
-    if(escolaridades.length === 0){
+    if (escolaridades.length === 0) {
       return res.status(204).json(escolaridades);
     }
     res.json(escolaridades)
@@ -14,6 +18,11 @@ const obtenerEscolaridades = async (_, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener una escolaridad por su id
+ * @param {number} id - ID de la escolaridad a obtener
+ * @returns {object} Retorna el objeto de la escolaridad si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerEscolaridad = async (req, res) => {
   try {
     const { id } = req.params
@@ -26,6 +35,11 @@ const obtenerEscolaridad = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite crear una escolaridad
+ * @param {object} escolaridad - Objeto que contiene los datos de la escolaridad
+ * @returns {object} Retorna el objeto de la escolaridad creada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearEscolaridad = async (req, res) => {
   try {
     const { descripcion } = req.body
@@ -40,6 +54,11 @@ const crearEscolaridad = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar una escolaridad
+ * @param {object} escolaridad - Objeto que contiene los datos de la escolaridad
+ * @returns {object} Retorna el objeto de la escolaridad actualizada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarEscolaridad = async (req, res) => {
   try {
     const { id } = req.params
@@ -54,6 +73,11 @@ const actualizarEscolaridad = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite eliminar una escolaridad
+ * @param {number} id - ID de la escolaridad a eliminar
+ * @returns {object} Retorna el objeto de la escolaridad eliminada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarEscolaridad = async (req, res) => {
   try {
     const { id } = req.params

@@ -1,9 +1,13 @@
 const ocupacionDAO = require('../data-access/ocupacionDAO')
 
+/**
+ * @abstract Método que permite obtener todas las ocupaciones
+ * @returns {array} Retorna un arreglo de objetos de ocupaciones si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerOcupaciones = async (req, res) => {
   try {
     const ocupaciones = await ocupacionDAO.obtenerOcupaciones()
-    if(ocupaciones.length === 0){
+    if (ocupaciones.length === 0) {
       return res.status(204).json(ocupaciones)
     }
     res.json(ocupaciones)
@@ -14,6 +18,11 @@ const obtenerOcupaciones = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener una ocupación por su id
+ * @param {number} id - ID de la ocupación a obtener
+ * @returns {object} Retorna el objeto de la ocupación si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerOcupacion = async (req, res) => {
   try {
     const { id } = req.params
@@ -26,6 +35,11 @@ const obtenerOcupacion = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite crear una ocupación
+ * @param {object} ocupacion - Objeto que contiene los datos de la ocupación
+ * @returns {object} Retorna el objeto de la ocupación creada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearOcupacion = async (req, res) => {
   try {
     const { descripcion_ocupacion } = req.body
@@ -40,6 +54,11 @@ const crearOcupacion = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar una ocupación
+ * @param {object} ocupacion - Objeto que contiene los datos de la ocupación
+ * @returns {object} Retorna el objeto de la ocupación actualizada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarOcupacion = async (req, res) => {
   try {
     const { id } = req.params
@@ -56,6 +75,11 @@ const actualizarOcupacion = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite eliminar una ocupación
+ * @param {number} id - ID de la ocupación a eliminar
+ * @returns {object} Retorna el objeto de la ocupación eliminada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarOcupacion = async (req, res) => {
   try {
     const { id } = req.params

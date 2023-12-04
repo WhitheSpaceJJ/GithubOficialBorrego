@@ -1,5 +1,10 @@
 const procesoJudicialDAO = require('../data-access/proceso_judicialDAO')
 
+/**
+ * @abstract Método que permite crear un proceso judicial
+ * @param {object} procesoJudicial - Objeto que contiene los datos del proceso judicial
+ * @returns {object} Retorna el objeto del proceso judicial creado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearProcesoJudicial = async (req, res) => {
   try {
     const { fecha_inicio, fecha_proceso, fecha_conclusion, area_seguimiento, numero_expediente, id_juzgado } = req.body
@@ -19,6 +24,10 @@ const crearProcesoJudicial = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener todos los procesos judiciales
+ * @returns {array} Retorna un arreglo de objetos de procesos judiciales si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerProcesosJudiciales = async (req, res) => {
   try {
     const procesosJudiciales = await procesoJudicialDAO.obtenerProcesosJudiciales()
@@ -33,6 +42,11 @@ const obtenerProcesosJudiciales = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener un proceso judicial por su id
+ * @param {number} id - ID del proceso judicial a obtener
+ * @returns {object} Retorna el objeto del proceso judicial si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerProcesoJudicial = async (req, res) => {
   try {
     const { id } = req.params
@@ -45,6 +59,11 @@ const obtenerProcesoJudicial = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar un proceso judicial
+ * @param {object} procesoJudicial - Objeto que contiene los datos del proceso judicial
+ * @returns {object} Retorna el objeto del proceso judicial actualizado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarProcesoJudicial = async (req, res) => {
   try {
     const { id } = req.params
@@ -59,6 +78,11 @@ const actualizarProcesoJudicial = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite eliminar un proceso judicial
+ * @param {number} id - ID del proceso judicial a eliminar
+ * @returns {object} Retorna el objeto del proceso judicial eliminado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarProcesoJudicial = async (req, res) => {
   try {
     const { id } = req.params

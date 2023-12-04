@@ -1,9 +1,13 @@
 const juezDAO = require('../data-access/juezDAO')
 
+/**
+ * @abstract Método que permite obtener todos los jueces
+ * @returns {array} Retorna un arreglo de objetos de jueces si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerJueces = async (_, res) => {
   try {
     const jueces = await juezDAO.obtenerJueces()
-    if(jueces.length === 0){
+    if (jueces.length === 0) {
       return res.status(204).json(jueces)
     }
     res.json(jueces)
@@ -14,6 +18,11 @@ const obtenerJueces = async (_, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener un juez por su id
+ * @param {number} id - ID del juez a obtener
+ * @returns {object} Retorna el objeto del juez si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerJuez = async (req, res) => {
   try {
     const { id } = req.params
@@ -26,6 +35,11 @@ const obtenerJuez = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite crear un juez
+ * @param {object} juez - Objeto que contiene los datos del juez
+ * @returns {object} Retorna el objeto del juez creado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearJuez = async (req, res) => {
   try {
     const { nombre_juez } = req.body
@@ -38,6 +52,11 @@ const crearJuez = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar un juez
+ * @param {object} juez - Objeto que contiene los datos del juez
+ * @returns {object} Retorna el objeto del juez actualizado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarJuez = async (req, res) => {
   try {
     const { id } = req.params
@@ -54,6 +73,11 @@ const actualizarJuez = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite eliminar un juez
+ * @param {number} id - ID del juez a eliminar
+ * @returns {object} Retorna el objeto del juez eliminado si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarJuez = async (req, res) => {
   try {
     const { id } = req.params

@@ -1,5 +1,9 @@
 const demandaDAO = require('../data-access/demandaDAO')
 
+/**
+ * @abstract Método que permite obtener todas las demandas
+ * @returns {array} Retorna un arreglo de objetos de demandas si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerDemandas = async (_, res) => {
   try {
     const demandas = await demandaDAO.obtenerDemandas()
@@ -14,6 +18,11 @@ const obtenerDemandas = async (_, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite obtener una demanda por su id
+ * @param {number} id - ID de la demanda a obtener
+ * @returns {object} Retorna el objeto de la demanda si la operación fue exitosa, de lo contrario lanza un error
+ */
 const obtenerDemanda = async (req, res) => {
   try {
     const { id } = req.params
@@ -26,6 +35,11 @@ const obtenerDemanda = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite crear una demanda
+ * @param {object} demanda - Objeto que contiene los datos de la demanda
+ * @returns {object} Retorna el objeto de la demanda creada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const crearDemanda = async (req, res) => {
   try {
     const { id_proceso_judicial, tipo_demanda, descripcion_demanda, fecha_demanda } = req.body
@@ -40,6 +54,11 @@ const crearDemanda = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar una demanda
+ * @param {object} demanda - Objeto que contiene los datos de la demanda
+ * @returns {object} Retorna el objeto de la demanda actualizada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const actualizarDemanda = async (req, res) => {
   try {
     const { id } = req.params
@@ -54,6 +73,11 @@ const actualizarDemanda = async (req, res) => {
   }
 }
 
+/**
+ * @abstract Método que permite actualizar una demanda
+ * @param {Number} id - id de al demada a eliminar
+ * @returns {object} Retorna el objeto de la demanda eliminada si la operación fue exitosa, de lo contrario lanza un error
+ */
 const eliminarDemanda = async (req, res) => {
   try {
     const { id } = req.params
