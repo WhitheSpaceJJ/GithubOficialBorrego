@@ -1,28 +1,38 @@
-const { Router } = require('express');
+// Importamos el módulo de enrutamiento de Express
+const { Router } = require('express')
 
+// Importamos los controladores de los promoventes
 const {
   crearPromovente,
   obtenerPromoventes,
   obtenerPromovente,
   actualizarPromovente,
   eliminarPromovente
-} = require('../controllers/promovente');
+} = require('../controllers/promovente')
 
+// Importamos los middlewares de los promoventes
 const {
   existePromovente,
   existeParticipante
-} = require('../middlewares/promovente');
+} = require('../middlewares/promovente')
 
-const router = Router();
+// Creamos una nueva instancia de Router
+const router = Router()
 
-router.post('/', [existeParticipante], crearPromovente);
+// Definimos la ruta para crear un nuevo promovente
+router.post('/', [existeParticipante], crearPromovente)
 
-router.get('/', obtenerPromoventes);
+// Definimos la ruta para obtener todos los promoventes
+router.get('/', obtenerPromoventes)
 
-router.get('/:id', [existePromovente], obtenerPromovente);
+// Definimos la ruta para obtener un promovente por su id
+router.get('/:id', [existePromovente], obtenerPromovente)
 
-router.put('/:id', [existePromovente], actualizarPromovente);
+// Definimos la ruta para actualizar un promovente por su id
+router.put('/:id', [existePromovente], actualizarPromovente)
 
-router.delete('/:id', [existePromovente], eliminarPromovente);
+// Definimos la ruta para eliminar un promovente por su id
+router.delete('/:id', [existePromovente], eliminarPromovente)
 
-module.exports = router;
+// Exportamos el router
+module.exports = router

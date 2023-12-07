@@ -1,3 +1,4 @@
+// Importamos los routers de cada entidad
 const routerDemanda = require('./demanda')
 const routerDenuncia = require('./denuncia')
 const routerEscolaridad = require('./escolaridad')
@@ -11,6 +12,7 @@ const routerParticipante = require('./participante')
 const routerProcesoJudicial = require('./proceso_judicial')
 const routerPromovente = require('./promovente')
 
+// Exportamos los routers para que puedan ser utilizados en otras partes de la aplicación
 module.exports = {
   routerDemanda,
   routerDenuncia,
