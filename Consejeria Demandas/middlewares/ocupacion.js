@@ -1,6 +1,11 @@
 const ocupacionDAO = require('../data-access/ocupacionDAO')
 
-async function existeOcupacion (req, res, next) {
+/**
+ * @abstract Middleware que verifica si existe una ocupacion con el id proporcionado
+ * @param {number} id - ID de la ocupacion a verificar
+ * @returns {object} Retorna un mensaje de error si la ocupacion no existe, de lo contrario pasa al siguiente middleware
+ */
+async function existeOcupacion(req, res, next) {
   const { id } = req.params
   const ocupacion = await ocupacionDAO.obtenerOcupacion(id)
   if (!ocupacion) {
@@ -11,7 +16,12 @@ async function existeOcupacion (req, res, next) {
   next()
 }
 
-function validateFormatoCrearJson(req, res, next) {
+/**
+ * @abstract Middleware que verifica si existe una ocupacion con el id proporcionado
+ * @param {number} id - ID de la ocupacion a verificar
+ * @returns {object} Retorna un mensaje de error si la ocupacion no existe, de lo contrario pasa al siguiente middleware
+ */
+async function validateFormatoCrearJson(req, res, next) {
   const { descripcion_ocupacion } = req.body
   if (!descripcion_ocupacion) {
     return res.status(400).json({ message: "El campo descripcion ocupacion es obligatorio" })
@@ -19,6 +29,11 @@ function validateFormatoCrearJson(req, res, next) {
   next()
 }
 
+/**
+ * @abstract Middleware que verifica si existe una ocupacion con el id proporcionado
+ * @param {number} id - ID de la ocupacion a verificar
+ * @returns {object} Retorna un mensaje de error si la ocupacion no existe, de lo contrario pasa al siguiente middleware
+ */
 async function validateActualizarOcupacion(req, res, next) {
   try {
     const ocupacion = await ocupacionDAO.obtenerOcupacion(req.params.id);
@@ -38,7 +53,7 @@ async function validateActualizarOcupacion(req, res, next) {
 }
 
 module.exports = {
-    existeOcupacion,
-    validateFormatoCrearJson,
-    validateActualizarOcupacion
+  existeOcupacion,
+  validateFormatoCrearJson,
+  validateActualizarOcupacion
 }

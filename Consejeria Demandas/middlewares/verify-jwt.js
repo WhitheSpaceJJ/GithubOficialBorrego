@@ -1,6 +1,13 @@
 const grpc = require('@grpc/grpc-js')
 const { packageDefinition } = require('../grpc/route.sever')
 
+/**
+ * @abstract Middleware que verifica y valida el token JWT en el encabezado "Authorization" de la solicitud
+ * @param {object} req - Objeto de la solicitud
+ * @param {object} res - Objeto de la respuesta
+ * @param {function} next - Función que pasa al siguiente middleware
+ * @returns {object} Retorna un mensaje de error si el token no es válido o no se proporcionó, de lo contrario pasa al siguiente middleware
+ */
 const jwtMiddleware = async (req, res, next) => {
   const tokenHeader = req.headers.authorization // Obtener el valor del encabezado "Authorization"
   // Verificar si el token existe en el encabezado
