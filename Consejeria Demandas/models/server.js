@@ -1,3 +1,4 @@
+// Importamos los módulos necesarios
 const express = require('express')
 const cors = require('cors')
 const verify_jwt = require('../middlewares/verify-jwt')
@@ -16,11 +17,15 @@ const {
   routerParticipante,
   routerPromovente
 } = require('../routes')
-//Comentario  de prueba
+
+// Definimos la clase Server
 class Server {
-  constructor () {
+  constructor() {
+    // Inicializamos la aplicación Express
     this.app = express()
+    // Definimos el puerto a partir de las variables de entorno
     this.port = process.env.PORT
+    // Definimos las rutas de la aplicación
     this.paths = {
       ocupacion: '/ocupacion',
       demanda: '/demanda',
@@ -35,21 +40,30 @@ class Server {
       participante: '/participante',
       promovente: '/promovente'
     }
+    // Llamamos a los middlewares
     this.middlewares()
+    // Conectamos a la base de datos
     this.conectarBD()
+    // Definimos las rutas de la aplicación
     this.routes()
   }
 
-  async conectarBD () {
+  // Método para conectar a la base de datos
+  async conectarBD() {
     await sequelize.sync()
   }
 
-  middlewares () {
+  // Método para definir los middlewares de la aplicación
+  middlewares() {
+    // Middleware para parsear el cuerpo de las peticiones a JSON
     this.app.use(express.json())
+    // Middleware para habilitar CORS
     this.app.use(cors())
   }
 
-  routes () {
+  // Método para definir las rutas de la aplicación
+  routes() {
+    // Definimos cada ruta y le asignamos su router correspondiente
     this.app.use(this.paths.ocupacion, verify_jwt, routerOcupacion)
     this.app.use(this.paths.demanda, verify_jwt, routerDemanda)
     this.app.use(this.paths.estadoProcesal, verify_jwt, routerEstadoProcesal)
@@ -64,11 +78,14 @@ class Server {
     this.app.use(this.paths.promovente, verify_jwt, routerPromovente)
   }
 
-  listen () {
+  // Método para iniciar el servidor
+  listen() {
+    // Iniciamos el servidor en el puerto definido
     this.app.listen(this.port, () => {
       console.log(`El servidor de demandas está corriendo en el puerto ${process.env.PORT}`)
     })
   }
 }
 
+// Exportamos la clase Server
 module.exports = Server
