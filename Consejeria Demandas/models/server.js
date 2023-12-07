@@ -64,12 +64,12 @@ class Server {
   // Método para definir las rutas de la aplicación
   routes() {
     // Definimos cada ruta y le asignamos su router correspondiente
-    this.app.use(this.paths.ocupacion, verify_jwt, routerOcupacion)
+    this.app.use(this.paths.ocupacion, routerOcupacion)
     this.app.use(this.paths.demanda, verify_jwt, routerDemanda)
     this.app.use(this.paths.estadoProcesal, verify_jwt, routerEstadoProcesal)
     this.app.use(this.paths.procesoJudicial, verify_jwt, routerProcesoJudicial)
     this.app.use(this.paths.juzgado, verify_jwt, routerJuzgado)
-    this.app.use(this.paths.juez, verify_jwt, routerJuez)
+    this.app.use(this.paths.juez, routerJuez)
     this.app.use(this.paths.denuncia, verify_jwt, routerDenuncia)
     this.app.use(this.paths.escolaridad, verify_jwt, routerEscolaridad)
     this.app.use(this.paths.etnia, verify_jwt, routerEtnia)

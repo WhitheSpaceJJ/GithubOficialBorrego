@@ -86,8 +86,15 @@ const eliminarOcupacion = async (req, res) => {
     const ocupacion = await ocupacionDAO.eliminarOcupacion(Number(id))
     res.json(ocupacion)
   } catch (error) {
+    if (error.message.includes('foreign key constraint fails')) {
+      return res.status(400).json({
+        message: 'No se puede eliminar la ocupación porque está siendo referenciada por uno o más participantes',
+        error: error.message
+      })
+    }
     res.status(500).json({
-      message: 'Error al realizar la consulta con bd'
+      message: 'Error al realizar la consulta con bd',
+      error: error.message
     })
   }
 }

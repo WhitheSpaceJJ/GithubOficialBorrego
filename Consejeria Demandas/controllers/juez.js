@@ -65,10 +65,11 @@ const actualizarJuez = async (req, res) => {
       nombre_juez
     })
     const juez = await juezDAO.obtenerJuez(Number(id))
-    res.json(juez)
+    res.json({ message: 'Juez actualizado exitosamente', juez })
   } catch (error) {
     res.status(500).json({
-      message: 'Error al realizar la consulta con bd'
+      message: 'Error al realizar la consulta con bd',
+      error: error.message
     })
   }
 }
@@ -82,10 +83,21 @@ const eliminarJuez = async (req, res) => {
   try {
     const { id } = req.params
     const juez = await juezDAO.eliminarJuez(Number(id))
-    res.json(juez)
+    if (!juez) {
+      return res.status(404).json({
+        error: {
+          message: 'No se encontró el juez con el ID proporcionado',
+          id: id
+        }
+      })
+    }
+    res.json({ message: 'Juez eliminado exitosamente', juez })
   } catch (error) {
     res.status(500).json({
-      message: error
+      error: {
+        message: 'Hubo un error al eliminar el juez',
+        details: error.message
+      }
     })
   }
 }

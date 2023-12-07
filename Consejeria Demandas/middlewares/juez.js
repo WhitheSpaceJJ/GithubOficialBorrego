@@ -22,11 +22,15 @@ async function existeJuez(req, res, next) {
  * @returns {object} Retorna un mensaje de error si el formato del JSON es incorrecto, de lo contrario pasa al siguiente middleware
  */
 async function validateFormatoCrearJson(req, res, next) {
-  const { nombre_juez } = req.body
-  if (!nombre_juez) {
-    return res.status(400).json({ message: "El campo nombre es obligatorio" })
+  try {
+    const { nombre_juez } = req.body
+    if (!nombre_juez) {
+      return res.status(400).json({ message: "El campo nombre es obligatorio" })
+    }
+    next()
+  } catch (error) {
+    res.status(400).json({ message: "El formato del JSON es incorrecto", error: error.message })
   }
-  next()
 }
 
 /**
@@ -46,15 +50,39 @@ async function validateActualizarJuez(req, res, next) {
   } catch (error) {
     return res.status(400).json({ message: "El id no es valido" })
   }
-  const { nombre_juez } = req.body
-  if (!nombre_juez) {
-    return res.status(400).json({ message: "El campo nombre es obligatorio" })
+  try {
+    const { nombre_juez } = req.body
+    if (!nombre_juez) {
+      return res.status(400).json({ message: "El campo nombre es obligatorio" })
+    }
+  } catch (error) {
+    return res.status(400).json({ message: "El formato del JSON es incorrecto", error: error.message })
   }
   next()
+}
+
+/**
+ * @abstract Middleware que verifica si el formato del JSON es correcto
+ * @param {String} nombre_juez - Nombre del juez
+ * @returns {object} Retorna un mensaje de error si el formato del JSON es incorrecto, de lo contrario pasa al siguiente middleware
+ */
+async function validateCamposJuez(req, res, next) {
+  const camposPermitidos = ['nombre_juez'];
+  const camposRecibidos = Object.keys(req.body);
+
+  const tieneCamposExtra = camposRecibidos.some(campo => !camposPermitidos.includes(campo));
+  const tieneTodosLosCampos = camposPermitidos.every(campo => camposRecibidos.includes(campo));
+
+  if (tieneCamposExtra || !tieneTodosLosCampos) {
+    return res.status(400).json({ message: "El formato del JSON es incorrecto" });
+  }
+
+  next();
 }
 
 module.exports = {
   existeJuez,
   validateFormatoCrearJson,
-  validateActualizarJuez
+  validateActualizarJuez,
+  validateCamposJuez
 }

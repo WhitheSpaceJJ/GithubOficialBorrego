@@ -14,7 +14,8 @@ const {
 const {
   existeJuez,
   validateActualizarJuez,
-  validateFormatoCrearJson
+  validateFormatoCrearJson,
+  validateCamposJuez
 } = require('../middlewares/juez')
 
 // Creamos una nueva instancia de Router
@@ -30,7 +31,7 @@ router.get('/:id', existeJuez, obtenerJuez)
 router.post('/', validateFormatoCrearJson, crearJuez)
 
 // Definimos la ruta para actualizar un juez por su id
-router.put('/:id', [existeJuez, validateActualizarJuez], actualizarJuez)
+router.put('/:id', [validateCamposJuez, existeJuez, validateActualizarJuez], actualizarJuez)
 
 // Definimos la ruta para eliminar un juez por su id
 router.delete('/:id', existeJuez, eliminarJuez)
