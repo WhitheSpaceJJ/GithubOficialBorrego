@@ -242,10 +242,16 @@ export class AsesoriaTab extends HTMLElement {
       this.#tipoEmpleadoValue === 'asesor'
         ? this.#asesor.options[this.#asesor.selectedIndex].text
         : this.#defensor.options[this.#defensor.selectedIndex].text
-    const empleado = {
+    const empleado = 
+    this.#tipoEmpleadoValue === 'asesor'
+    ?
+    {
       id_empleado: Number(idEmpleado),
       nombre_asesor: nombreEmpleado,
-    }
+    } :  {
+      id_empleado: Number(idEmpleado),
+      nombre_defensor: nombreEmpleado,
+    } 
 
     return {
       datos_asesoria,

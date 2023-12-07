@@ -77,7 +77,7 @@ class APIModel {
     }
   }
 
-  async getAsesoriaByFullName({ nombre, apellidoPaterno, apellidoMaterno }) {
+  async getAsesoriaByFullName({ nombre, apellidoMaterno, apellidoPaterno }) {
     const url = new URL(`${this.ASESORIAS_API_URL}/asesorias/buscar`)
     const params = {
       nombre,
@@ -94,7 +94,9 @@ class APIModel {
     })
     if (response.ok) {
       const data = await response.json()
-      return data
+   const firstPropertyValue = Object.values(data)[0];
+    //  console.log(firstPropertyValue);
+      return JSON.stringify(firstPropertyValue);
     } else {
       throw new Error('Error en la petición')
     }
@@ -116,7 +118,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-
+// ---------------------- CP ----------------------
   async getColoniaById(idColonia) {
     const url = `${this.CP_API_URL}/colonias/${idColonia}`
     const response = await fetch(url, {
@@ -186,7 +188,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-
+// ---------------------- CP ----------------------
   async getDomicilioByCP(cp) {
     const url = `${this.CP_API_URL}/codigospostales/cp/${cp}`
     const response = await fetch(url, {

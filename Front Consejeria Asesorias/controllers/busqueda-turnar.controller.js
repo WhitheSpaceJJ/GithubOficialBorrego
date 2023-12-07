@@ -10,7 +10,7 @@ class BusquedaTurnarController {
 
   // DOMContentLoaded
   handleDOMContentLoaded = () => {
-    // add permissions
+    // add permissions 
     this.utils.validatePermissions({})
   }
 
@@ -36,7 +36,7 @@ class BusquedaTurnarController {
       )
 
       sessionStorage.setItem('asesoria', JSON.stringify(asesoria))
-      sessionStorage.setItem('colonia', JSON.stringify(dataColonia.data))
+      sessionStorage.setItem('colonia', JSON.stringify(dataColonia))
 
       location.href = 'turnar.html'
     } catch (error) {
