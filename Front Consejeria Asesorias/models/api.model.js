@@ -93,10 +93,7 @@ class APIModel {
       },
     })
     if (response.ok) {
-      const data = await response.json()
-   const firstPropertyValue = Object.values(data)[0];
-    //  console.log(firstPropertyValue);
-      return JSON.stringify(firstPropertyValue);
+      return await response.json()
     } else {
       throw new Error('Error en la petición')
     }
@@ -118,7 +115,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-// ---------------------- CP ----------------------
+  // ---------------------- CP ----------------------
   async getColoniaById(idColonia) {
     const url = `${this.CP_API_URL}/colonias/${idColonia}`
     const response = await fetch(url, {
@@ -188,7 +185,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-// ---------------------- CP ----------------------
+  // ---------------------- CP ----------------------
   async getDomicilioByCP(cp) {
     const url = `${this.CP_API_URL}/codigospostales/cp/${cp}`
     const response = await fetch(url, {

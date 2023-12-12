@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Sistema de Asesoría</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/DPS.png" />
+    <link rel="stylesheet" href="./tailwind.css" />
+    <script src="./src/asesorias-turnar.js" type="module"></script>
+  </head>
+
+  <body
+    class="flex flex-col h-screen bg-gray-50 md:bg-[url('/img/bg-desierto.jpg')] bg-cover bg-center"
+  >
+    <navbar-comp></navbar-comp>
+
+    <main
+      class="flex items-top justify-center mb-auto flex-1 md:pt-[10vh] backdrop-blur-md"
+    >
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-left text-gray-500">
+          <thead class="text-gray-700 uppercase bg-gray-100">
+            <tr>
+              <th scope="col" class="px-6 py-3">ID</th>
+              <th scope="col" class="px-6 py-3">Nombre</th>
+              <th scope="col" class="px-6 py-3">Tipo de Juicio</th>
+              <th scope="col" class="px-6 py-3">Resumen Asesoria</th>
+              <th scope="col" class="px-6 py-3">Usuario</th>
+              <th scope="col" class="px-6 py-3">
+                <span class="sr-only">Consultar</span>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <span class="sr-only">Turnar</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rows will be added from consultas.js -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <!-- MODAL ADVERTENCIA -->
+    <modal-warning></modal-warning>
+    <modal-asesoria></modal-asesoria>
+  </body>
+</html>

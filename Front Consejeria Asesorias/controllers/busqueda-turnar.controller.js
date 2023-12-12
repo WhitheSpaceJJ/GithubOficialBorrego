@@ -31,14 +31,8 @@ class BusquedaTurnarController {
         apellidoMaterno,
       })
 
-      const dataColonia = await this.model.getColoniaById(
-        asesoria[1].persona.domicilio.id_colonia
-      )
-
-      sessionStorage.setItem('asesoria', JSON.stringify(asesoria[1]))
-      sessionStorage.setItem('colonia', JSON.stringify(dataColonia.colonia))
-
-      location.href = 'turnar.html'
+      sessionStorage.setItem('asesorias', JSON.stringify(asesoria))
+      location.href = 'asesorias-turnar.html'
     } catch (error) {
       if (error instanceof ValidationError) {
         const modal = document.querySelector('modal-warning')
