@@ -32,11 +32,11 @@ class BusquedaTurnarController {
       })
 
       const dataColonia = await this.model.getColoniaById(
-        asesoria.persona.domicilio.id_colonia
+        asesoria[1].persona.domicilio.id_colonia
       )
 
-      sessionStorage.setItem('asesoria', JSON.stringify(asesoria))
-      sessionStorage.setItem('colonia', JSON.stringify(dataColonia.data))
+      sessionStorage.setItem('asesoria', JSON.stringify(asesoria[1]))
+      sessionStorage.setItem('colonia', JSON.stringify(dataColonia.colonia))
 
       location.href = 'turnar.html'
     } catch (error) {

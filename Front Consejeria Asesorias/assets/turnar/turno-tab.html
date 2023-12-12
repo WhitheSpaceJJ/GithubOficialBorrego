@@ -16,7 +16,7 @@
       placeholder="Escribe aquí el resumen de los hechos"
     ></textarea>
   </div>
-  <div class="">
+  <div class="hidden" id="asesor-container">
     <label for="nombre-asesor" class="block mb-2 font-medium text-black text-md"
       >Nombre del asesor</label
     >
@@ -25,6 +25,19 @@
       class="bg-gray-50 border border-gray-300 text-black text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
     >
       <option selected disabled value="">Selecciona un asesor</option>
+    </select>
+  </div>
+  <div class="hidden" id="defensor-container">
+    <label
+      for="nombre-defensor"
+      class="block mb-2 font-medium text-black text-md"
+      >Nombre del defensor</label
+    >
+    <select
+      id="nombre-defensor"
+      class="bg-gray-50 border border-gray-300 text-black text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+    >
+      <option selected disabled value="">Selecciona un defensor</option>
     </select>
   </div>
   <div class="relative z-0 w-full mt-3 group">

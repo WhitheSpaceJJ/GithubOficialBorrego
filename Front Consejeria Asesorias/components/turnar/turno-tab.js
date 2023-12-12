@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { ValidationError } from '../../lib/errors'
 import { getDate, validateNonEmptyFields } from '../../lib/utils'
 import { APIModel } from '../../models/api.model'
@@ -10,11 +11,13 @@ template.innerHTML = html
 export class TurnoTab extends HTMLElement {
   #asesoria
   #asesores
+  #defensores
   #usuario
   #api
 
   #resumen
   #nombreAsesor
+  #nombreDefensor
   #responsableTurno
   #horaTurno
   #minutoTurno
@@ -38,29 +41,33 @@ export class TurnoTab extends HTMLElement {
     this.#initialize()
   }
 
-  #initialize() {
-    this.#fetchAsesores()
-      .then(() => {
-        this.#manageFormFields()
-        this.#fillInputs()
-      })
-      .catch(error => {
-        console.error('Error al inicializar:', error)
-      })
+  async #initialize() {
+    await this.#fetchEmpleados()
+
+    this.#manageFormFields()
+    this.#fillInputs()
   }
 
-  async #fetchAsesores() {
+  async #fetchEmpleados() {
     try {
       const data = await this.#api.getAsesores()
       this.#asesores = data.asesores
     } catch (error) {
       throw new Error('No se pudieron obtener los asesores')
     }
+
+    try {
+      const data = await this.#api.getDefensores()
+      this.#defensores = data.defensores
+    } catch (error) {
+      throw new Error('No se pudieron obtener los defensores')
+    }
   }
 
   #manageFormFields() {
     this.#resumen = this.shadowRoot.getElementById('resumen')
     this.#nombreAsesor = this.shadowRoot.getElementById('nombre-asesor')
+    this.#nombreDefensor = this.shadowRoot.getElementById('nombre-defensor')
     this.#responsableTurno = this.shadowRoot.getElementById('responsable-turno')
     this.#horaTurno = this.shadowRoot.getElementById('hora-turno')
     this.#minutoTurno = this.shadowRoot.getElementById('minuto-turno')
@@ -78,13 +85,30 @@ export class TurnoTab extends HTMLElement {
       option.textContent = `${asesor.nombre_asesor}`
       this.#nombreAsesor.appendChild(option)
     })
+    this.#defensores.forEach(defensor => {
+      const option = document.createElement('option')
+      option.value = defensor.id_defensor
+      option.textContent = `${defensor.nombre_defensor}`
+      this.#nombreDefensor.appendChild(option)
+    })
+    if (this.#asesoria.asesor) {
+      this.#nombreAsesor.value = this.#asesoria.asesor.id_asesor
+
+      this.shadowRoot
+        .getElementById('asesor-container')
+        .classList.remove('hidden')
+    } else {
+      this.#nombreDefensor.value = this.#asesoria.defensor.id_defensor
+      this.shadowRoot
+        .getElementById('defensor-container')
+        .classList.remove('hidden')
+    }
     this.#turnadoPorAsesor.checked = Boolean(this.#asesoria.turno)
-    this.#nombreAsesor.value = this.#asesoria.asesor.id_asesor
     this.#responsableTurno.value = this.#usuario.name
 
     const [hora, minuto] = this.#asesoria?.turno?.hora_turno?.split(':') ?? []
-    this.#horaTurno.value = hora
-    this.#minutoTurno.value = minuto
+    this.#horaTurno.value = hora ?? ''
+    this.#minutoTurno.value = minuto ?? ''
   }
 
   connectedCallback() {
@@ -103,11 +127,12 @@ export class TurnoTab extends HTMLElement {
         ...(numeroInt ? { ...domicilioData } : { ...restDomicilioData }),
         ...turnoData,
       }
-
+      console.log(data)
       const inputs = Object.values(data)
+      console.log(inputs.slice(0, -1))
 
       try {
-        if (!validateNonEmptyFields(inputs)) {
+        if (!validateNonEmptyFields(inputs.slice(0, -1))) {
           throw new ValidationError(
             'Campos obligatorios en blanco, por favor revise.'
           )
@@ -124,28 +149,32 @@ export class TurnoTab extends HTMLElement {
             numero_interior_domicilio: data.numeroInt,
           },
         }
-
         // replace turno data
         this.#asesoria.datos_asesoria = {
           ...this.#asesoria.datos_asesoria,
           resumen_asesoria: data.resumen,
           usuario: this.#usuario.name,
+          id_empleado: turnoData.empleado,
         }
+
         this.#asesoria.turno = {
           fecha_turno: getDate(),
           hora_turno: `${data.horaTurno}:${data.minutoTurno}`,
         }
+        delete this.#asesoria.asesor
+        console.log(this.#asesoria)
+        console.log(JSON.stringify(this.#asesoria))
 
-        this.#asesoria.asesor = turnoData.asesor
+        console.log(
+          await this.#api.putAsesoria({
+            id: this.#asesoria.datos_asesoria.id_asesoria,
+            data: this.#asesoria,
+          })
+        )
 
-        await this.#api.putAsesoria({
-          id: this.#asesoria.datos_asesoria.id_asesoria,
-          data: this.#asesoria,
-        })
-
-        this.#showModal('Turno registrado con éxito', 'Registrar turno', () => {
+        /* this.#showModal('Turno registrado con éxito', 'Registrar turno', () => {
           location.href = '/'
-        })
+        }) */
       } catch (error) {
         if (error instanceof ValidationError) {
           this.#showModal(error.message, 'Error de validación')
@@ -177,11 +206,17 @@ export class TurnoTab extends HTMLElement {
   }
 
   get data() {
+    const idEmpelado = this.#asesoria.asesor
+      ? this.#asesores.find(
+          asesor => asesor.id_asesor === Number(this.#nombreAsesor.value)
+        )
+      : this.#defensores.find(
+          defensor =>
+            defensor.id_defensor === Number(this.#nombreDefensor.value)
+        )
     return {
       resumen: this.#resumen.value,
-      asesor: this.#asesores.find(
-        asesor => asesor.id_asesor === Number(this.#nombreAsesor.value)
-      ),
+      empleado: idEmpelado,
       responsableTurno: this.#usuario.name,
       horaTurno: this.#horaTurno.value,
       minutoTurno: this.#minutoTurno.value,

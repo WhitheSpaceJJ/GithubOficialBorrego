@@ -29,6 +29,7 @@ export class DomicilioTab extends HTMLElement {
 
     this.#asesoria = JSON.parse(sessionStorage.getItem('asesoria'))
     this.#domicilio = JSON.parse(sessionStorage.getItem('colonia'))
+    console.log(this.#domicilio)
 
     this.manageFormFields()
     this.fillInputs()
