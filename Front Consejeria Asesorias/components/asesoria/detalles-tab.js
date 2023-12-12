@@ -41,6 +41,11 @@ export class DetallesTab extends HTMLElement {
       domicilio
     )
     $section.appendChild(dataAsesoria)
+
+    this.#asesoria.datos_asesoria = {
+      ...this.#asesoria.datos_asesoria,
+      id_empleado: this.#asesoria.empleado.id_empleado,
+    }
   }
 
   connectedCallback() {
