@@ -70,11 +70,13 @@ export class CodigoPostal extends HTMLElement {
         this.#showModal('No se encontró el código postal', 'Advertencia')
         return
       }
-
+      this.#estado.innerHTML='';
       this.#estado.value = data.estado.nombre_estado
+      this.#municipio.innerHTML = '';
       this.#municipio.value = data.municipio.nombre_municipio
+      this.#ciudad.innerHTML = '';
       this.#ciudad.value = data.ciudad.nombre_ciudad
-
+      this.#colonia.innerHTML = '';
       data.colonias.forEach(colonia => {
         const option = document.createElement('option')
         option.value = colonia.id_colonia

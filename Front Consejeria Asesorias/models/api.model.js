@@ -77,7 +77,7 @@ class APIModel {
     }
   }
 
-  async getAsesoriaByFullName({ nombre, apellidoPaterno, apellidoMaterno }) {
+  async getAsesoriaByFullName({ nombre, apellidoMaterno, apellidoPaterno }) {
     const url = new URL(`${this.ASESORIAS_API_URL}/asesorias/buscar`)
     const params = {
       nombre,
@@ -94,7 +94,9 @@ class APIModel {
     })
     if (response.ok) {
       const data = await response.json()
-      return data
+   const firstPropertyValue = Object.values(data)[0];
+    //  console.log(firstPropertyValue);
+      return JSON.stringify(firstPropertyValue);
     } else {
       throw new Error('Error en la petición')
     }
@@ -116,7 +118,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-
+// ---------------------- CP ----------------------
   async getColoniaById(idColonia) {
     const url = `${this.CP_API_URL}/colonias/${idColonia}`
     const response = await fetch(url, {
@@ -186,7 +188,7 @@ class APIModel {
       throw new Error('Error en la petición')
     }
   }
-
+// ---------------------- CP ----------------------
   async getDomicilioByCP(cp) {
     const url = `${this.CP_API_URL}/codigospostales/cp/${cp}`
     const response = await fetch(url, {
@@ -287,6 +289,102 @@ class APIModel {
     })
     if (response.ok) {
       const data = await response.json()
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getMunicipios() {
+    const url = `${this.CP_API_URL}/estados/26`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+    if (response.ok) {
+      let data = await response.json()
+      data = data.estado.municipios
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getZonas() {
+    const url = `${this.ASESORIAS_API_URL}/zonas`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      let data = await response.json()
+      data = data.zonas
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getDefensoresByZona(id) {
+    const url = `${this.ASESORIAS_API_URL}/defensores/zona/${id}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      let data = await response.json()
+      data = data.defensor
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getAsesoresByZona(id) {
+    const url = `${this.ASESORIAS_API_URL}/asesores/zona/${id}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      let data = await response.json()
+      data = data.asesores
+      console.log(data)
+      return data
+    } else {
+      throw new Error('Error en la petición')
+    }
+  }
+
+  async getAsesoriasByFilters(filtros) {
+    const url = `${this.ASESORIAS_API_URL}/asesorias/filtro?filtros={"fecha-inicio":"${filtros.fecha_inicio}","fecha-final":"${filtros.fecha_final}","id_municipio":${filtros.id_municipio},"id_zona":${filtros.id_zona},"id_defensor":${filtros.id_defensor},"id_asesor":${filtros.id_asesor}}`
+    // http://200.58.127.244:3009/asesorias/filtro?filtros={"fecha-inicio":"2021-10-23","fecha-final":"2024-11-22","id_municipio":251,"id_zona":null,"id_defensor":null,"id_asesor":null}
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.user.token}`,
+      },
+    })
+
+    if (response.ok) {
+      let data = await response.json()
+      data = data.asesorias
       return data
     } else {
       throw new Error('Error en la petición')

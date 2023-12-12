@@ -19,7 +19,175 @@
   <body>
     <navbar-comp></navbar-comp>
     <div class="w-full max-w-screen-lg px-1 mx-auto mt-12 overflow-x-auto">
-      <h1 class="mb-8 text-4xl font-semibold">Asesorías</h1>
+      <div class="mb-8">
+        <h1 class="h-full mb-4 text-4xl font-semibold">Asesorías</h1>
+        <h2 class="h-full mb-2 text-2xl font-semibold" id="asesorias"> Total:</h2>
+        <form class="w-2/4" id="filtros-form">
+          <div class="flex">
+            <!-- <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label> -->
+            <button
+              id="dropdown-button"
+              data-dropdown-toggle="dropdown"
+              class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+              type="button"
+            >
+              Filtros
+              <svg
+                class="w-2.5 h-2.5 ms-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="dropdown"
+              class="z-10 hidden w-auto bg-white divide-y divide-gray-100 rounded-lg shadow"
+            >
+              
+              <!-- MUNICIPIO -->
+              <article class="flex items-center p-4 rounded">
+                <div class="flex items-center w-2/4 gap-2">
+                  <input
+                    id="check-municipio"
+                    type="checkbox"
+                    value=""
+                    name="check-municipio"
+                    class="w-4 text-[#a52a2a] bg-gray-100 border-gray-300 rounded focus:ring-[#a52a2a] focus:ring-2 cursor-pointer"
+                  />
+                  <label
+                    for="check-municipio"
+                    class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Municipio</label
+                  >
+                </div>
+                <div class="flex items-center justify-center pl-4 ml-4 border-l w-full">
+                  <select class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#a52a2a] focus:border-[#a52a2a] block w-full p-2.5 cursor-pointer" id="select-municipio">
+                    <option value="0">Selecciona una opcion</option>
+                  </select>
+                </div>
+              </article>
+
+              <!-- ZONA -->
+              <article class="flex items-center p-4 rounded">
+                <div class="flex items-center w-2/4 gap-2">
+                  <input
+                    id="check-zona"
+                    type="checkbox"
+                    value=""
+                    name="check-zona"
+                    class="w-4 text-[#a52a2a] bg-gray-100 border-gray-300 rounded focus:ring-[#a52a2a] focus:ring-2 cursor-pointer"
+                  />
+                  <label
+                    for="check-zona"
+                    class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Zona</label
+                  >
+                </div>
+                <div class="flex items-center justify-center pl-4 ml-4 border-l w-full">
+                  <select class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#a52a2a] focus:border-[#a52a2a] block w-full p-2.5 cursor-pointer" id="select-zona">
+                    <option value="0">Selecciona una opcion</option>
+                  </select>
+                </div>
+              </article>
+
+              <!-- ASESOR -->
+              <article class="flex items-center p-4 rounded">
+                <div class="flex items-center w-2/4 gap-2">
+                  <input
+                    id="check-asesor"
+                    type="checkbox"
+                    value=""
+                    name="check-asesor"
+                    class="w-4 text-[#a52a2a] bg-gray-100 border-gray-300 rounded focus:ring-[#a52a2a] focus:ring-2 cursor-pointer"
+                    disabled
+                  />
+                  <label
+                    for="check-asesor"
+                    class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Asesor</label
+                  >
+                </div>
+                <div class="flex items-center justify-center pl-4 ml-4 border-l w-full">
+                  <select class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#a52a2a] focus:border-[#a52a2a] block w-full p-2.5 cursor-pointer" id="select-asesor" disabled>
+                    <option value="0">Selecciona una opcion</option>
+                  </select>
+                </div>
+              </article>
+
+              <!-- DEFENSOR -->
+              <article class="flex items-center p-4 rounded">
+                <div class="flex items-center w-2/4 gap-2">
+                  <input
+                    id="check-defensor"
+                    type="checkbox"
+                    value=""
+                    name="check-defensor"
+                    class="w-4 text-[#a52a2a] bg-gray-100 border-gray-300 rounded focus:ring-[#a52a2a] focus:ring-2 cursor-pointer"
+                    disabled
+                  />
+                  <label
+                    for="check-defensor"
+                    class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Defensor</label
+                  >
+                </div>
+                <div class="flex items-center justify-center pl-4 ml-4 border-l w-full">
+                  <select class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#a52a2a] focus:border-[#a52a2a] block w-full p-2.5 cursor-pointer" id="select-defensor" disabled>
+                    <option value="0">Selecciona una opcion</option>
+                  </select>
+                </div>
+              </article>
+            </div>
+            <div class="relative w-full">
+              <input
+                type="date"
+                id="fecha-inicio"
+                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-[#a52a2a] focus:border-[#a52a2a] cursor-text"
+                placeholder="Fecha inicio..."
+                required
+              />
+              <input
+                type="date"
+                id="fecha-final"
+                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-[#a52a2a] focus:border-[#a52a2a] cursor-text"
+                placeholder="Fecha final..."
+                required
+              />
+              <button
+                type="submit"
+                class="absolute z-10 top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#a52a2a] rounded-e-lg border hover:bg-[#db2424] focus:ring-4 focus:outline-none focus:ring-blue-300 transition duration-200"
+              >
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+                <span class="sr-only">Search</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-left text-gray-500">
