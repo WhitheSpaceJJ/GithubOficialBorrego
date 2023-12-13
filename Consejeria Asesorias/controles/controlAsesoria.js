@@ -25,12 +25,12 @@ const obtenerAsesoriasFiltro = async (filtros) => {
     if (filtroKeys.length === 0) {
       throw new Error("El arreglo de filtros debe contener al menos una clave.");
     }
-    if (filtroKeys.length > 5) {
-      throw new Error("El arreglo de filtros no debe contener más de cinco claves.");
+    if (filtroKeys.length > 6) {
+      throw new Error("El arreglo de filtros no debe contener más de seis claves.");
     }
 
     // Verificar que las claves sean las esperadas
-    const clavesEsperadas = ['fecha-inicio', 'fecha-final','id_empleado', 'id_municipio', 'id_zona'];
+    const clavesEsperadas = ['fecha-inicio', 'fecha-final','id_defensor', 'id_municipio', 'id_zona','id_asesor'];
     const clavesInvalidas = filtroKeys.filter(key => !clavesEsperadas.includes(key));
     if (clavesInvalidas.length > 0) {
       throw new Error(`Claves inválidas en el arreglo de filtros: ${clavesInvalidas.join(', ')}`);
@@ -43,15 +43,22 @@ const obtenerAsesoriasFiltro = async (filtros) => {
     //  whereClause.fecha_registro = filtros.fecha_registro;
     //} else 
     
-    if (filtros.fecha-inicio && filtros.fecha-final) {
+    if (filtros['fecha-inicio'] && filtros['fecha-final']) {
       whereClause.fecha_registro = {
-        [Op.between]: [filtros.fecha-inicio, filtros.fecha-final],
+        [Op.between]: [filtros['fecha-inicio'], filtros['fecha-final']],
       };
     }
-
-    if (filtros.id_empleado) {
-      whereClause.id_empleado = filtros.id_empleado;
+    if (filtros.id_asesor && filtros.id_defensor) {
+      whereClause[Op.or] = [
+        { id_empleado: filtros.id_asesor },
+        { id_empleado: filtros.id_defensor },
+      ];
+    }else if(filtros.id_asesor){
+      whereClause.id_empleado = filtros.id_asesor;
+    }else if(filtros.id_defensor){
+      whereClause.id_empleado = filtros.id_defensor;
     }
+  
     if (filtros.id_municipio) {
       // Asegúrate de que la relación entre Empleado y Municipio esté definida
       // y ajusta el nombre del modelo y la clave foránea según sea necesario
@@ -97,7 +104,6 @@ const obtenerAsesoriasFiltro = async (filtros) => {
 
     for (const asesoria_pre of asesorias_pre) {
       console.log(JSON.stringify(asesoria_pre));
-      console.log("--------------------------------------------------");
       const asesoria_obj = JSON.parse(JSON.stringify(asesoria_pre));
       delete asesoria_obj.id_empleado;
 
@@ -728,11 +734,11 @@ const obtenerTotalAsesorias = async (filtros) => {
       throw new Error("El arreglo de filtros debe contener al menos una clave.");
     }
     if (filtroKeys.length > 5) {
-      throw new Error("El arreglo de filtros no debe contener más de cinco claves.");
+      throw new Error("El arreglo de filtros no debe contener más de seis claves.");
     }
 
     // Verificar que las claves sean las esperadas
-    const clavesEsperadas = ['fecha-inicio', 'fecha-final', 'id_empleado', 'id_municipio', 'id_zona'];
+    const clavesEsperadas = ['fecha-inicio', 'fecha-final', 'id_asesor', 'id_municipio', 'id_zona','id_defensor'];
     const clavesInvalidas = filtroKeys.filter(key => !clavesEsperadas.includes(key));
     if (clavesInvalidas.length > 0) {
       throw new Error(`Claves inválidas en el arreglo de filtros: ${clavesInvalidas.join(', ')}`);
@@ -745,9 +751,15 @@ const obtenerTotalAsesorias = async (filtros) => {
         [Op.between]: [filtros['fecha-inicio'], filtros['fecha-final']],
       };
     }
+    
 
-    if (filtros.id_empleado) {
-      whereClause.id_empleado = filtros.id_empleado;
+    if (filtros.id_asesor || filtros.id_defensor) {
+      whereClause.id_empleado = {
+        [Op.or]: [
+          { id_asesor: filtros.id_asesor },
+          { id_defensor: filtros.id_defensor },
+        ],
+      };
     }
     if (filtros.id_municipio) {
       whereClause['$empleado.distrito_judicial.id_municipio_distrito$'] = filtros.id_municipio;
